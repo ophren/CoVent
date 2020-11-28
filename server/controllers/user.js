@@ -29,14 +29,9 @@ const createUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const users = await models.user.findAll({
-      include: [models.event, {
-        model: models.profile, include: [
-          { model: models.local },
-          { model: models.tourist }
-        ]
-      }]
+      include: [models.profile]
     });
-    res.status(201).send(users);
+    res.status(200).send(users);
   } catch (error) {
     console.error(error);
     res.status(500).send({ error, message: 'Could not get all users' });
@@ -48,18 +43,36 @@ const getUser = async (req, res) => {
     const { id } = req.params;
     const user = await models.user.findAll({
       where: { id: id },
-      include: [models.event, {
-        model: models.profile, include: [
-          { model: models.local },
-          { model: models.tourist }
-        ]
-      }]
+      include: [models.profile]
     });
-    if (user.length > 0) res.status(201).send(user);
-    throw new Error();
+    if (user.length > 0) {
+      res.status(200).send(user);
+    } else {
+      throw new Error();
+    }
   } catch (error) {
     res.status(500).send({ error, message: 'Could not get User' });
   }
 };
 
-module.exports = { createUser, getAllUsers, getUser };
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    console.log('password-->', password);
+
+    const user = await await models.user.findAll({ where: { email: email } });
+    console.log('user-->', user);
+
+    const validatedPass = await bcrypt.compare(password, user[0].password);
+    console.log('validatedPass-->', validatedPass);
+
+    if (!validatedPass) throw new Error();
+    res.status(200).send(user);
+  } catch (error) {
+    res
+      .status(401)
+      .send({ error: '401', message: 'Username or password is incorrect' });
+  }
+};
+
+module.exports = { createUser, getAllUsers, getUser, login };

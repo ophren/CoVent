@@ -20,15 +20,11 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  // user.associate = model => {
-  //   user.hasMany(model.event, {
-  //     onDelete: 'cascade'
-  //   });
-
-  //    user.hasOne(model.profile, {
-  //     onDelete: 'cascade'
-  //   });
-  // };
+  user.associate = model => {
+    user.hasOne(model.profile, {
+      onDelete: 'cascade'
+    });
+  };
 
   return user;
 };
