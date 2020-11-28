@@ -1,5 +1,6 @@
 'use strict';
 
+const bcrypt = require('bcrypt');
 const models = require('../models');
 
 const createUser = async (req, res) => {
@@ -13,9 +14,10 @@ const createUser = async (req, res) => {
       .send({ error: '409', message: 'User already exists' });
   try {
     if (password === '') throw new Error();
+    const hash = await bcrypt.hash(password, 10);
     const newUser = {
       ...req.body,
-      password,
+      password: hash,
     };
     const user = await models.user.create(newUser);
     res.status(201).send(user);
