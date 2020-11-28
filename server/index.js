@@ -2,12 +2,12 @@ const express = require('express');
 const app = express();
 require('dotenv/config');
 const PORT = process.env.PORT;
-
-console.log('PORT-->', PORT);
-
+const router = require('./router');
 
 
-app.listen(PORT, () => {
+app.use(router);
+
+app.listen(3002, () => {
   console.log(`COEVENT listening at http://localhost:${PORT}`);
 });
 
