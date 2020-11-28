@@ -1,3 +1,5 @@
+'use strict';
+
 const models = require('./../models/');
 
 const createProfile = async (req, res) => {
@@ -10,7 +12,7 @@ const createProfile = async (req, res) => {
       const updatedProfile = await models.profile.update((req.body), {
         where: { userId: userId }
       });
-      res.status(201).send(updatedProfile);
+      res.status(204).send(updatedProfile);
     } else {
       const newProfile = await models.profile.create(req.body);
       res.status(201).send(newProfile);
@@ -25,10 +27,9 @@ const getProfile = async (req, res) => {
     const { id } = req.params;
     const profile = await models.profile.findAll({
       where: { userId: id },
-      include: [models.user, models.local, models.tourist]
+      include: [models.user]
     });
     res.status(200).send(profile);
-
   } catch (error) {
     res.status(500).send({ error, message: 'Could not get Profile' });
   }
