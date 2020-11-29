@@ -29,7 +29,7 @@ const createUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const users = await models.user.findAll({
-      include: [models.profile]
+      include: { model: models.profile, include: [models.category] }
     });
     res.status(200).send(users);
   } catch (error) {
@@ -58,14 +58,8 @@ const getUser = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log('password-->', password);
-
     const user = await await models.user.findAll({ where: { email: email } });
-    console.log('user-->', user);
-
     const validatedPass = await bcrypt.compare(password, user[0].password);
-    console.log('validatedPass-->', validatedPass);
-
     if (!validatedPass) throw new Error();
     res.status(200).send(user);
   } catch (error) {

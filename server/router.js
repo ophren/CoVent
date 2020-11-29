@@ -3,6 +3,7 @@
 const router = require('express').Router();
 const userController = require('./controllers/user');
 const profileController = require('./controllers/profile');
+const categoryController = require('./controllers/category');
 
 
 router.get('/', (req, res) => {
@@ -16,6 +17,9 @@ router.post('/login', userController.login);
 
 router.post('/profile', profileController.createProfile);
 router.get('/profile/:id', profileController.getProfile);
+
+router.post('/category', categoryController.addCategory);
+router.get('/categorIES', categoryController.getAllCategories);
 
 
 module.exports = router;
