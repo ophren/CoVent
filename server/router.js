@@ -4,6 +4,8 @@ const router = require('express').Router();
 const userController = require('./controllers/user');
 const profileController = require('./controllers/profile');
 const categoryController = require('./controllers/category');
+const likeController = require('./controllers/like');
+const matchController = require('./controllers/match');
 
 
 router.get('/', (req, res) => {
@@ -21,7 +23,9 @@ router.get('/profile/:id', profileController.getProfile);
 router.post('/category', categoryController.addCategory);
 router.get('/categories', categoryController.getAllCategories);
 
-// router.post('/givelike', )
+router.post('/like/:direction', likeController.like);
+
+router.post('/match', matchController.addMatch);
 
 
 module.exports = router;

@@ -29,20 +29,43 @@ module.exports = (sequelize, DataTypes) => {
 
     profile.belongsTo(model.user);
 
-    profile.hasMany(model.givenLike, {
-      onDelete: 'cascade'
-    });
+    // profile.belongsToMany(model.category, {
+    //   through: 'categoryProfiles'
+    // });
 
-    // profile.hasMany(model.category, {
+    // // old working version
+    // profile.hasMany(model.givenLike, {
     //   onDelete: 'cascade'
     // });
 
-    profile.belongsToMany(model.category, {
-      through: 'categoryProfiles'
+    // profile.belongsToMany(model.givenLike, {
+    //   through: 'likedProfiles',
+    //   // through: model.givenLikeProfile,
+    //   // foreignKey: model.givenLikeProfile.likedProfileId,
+    // });
+    profile.belongsToMany(model.profile, {
+      through: 'likedProfiles',
+      as: 'likedProfile',
+      foreignKey: 'likedProfile'
+      // targetKey: 'giveTo',
+      // sourceKey: 'receivedFrom'
+      // through: model.givenLikeProfile,
+      // foreignKey: model.givenLikeProfile.likedProfileId,
+    });
+
+    profile.belongsToMany(model.profile, {
+      through: 'likedProfiles',
+      as: 'givenLike',
+      foreignKey: 'givenLike'
+      // through: model.givenLikeProfile,
+      // foreignKey: model.givenLikeProfile.likedProfileId,
     });
 
 
-    // profile.hasMany(model.activity, {
+
+
+
+    // profile.hasMany(model.receivedLike, {
     //   onDelete: 'cascade'
     // });
 
@@ -50,10 +73,12 @@ module.exports = (sequelize, DataTypes) => {
     //   onDelete: 'cascade'
     // });
 
-
-    // profile.hasMany(model.receivedLike, {
+    // profile.hasMany(model.activity, {
     //   onDelete: 'cascade'
     // });
+
+
+
 
   };
 

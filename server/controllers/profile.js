@@ -27,7 +27,7 @@ const getProfile = async (req, res) => {
     const { id } = req.params;
     const profile = await models.profile.findAll({
       where: { userId: id },
-      include: [models.user, models.category, models.givenLike]
+      // include: [models.user, models.category, { include: models.givenLike }, models.receivedLike]
     });
     res.status(200).send(profile);
   } catch (error) {
