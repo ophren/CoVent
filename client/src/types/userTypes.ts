@@ -2,7 +2,10 @@ export interface User {
 
   name: string,
   age: number,
-  profilePic: string
+  profilePic: string,
+  oldMatchArray?: number[],
+  newMatchArray?: number[]
+
 }
 
 

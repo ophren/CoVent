@@ -7,7 +7,9 @@ const initialUserState: User = {
 
   name: 'Till',
   age: 33,
-  profilePic: 'https://ca.slack-edge.com/T0WU5R8NT-U015FNL1RQF-87fa8c57d5ca-512'
+  profilePic: 'https://ca.slack-edge.com/T0WU5R8NT-U015FNL1RQF-87fa8c57d5ca-512',
+  oldMatchArray:[1,2,3],
+  newMatchArray:[1,2,3,4]
 
 }
 
