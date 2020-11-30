@@ -14,6 +14,7 @@ export const TopBarSignUpButton = () => {
     <div className="top_bar_sign_up_button_container">
 
       {showSignUp ?? <button
+      
         className="top_bar_sign_up_button">
           {USER_SIGN_UP_TEXT}
           </button>}
