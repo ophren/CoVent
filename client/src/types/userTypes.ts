@@ -4,7 +4,9 @@ export interface User {
   age: number,
   profilePic: string,
   oldMatchArray?: number[],
-  newMatchArray?: number[]
+  newMatchArray?: number[],
+  hasNewMatches : boolean
+
 
 }
 
