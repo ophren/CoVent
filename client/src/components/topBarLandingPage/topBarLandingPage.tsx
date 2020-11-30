@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react'
+import { TopBarLandingPageLogInButton } from '../TopBarLandingPageLogInButton/TopBarLandingPageLogInButton'
 
 
 export const TopBarLandingPage =
@@ -7,7 +8,7 @@ export const TopBarLandingPage =
     return (<div
       className="top_bar_landing_page_container"
     >
-      <TopBarLandingPageLogInButton />
+      <TopBarLandingPageLogInButton/>
 
     </div>)
   }
