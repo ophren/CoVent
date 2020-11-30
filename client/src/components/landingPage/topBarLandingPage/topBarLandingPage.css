@@ -1,0 +1,6 @@
+.top_bar_landing_page_container {
+  background-color: blue;
+  display: flex;
+  justify-content: flex-end;
+
+}
