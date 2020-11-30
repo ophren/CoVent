@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     }
   });
 
@@ -12,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     category.belongsToMany(model.profile, {
       through: 'categoryProfiles'
     });
-    
+
     // category.belongsToMany(model.profile, {
     //   through: model.categoryProfiles
     // });

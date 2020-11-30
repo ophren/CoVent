@@ -22,11 +22,7 @@ const addCategory = async (req, res) => {
     const profile = await models.profile.findAll({
       where: { id: profileId }
     });
-    console.log('newCategory', newCategory);
-    console.log('profile BEFORE-->', profile);
     await profile[0].addCategory(newCategory);
-    console.log('profile AFTER-->', profile);
-
     res.status(201).send(newCategory);
   } catch (error) {
     res.status(400).send({ error, message: 'Could not add category' });
@@ -40,14 +36,17 @@ const getAllCategories = async (req, res) => {
     //   plain: false,
     // });
 
-    // // not unique list
-    // const categories = await models.category.findAll({});
-
+    // not unique list
     const categories = await models.category.findAll({
-      attributes: ['name'],
-      group: ['name'],
-      include: [models.profile],
+      include: [models.profile]
     });
+
+    // const categories = await models.category.findAll({
+    //   attributes: ['name'],
+    //   group: ['name'],
+    //   // include: [models.profile],
+    // });
+
     console.log('categories-->', categories);
     res.status(200).send(categories);
   } catch (error) {

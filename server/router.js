@@ -19,7 +19,9 @@ router.post('/profile', profileController.createProfile);
 router.get('/profile/:id', profileController.getProfile);
 
 router.post('/category', categoryController.addCategory);
-router.get('/categorIES', categoryController.getAllCategories);
+router.get('/categories', categoryController.getAllCategories);
+
+// router.post('/givelike', )
 
 
 module.exports = router;

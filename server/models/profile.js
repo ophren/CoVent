@@ -26,7 +26,12 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   profile.associate = model => {
+
     profile.belongsTo(model.user);
+
+    profile.hasMany(model.givenLike, {
+      onDelete: 'cascade'
+    });
 
     // profile.hasMany(model.category, {
     //   onDelete: 'cascade'
@@ -45,9 +50,6 @@ module.exports = (sequelize, DataTypes) => {
     //   onDelete: 'cascade'
     // });
 
-    // profile.hasMany(model.givenLike, {
-    //   onDelete: 'cascade'
-    // });
 
     // profile.hasMany(model.receivedLike, {
     //   onDelete: 'cascade'
