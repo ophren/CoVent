@@ -7,16 +7,16 @@ const USER_MATCHES_BUTTON_TEXT = 'Machtes'
 
 
 export const TopBarNewMatchesButton = () => {
-  const userIsLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
-  const userHasNewMatches = useSelector((state: RootState) => state.user.hasNewMatches)
+  let userIsLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
+  let userHasNewMatches = useSelector((state: RootState) => state.user.hasNewMatches)
   let changeOnNewMatches = userHasNewMatches ? 'hasNewMatches top_bar_new_matches_button' : 'NoNewMatches top_bar_new_matches_button'
 
 
 
   return (<div
 
-    className= "top_bar_new_matches_button_container" >
-    <button
-      className={changeOnNewMatches}>{USER_MATCHES_BUTTON_TEXT}</button>
+    className="top_bar_new_matches_button_container" >
+    {userIsLoggedIn && <button
+      className={changeOnNewMatches}>{USER_MATCHES_BUTTON_TEXT}</button>}
   </div>)
 }
