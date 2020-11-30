@@ -5,7 +5,7 @@ import './landingPage.css'
 
 import { useDispatch } from 'react-redux'
 import { setUserName } from '../../redux/userState/userActions';
-import { TopBarLandingPage } from '../topBarLandingPage/topBarLandingPage';
+import { TopBarLandingPage } from './topBarLandingPage/topBarLandingPage';
 
 
 
