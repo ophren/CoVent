@@ -6,6 +6,7 @@ import './landingPage.css'
 import { useDispatch } from 'react-redux'
 import { setUserName } from '../../redux/userState/userActions';
 import { TopBarLandingPage } from './topBarLandingPage/topBarLandingPage';
+import { Searchbar } from './searchbar/searchbar';
 
 
 
@@ -25,6 +26,7 @@ export const LandingPage = (): ReactElement => {
   return (
     <div className="landing_page_container">
       <TopBarLandingPage />
+      <Searchbar/>
 
 
 
