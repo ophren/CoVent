@@ -7,11 +7,6 @@ const categoryController = require('./controllers/category');
 const likeController = require('./controllers/like');
 const matchController = require('./controllers/match');
 
-
-router.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
 router.post('/register', userController.createUser);
 router.get('/users', userController.getAllUsers);
 router.get('/user/:id', userController.getUser);
@@ -26,6 +21,5 @@ router.get('/categories', categoryController.getAllCategories);
 router.post('/like/:direction', likeController.like);
 
 router.post('/match', matchController.addMatch);
-
 
 module.exports = router;
