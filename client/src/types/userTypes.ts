@@ -1,5 +1,6 @@
 export interface User {
   id?:number,
+  firebaseId:number
   
 
   name: string,
@@ -59,8 +60,12 @@ export interface CategoryProfiles {
 
 //redux action types
 
+export const SET_USER_FIREBASE_ID = 'SET_USER_FIREBASE_ID'
 export const SET_USER_NAME = 'SET_USER_NAME'
 export const SET_USER_AGE = 'SET_USER_AGE'
+export const SET_USER_PROFILE_PIC = 'SET_USER_PROFILE_PIC'
+export const SET_USER_HAS_MATCHES_TO_FALSE= 'SET_USER_HAS_MATCHES_TO_FALSE'
+// export const SET_USER_AGE = 'SET_USER_AGE'
 
 interface SetUserNameAction {
   type: typeof SET_USER_NAME,

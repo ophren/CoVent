@@ -14,3 +14,9 @@ export function setUserAge(newAge: number): UserActionTypes {
     payload: newAge
   }
 }
+export function setUserProfilePic(newAge: number): UserActionTypes {
+  return {
+    type: SET_USER_AGE,
+    payload: newAge
+  }
+}
