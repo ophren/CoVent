@@ -1,4 +1,4 @@
-import { SystemState, SystemActionTypes, UPDATE_SESSION, UPDATE_LOGIN } from './../../types/systemTypes';
+import { SystemState, SystemActionTypes, UPDATE_SESSION } from './../../types/systemTypes';
 
 const initialSystemState: SystemState = {
   loggedIn: false, 
