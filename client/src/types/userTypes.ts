@@ -1,5 +1,6 @@
 export interface User {
   id?:number,
+  
 
   name: string,
   age: number,
@@ -14,6 +15,7 @@ export interface User {
 
 export interface Profile {
   id?:number,
+  description?:string
   picture?: string,
   age?: number,
   gender?:string,
@@ -34,6 +36,15 @@ export interface Category {
   createdAt?: string,
   updatedAt?:string,
   categoryProfiles?: CategoryProfiles
+}
+
+export interface GiveLike {
+  profileId: number,
+  givenLikeId:number
+}
+export interface ReceivedLike {
+  profileId: number,
+  receivedLikeId:number
 }
 
 export interface CategoryProfiles {

@@ -1,4 +1,5 @@
-import { User } from "../types/userTypes";
+import { Category, GiveLike, ReceivedLike } from './../types/userTypes';
+import { Profile, User } from "../types/userTypes";
 
 const baseUrl = "http://localhost:3002/";
 
@@ -34,14 +35,36 @@ export function registerUserToDataBase(user: User): Promise<User> {
 export function addProfileToUserAtDataBase(profile: Profile): Promise<User> {
   return fetch(`${baseUrl}/profile`, {
     method:"POST",
-    body: JSON.stringify(user),
+    body: JSON.stringify(profile),
     headers: {
       Accept: "application/json",
     },
   }).then((res) => res.json());
 }
-/*     return fetch(`${baseUrl}/cool/${firstName}`, {
-      headers: {
-        Accept: "application/json",
-      },
-    }).then((res) => res.json()); */
+export function addCategoryToUserAtDataBase(category: Category): Promise<User> {
+  return fetch(`${baseUrl}/category`, {
+    method:"POST",
+    body: JSON.stringify(category),
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json());
+}
+export function giveLikeToOtherUser(giveLike: GiveLike): Promise<User> {
+  return fetch(`${baseUrl}/like/give`, {
+    method:"POST",
+    body: JSON.stringify(giveLike),
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json());
+}
+export function receivedLikeFromOther(receivedLike: ReceivedLike): Promise<User> {
+  return fetch(`${baseUrl}/like/received`, {
+    method:"POST",
+    body: JSON.stringify(receivedLike),
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json());
+}
