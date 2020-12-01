@@ -5,7 +5,6 @@ export interface SystemState {
   userFirebaseId: string
 }
 
-
 ///redux action Types
 
 export const UPDATE_SESSION = 'UPDATE_SESSION'

@@ -1,15 +1,10 @@
 export interface User {
-
   name: string,
   age: number,
   profilePic: string,
   oldMatchArray?: number[],
   newMatchArray?: number[]
-
 }
-
-
-
 
 //redux action types
 

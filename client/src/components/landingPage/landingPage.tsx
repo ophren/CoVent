@@ -8,30 +8,16 @@ import { setUserName } from '../../redux/userState/userActions';
 import { TopBarLandingPage } from './topBarLandingPage/topBarLandingPage';
 
 
-
-
-
 export const LandingPage = (): ReactElement => {
 
   // let userLoggedInWithFireBase = useSelector((state: RootState) => state.system.loggedIn)
-
-
-
   // const dispatch = useDispatch()
   // const user = useSelector((state: RootState) => state.user);
   // dispatch(setUserName('Peter'))
 
-
   return (
     <div className="landing_page_container">
       <TopBarLandingPage />
-
-
-
-
-
-
-
     </div>
   )
 }

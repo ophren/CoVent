@@ -17,14 +17,10 @@
     "react-redux": "^7.2.2",
     "react-redux-firebase": "^3.8.1",
     "react-scripts": "4.0.1",
-<<<<<<< HEAD
     "react-toastify": "^6.1.0",
     "redux": "^4.0.5",
     "redux-firestore": "^0.14.0",
     "redux-thunk": "^2.3.0",
-=======
-    "redux": "^4.0.5",
->>>>>>> 494f3f7e916cb999752fc3ab13bed79cb6443f0b
     "typescript": "^4.1.2",
     "web-vitals": "^0.2.4"
   },
