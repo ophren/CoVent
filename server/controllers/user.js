@@ -34,7 +34,7 @@ const getAllUsers = async (req, res) => {
         model: models.profile,
         attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
         include: [
-          { model: models.category },
+          // { model: models.category },
           {
             model: models.profile, as: 'likedProfile',
             attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
@@ -79,7 +79,7 @@ const getUser = async (req, res) => {
         model: models.profile,
         attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
         include: [
-          { model: models.category },
+          // { model: models.category },
           {
             model: models.profile, as: 'likedProfile',
             attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],

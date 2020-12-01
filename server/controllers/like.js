@@ -9,17 +9,31 @@ const like = async (req, res) => {
 
   const values = Object.values(req.body);
 
+  const profile = await models.profile.findAll({
+    where: { id: profileId },
+    include: [
+      {
+        model: models.profile, as: 'likedProfile',
+        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+        include: {
+          attributes: ['id', 'firstName', 'lastName', 'email'],
+          model: models.user,
+        }
+      },
+      {
+        model: models.profile, as: 'receivedLike',
+        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+        include: {
+          model: models.user,
+          attributes: ['id', 'firstName', 'lastName', 'email'],
+        }
+      },
+    ]
+  });
+
   if (values[0] === values[1]) {
     return res.status(500).send({ error: '500', message: 'You cannot like yourself' });
   }
-
-
-  const profile = await models.profile.findAll({
-    where: { id: profileId },
-    include: [models.like, models.liked]
-  });
-
-
 
   if (profile.length === 0) {
     return res.status(500).send({ error: '500', message: 'Profile not available' });
@@ -37,17 +51,44 @@ const like = async (req, res) => {
         return res.status(500).send({ error: '500', message: 'Liked profile not available' });
       }
 
-      const duplicateLikeCheck = profile[0].likes.filter((el) => {
-        return Number(el.likeId) === Number(givenLikeId);
+      await profile[0].addLikedProfile(givenLikeId, profileId);
+      await likedProfile[0].addReceivedLike(profileId, givenLikeId);
+
+      const targetProfile = await models.profile.findAll({
+        where: { id: values[1] },
+        include: [
+          {
+            model: models.profile, as: 'likedProfile',
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            include: {
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+              model: models.user,
+            }
+          },
+          {
+            model: models.profile, as: 'receivedLike',
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            include: {
+              model: models.user,
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+            }
+          },
+        ]
       });
 
-      if (duplicateLikeCheck.length > 0) {
-        return res.status(500).send({ error: '500', message: 'Already liked' });
+      if (targetProfile[0].dataValues.likedProfile.length > 0) {
+        const matchCheck = targetProfile[0].dataValues.likedProfile.some((el) => {
+          return el.dataValues.id === profileId;
+        });
+
+        if (matchCheck) {
+          await profile[0].addMatched(givenLikeId, profileId);
+          await targetProfile[0].addMatched(profileId, givenLikeId);
+          return res.status(201).send({ message: 'You got a new match' });
+        }
       }
 
-      await profile[0].addLikedProfile(givenLikeId, profileId);
-      const like = await models.like.create({ profileId: profileId, likeId: givenLikeId });
-      res.status(201).send(likedProfile);
+      res.status(201).send(like);
 
     } else if (direction === 'receive') {
       const { receivedLikeId } = req.body;
@@ -69,7 +110,7 @@ const like = async (req, res) => {
 
       await profile[0].addReceivedLike(receivedLikeId, profileId);
       const liked = await models.liked.create({ profileId: profileId, likedId: receivedLikeId });
-      res.status(201).send(receivedLikeProfile);
+      res.status(201).send(liked);
 
     } else {
       res.status(500).send({ error, message: 'Wrong direction' });
