@@ -68,3 +68,13 @@ export function receivedLikeFromOther(receivedLike: ReceivedLike): Promise<User>
     },
   }).then((res) => res.json());
 }
+
+export function updateUserProfileData (updatedUserProfile: Profile) :Promise<void>{
+  return fetch(`${baseUrl}/profile`, {
+    method:"POST",
+    body: JSON.stringify(updatedUserProfile),
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json());
+}
