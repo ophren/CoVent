@@ -1,11 +1,13 @@
-import { SystemState, SystemActionTypes, UPDATE_SESSION } from './../../types/systemTypes';
+import { SystemState, SystemActionTypes, UPDATE_SESSION, UPDATE_LOGIN } from './../../types/systemTypes';
 
 const initialSystemState: SystemState = {
-  loggedIn: false,
+  loggedIn: false, 
   session: '',
   userName: '',
   userFirebaseId: ''
 }
+
+// create action to toggle true/false in systemStateActions.js
 
 export function systemReducer(
   state = initialSystemState,
@@ -18,6 +20,7 @@ export function systemReducer(
         ...action.payload
       }
     }
+
     default: return state
   }
 }

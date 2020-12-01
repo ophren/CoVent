@@ -6,3 +6,10 @@ export function updateSession(newSession: SystemState): SystemActionTypes {
     payload: newSession
   }
 }
+
+// export function updateLoginState (newLogin: SystemState): SystemActionTypes {
+//   return {
+//     type: UPDATE_LOGIN,
+//     payload: newLogin
+//   }
+// }
