@@ -2,7 +2,7 @@ import { SystemState, SystemActionTypes, UPDATE_SESSION } from './../../types/sy
 
 const initialSystemState: SystemState = {
 
-  loggedIn: false,
+  loggedIn: true,
   session: '',
   userName: '',
   userFirebaseId: ''
