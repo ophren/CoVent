@@ -1,4 +1,5 @@
 export interface User {
+  id?:number,
 
   name: string,
   age: number,
@@ -6,8 +7,40 @@ export interface User {
   oldMatchArray?: number[],
   newMatchArray?: number[],
   hasNewMatches : boolean
+  profile?:Profile
 
 
+}
+
+export interface Profile {
+  id?:number,
+  picture?: string,
+  age?: number,
+  gender?:string,
+  location?:string,
+  userId:number,
+  categories?: Category[],
+  user?:User, //this is for the likedProfile structure 
+  likedProfile?: User[],
+  receivedLike?:User[],
+  matched?:User[],
+
+
+}
+
+export interface Category {
+  id?:number,
+  name:string,
+  createdAt?: string,
+  updatedAt?:string,
+  categoryProfiles?: CategoryProfiles
+}
+
+export interface CategoryProfiles {
+  createdAt?:string,
+  updatedAt?:string,
+  categoryId:1,
+  profileId:1
 }
 
 
