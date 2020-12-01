@@ -13,14 +13,9 @@ module.exports = (sequelize, DataTypes) => {
     category.belongsToMany(model.profile, {
       through: 'categoryProfiles'
     });
-
-    // category.belongsToMany(model.profile, {
-    //   through: model.categoryProfiles
-    // });
-
-    // category.hasMany(model.activity);
-    // category.belongsTo(model.profile);
   };
 
   return category;
 };
+
+

@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   match.associate = model => {
-    match.belongsTo(model.category);
-
-    // match.belongsToMany(model.profile, { through: 'matchProfiles' });
+    match.belongsToMany(model.profile, {
+      through: 'matchProfiles'
+    });
   };
 
   return match;

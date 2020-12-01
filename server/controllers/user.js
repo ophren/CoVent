@@ -29,22 +29,30 @@ const createUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const users = await models.user.findAll({
+      attributes: ['id', 'firstName', 'lastName', 'email'],
       include: {
         model: models.profile,
         attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
         include: [
-          'likedProfile',
-          'givenLike'
-          // model: models.category, attributes: ['id', 'name'],
-          // model: models.givenLike, include: {
-          //   model: models.profile,
-          //   attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-          //   // through: { likedProfileId: models.profile }
-          // }, attributes: ['givenLikeId'],
-          // model: models.receivedLike, attributes: ['receivedLikeId']
+          { model: models.category },
+          {
+            model: models.profile, as: 'likedProfile',
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            include: {
+              model: models.user,
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+            }
+          },
+          {
+            model: models.profile, as: 'receivedLike',
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            include: {
+              model: models.user,
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+            }
+          }
         ]
-      },
-      attributes: ['id', 'firstName', 'lastName', 'email']
+      }
     });
     res.status(200).send(users);
   } catch (error) {
@@ -58,19 +66,29 @@ const getUser = async (req, res) => {
     const { id } = req.params;
     const user = await models.user.findAll({
       where: { id: id },
-      // include: [models.profile]
+      attributes: ['id', 'firstName', 'lastName', 'email'],
       include: {
         model: models.profile,
+        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
         include: [
-          // 'likedProfile',
-          { model: models.profile, as: 'likedProfile', include: [models.user] },
-          'givenLike',
-
-          // { model: models.category, attributes: ['id', 'name'] },
-          // { model: models.givenLike },
-          // { model: models.receivedLike, attributes: ['receivedLikeId'] }
+          { model: models.category },
+          {
+            model: models.profile, as: 'likedProfile',
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            include: {
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+              model: models.user,
+            }
+          },
+          {
+            model: models.profile, as: 'receivedLike',
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            include: {
+              model: models.user,
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+            }
+          }
         ]
-
       }
     });
     if (user.length > 0) {

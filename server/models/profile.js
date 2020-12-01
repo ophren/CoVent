@@ -29,56 +29,37 @@ module.exports = (sequelize, DataTypes) => {
 
     profile.belongsTo(model.user);
 
-    // profile.belongsToMany(model.category, {
-    //   through: 'categoryProfiles'
-    // });
+    profile.hasMany(model.like);
 
-    // // old working version
-    // profile.hasMany(model.givenLike, {
-    //   onDelete: 'cascade'
-    // });
+    profile.hasMany(model.liked);
 
-    // profile.belongsToMany(model.givenLike, {
-    //   through: 'likedProfiles',
-    //   // through: model.givenLikeProfile,
-    //   // foreignKey: model.givenLikeProfile.likedProfileId,
-    // });
     profile.belongsToMany(model.profile, {
       through: 'likedProfiles',
       as: 'likedProfile',
       foreignKey: 'likedProfile'
-      // targetKey: 'giveTo',
-      // sourceKey: 'receivedFrom'
-      // through: model.givenLikeProfile,
-      // foreignKey: model.givenLikeProfile.likedProfileId,
     });
 
     profile.belongsToMany(model.profile, {
       through: 'likedProfiles',
       as: 'givenLike',
       foreignKey: 'givenLike'
-      // through: model.givenLikeProfile,
-      // foreignKey: model.givenLikeProfile.likedProfileId,
     });
 
+    profile.belongsToMany(model.profile, {
+      through: 'receivedLikes',
+      as: 'receivedLike',
+      foreignKey: 'receivedLike'
+    });
 
+    profile.belongsToMany(model.profile, {
+      through: 'receivedLikes',
+      as: 'liked',
+      foreignKey: 'liked'
+    });
 
-
-
-    // profile.hasMany(model.receivedLike, {
-    //   onDelete: 'cascade'
-    // });
-
-    // profile.hasMany(model.match, {
-    //   onDelete: 'cascade'
-    // });
-
-    // profile.hasMany(model.activity, {
-    //   onDelete: 'cascade'
-    // });
-
-
-
+    profile.belongsToMany(model.category, {
+      through: 'categoryProfiles'
+    });
 
   };
 
