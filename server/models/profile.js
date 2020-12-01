@@ -57,6 +57,18 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'liked'
     });
 
+    profile.belongsToMany(model.profile, {
+      through: 'matches',
+      as: 'matched',
+      foreignKey: 'matched'
+    });
+
+    profile.belongsToMany(model.profile, {
+      through: 'matches',
+      as: 'partner',
+      foreignKey: 'partner'
+    });
+
     profile.belongsToMany(model.category, {
       through: 'categoryProfiles'
     });

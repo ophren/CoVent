@@ -50,6 +50,14 @@ const getAllUsers = async (req, res) => {
               model: models.user,
               attributes: ['id', 'firstName', 'lastName', 'email'],
             }
+          },
+          {
+            model: models.profile, as: 'matched',
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            include: {
+              model: models.user,
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+            }
           }
         ]
       }
@@ -82,6 +90,14 @@ const getUser = async (req, res) => {
           },
           {
             model: models.profile, as: 'receivedLike',
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            include: {
+              model: models.user,
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+            }
+          },
+          {
+            model: models.profile, as: 'matched',
             attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
             include: {
               model: models.user,

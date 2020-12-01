@@ -7,17 +7,23 @@ const like = async (req, res) => {
   const { direction } = req.params;
   const { profileId } = req.body;
 
+  const values = Object.values(req.body);
+
+  if (values[0] === values[1]) {
+    return res.status(500).send({ error: '500', message: 'You cannot like yourself' });
+  }
+
 
   const profile = await models.profile.findAll({
     where: { id: profileId },
     include: [models.like, models.liked]
   });
 
+
+
   if (profile.length === 0) {
     return res.status(500).send({ error: '500', message: 'Profile not available' });
   }
-
-  console.log('BEFORE TRY CATCH-->');
 
   try {
     if (direction === 'give') {
@@ -41,11 +47,9 @@ const like = async (req, res) => {
 
       await profile[0].addLikedProfile(givenLikeId, profileId);
       const like = await models.like.create({ profileId: profileId, likeId: givenLikeId });
-      res.status(201).send(like);
+      res.status(201).send(likedProfile);
 
     } else if (direction === 'receive') {
-      console.log('INSIDE RECEIVE-->');
-
       const { receivedLikeId } = req.body;
       const receivedLikeProfile = await models.profile.findAll({
         where: { id: receivedLikeId }
@@ -62,14 +66,10 @@ const like = async (req, res) => {
       if (duplicateLikeCheck.length > 0) {
         return res.status(500).send({ error: '500', message: 'Already received like' });
       }
-      console.log('profile[0]-->', profile[0]);
-      console.log('receivedLikeId-->', receivedLikeId);
-      console.log('profileId', profileId);
-
 
       await profile[0].addReceivedLike(receivedLikeId, profileId);
       const liked = await models.liked.create({ profileId: profileId, likedId: receivedLikeId });
-      res.status(201).send(liked);
+      res.status(201).send(receivedLikeProfile);
 
     } else {
       res.status(500).send({ error, message: 'Wrong direction' });

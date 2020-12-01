@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  match.associate = model => {
-    match.belongsToMany(model.profile, {
-      through: 'matchProfiles'
-    });
-  };
+  // match.associate = model => {
+  //   match.belongsToMany(model.profile, {
+  //     through: 'matchProfiles'
+  //   });
+  // };
 
   return match;
 };
