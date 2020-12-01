@@ -27,7 +27,34 @@ const getProfile = async (req, res) => {
     const { id } = req.params;
     const profile = await models.profile.findAll({
       where: { userId: id },
-      // include: [models.user, models.category, { include: models.givenLike }, models.receivedLike]
+      attributes: ['id', 'picture', 'description', 'age', 'gender', 'location', 'userId'],
+      include: [
+        { include: models.user },
+        {
+          model: models.profile, as: 'likedProfile',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        },
+        {
+          model: models.profile, as: 'receivedLike',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        },
+        {
+          model: models.profile, as: 'matched',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        }
+      ]
     });
     res.status(200).send(profile);
   } catch (error) {
@@ -35,4 +62,42 @@ const getProfile = async (req, res) => {
   }
 };
 
-module.exports = { createProfile, getProfile };
+const getAllProfiles = async (req, res) => {
+  try {
+    const profiles = await models.profile.findAll({
+      attributes: ['id', 'picture', 'description', 'age', 'gender', 'location', 'userId'],
+      include: [
+        { model: models.user, attributes: ['id', 'firstName', 'lastName', 'email'] },
+        {
+          model: models.profile, as: 'likedProfile',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        },
+        {
+          model: models.profile, as: 'receivedLike',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        },
+        {
+          model: models.profile, as: 'matched',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        }
+      ]
+    });
+    res.status(200).send(profiles);
+  } catch (error) {
+    res.status(500).send({ error, message: 'Could not get Profiles' });
+  }
+};
+
+module.exports = { createProfile, getProfile, getAllProfiles };

@@ -14,6 +14,7 @@ router.post('/login', userController.login);
 
 router.post('/profile', profileController.createProfile);
 router.get('/profile/:id', profileController.getProfile);
+router.get('/profiles', profileController.getAllProfiles);
 
 router.post('/category', categoryController.addCategory);
 router.get('/categories', categoryController.getAllCategories);

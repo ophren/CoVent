@@ -34,7 +34,6 @@ const getAllUsers = async (req, res) => {
         model: models.profile,
         attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
         include: [
-          // { model: models.category },
           {
             model: models.profile, as: 'likedProfile',
             attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
@@ -64,7 +63,6 @@ const getAllUsers = async (req, res) => {
     });
     res.status(200).send(users);
   } catch (error) {
-    console.error(error);
     res.status(500).send({ error, message: 'Could not get all users' });
   }
 };
@@ -79,7 +77,6 @@ const getUser = async (req, res) => {
         model: models.profile,
         attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
         include: [
-          // { model: models.category },
           {
             model: models.profile, as: 'likedProfile',
             attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],

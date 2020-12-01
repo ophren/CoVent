@@ -8,7 +8,6 @@ const addMatch = async (req, res) => {
 
   const profile = await models.profile.findAll({
     where: { id: profileId },
-    // include: [models.match]
   });
 
   const values = Object.values(req.body);
@@ -23,7 +22,6 @@ const addMatch = async (req, res) => {
 
   const matchedProfile = await models.profile.findAll({
     where: { id: matchedProfileId },
-    // include: [models.match]
   });
 
   if (matchedProfile.length === 0) {
