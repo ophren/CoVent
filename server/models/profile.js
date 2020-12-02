@@ -22,16 +22,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    hasNewMatch: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    }
 
   });
 
   profile.associate = model => {
 
     profile.belongsTo(model.user);
-
-    profile.hasMany(model.like);
-
-    profile.hasMany(model.liked);
 
     profile.belongsToMany(model.profile, {
       through: 'likedProfiles',

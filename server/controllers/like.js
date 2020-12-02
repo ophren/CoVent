@@ -57,6 +57,7 @@ const like = async (req, res) => {
       const targetProfile = await models.profile.findAll({
         where: { id: values[1] },
         include: [
+          { model: models.user },
           {
             model: models.profile, as: 'likedProfile',
             attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
@@ -88,7 +89,7 @@ const like = async (req, res) => {
         }
       }
 
-      res.status(201).send(like);
+      res.status(201).send(targetProfile);
 
     } else if (direction === 'receive') {
       const { receivedLikeId } = req.body;
@@ -109,8 +110,8 @@ const like = async (req, res) => {
       }
 
       await profile[0].addReceivedLike(receivedLikeId, profileId);
-      const liked = await models.liked.create({ profileId: profileId, likedId: receivedLikeId });
-      res.status(201).send(liked);
+      // const liked = await models.liked.create({ profileId: profileId, likedId: receivedLikeId });
+      res.status(201).send(profile);
 
     } else {
       res.status(500).send({ error, message: 'Wrong direction' });
