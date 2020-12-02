@@ -139,11 +139,11 @@ const unmatch = async (req, res) => {
     attributes: ['id', 'firstName', 'lastName', 'email'],
     include: {
       model: models.profile,
-      attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
+      attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
       include: [
         {
           model: models.profile, as: 'likedProfile',
-          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
           include: {
             model: models.user,
             attributes: ['id', 'firstName', 'lastName', 'email'],
@@ -151,7 +151,7 @@ const unmatch = async (req, res) => {
         },
         {
           model: models.profile, as: 'receivedLike',
-          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
           include: {
             model: models.user,
             attributes: ['id', 'firstName', 'lastName', 'email'],
@@ -159,7 +159,7 @@ const unmatch = async (req, res) => {
         },
         {
           model: models.profile, as: 'matched',
-          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
           include: {
             model: models.user,
             attributes: ['id', 'firstName', 'lastName', 'email'],

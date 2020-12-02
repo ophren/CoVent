@@ -1,6 +1,7 @@
 'use strict';
 
 const models = require('./../models/');
+const helperFuncs = require('./../utils/helperFuncs');
 
 const createProfile = async (req, res) => {
   const { userId } = req.body;

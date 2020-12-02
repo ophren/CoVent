@@ -9,8 +9,8 @@ interface TopBarSignUpButtonProp {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 export const TopBarSignUpButton = ({ setShowModal }: TopBarSignUpButtonProp) => {
-  let userIsLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
-  let showSignUp = userIsLoggedIn || null
+  const userIsLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
+  const showSignUp = userIsLoggedIn || null
 
   function displayModal() {
     setShowModal(true);
@@ -21,7 +21,7 @@ export const TopBarSignUpButton = ({ setShowModal }: TopBarSignUpButtonProp) => 
   }
   return (
     <div className="top_bar_sign_up_button_container">
-      {showSignUp ?? 
+      {showSignUp ??
         <>
           <button className="top_bar_sign_up_button"
                   onClick={displayModal}

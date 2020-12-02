@@ -2,6 +2,7 @@
 
 const bcrypt = require('bcrypt');
 const models = require('../models');
+const helperFuncs = require('./../utils/helperFuncs');
 
 const createUser = async (req, res) => {
   const { email, password } = req.body;
@@ -28,40 +29,7 @@ const createUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await models.user.findAll({
-      attributes: ['id', 'firstName', 'lastName', 'email'],
-      include: {
-        model: models.profile,
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
-        include: [
-          {
-            model: models.profile, as: 'likedProfile',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
-            include: {
-              model: models.user,
-              attributes: ['id', 'firstName', 'lastName', 'email'],
-            }
-          },
-          {
-            model: models.profile, as: 'receivedLike',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
-            include: {
-              model: models.user,
-              attributes: ['id', 'firstName', 'lastName', 'email'],
-            }
-          },
-          {
-            model: models.profile, as: 'matched',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
-            include: {
-              model: models.user,
-              attributes: ['id', 'firstName', 'lastName', 'email'],
-            }
-          },
-          { model: models.category }
-        ]
-      }
-    });
+    const users = await helperFuncs.getUsersObject(models);
     res.status(200).send(users);
   } catch (error) {
     res.status(500).send({ error, message: 'Could not get all users' });
@@ -71,41 +39,7 @@ const getAllUsers = async (req, res) => {
 const getUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await models.user.findAll({
-      where: { id: id },
-      attributes: ['id', 'firstName', 'lastName', 'email'],
-      include: {
-        model: models.profile,
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
-        include: [
-          {
-            model: models.profile, as: 'likedProfile',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
-            include: {
-              model: models.user,
-              attributes: ['id', 'firstName', 'lastName', 'email'],
-            }
-          },
-          {
-            model: models.profile, as: 'receivedLike',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
-            include: {
-              model: models.user,
-              attributes: ['id', 'firstName', 'lastName', 'email'],
-            }
-          },
-          {
-            model: models.profile, as: 'matched',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
-            include: {
-              model: models.user,
-              attributes: ['id', 'firstName', 'lastName', 'email'],
-            }
-          },
-          { model: models.category }
-        ]
-      }
-    });
+    const user = await helperFuncs.getUserObject(models, id);
     if (user.length > 0) {
       res.status(200).send(user);
     } else {
