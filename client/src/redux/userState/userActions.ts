@@ -7,7 +7,6 @@ export function setUserName(newName: string): UserActionTypes {
   }
 
 }
-
 export function setUserAge(newAge: number): UserActionTypes {
   return {
     type: SET_USER_AGE,
