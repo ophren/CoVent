@@ -1,4 +1,25 @@
-import { SystemState, SystemActionTypes, SET_USER_FIREBASE_ID, SET_USER_AS_LOGGEG_IN, SET_USER_AS_LOGGEG_OUT } from './../../types/systemTypes';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
+import { SystemState, SystemActionTypes, SET_USER_FIREBASE_ID, SET_USER_AS_LOGGED_IN, SET_USER_AS_LOGGED_OUT } from './../../types/systemTypes';
+
+
+//  interface User {
+//    name:string,
+//    age:number
+//  }
+
+
+// let hello = 'hello'
+// function sayHello (arg :string, arg2:number, arg3:User):User {
+// console.log(hello)
+// return arg3
+// }
+
+// const user:User = {
+//   name: 'Till',
+//   age: 3
+
+// }
+
 
 
 export function setUserFirebaseId(firebaseId: string | undefined): SystemActionTypes {
@@ -9,13 +30,13 @@ export function setUserFirebaseId(firebaseId: string | undefined): SystemActionT
 }
 export function setUserToLoggedIn(): SystemActionTypes {
   return {
-    type: SET_USER_AS_LOGGEG_IN,
+    type: SET_USER_AS_LOGGED_IN,
     payload: true
   }
 }
 export function setUserToLoggedOut( ): SystemActionTypes {
   return {
-    type: SET_USER_AS_LOGGEG_OUT,
+    type: SET_USER_AS_LOGGED_OUT,
     payload: false
   }
 }

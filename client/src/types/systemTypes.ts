@@ -11,19 +11,19 @@ export interface SystemState {
 
 export const SET_USER_FIREBASE_ID = 'SET_USER_FIREBASE_ID'
 export const SET_USER_EMAIL= 'SET_USER_EMAIL'
-export const SET_USER_AS_LOGGEG_IN= 'SET_USER_AS_LOGGED_IN'
-export const SET_USER_AS_LOGGEG_OUT= 'SET_USER_AS_LOGGED_OUT'
+export const SET_USER_AS_LOGGED_IN= 'SET_USER_AS_LOGGED_IN'
+export const SET_USER_AS_LOGGED_OUT= 'SET_USER_AS_LOGGED_OUT'
 
 interface SetUserFirebaseId {
   type: typeof SET_USER_FIREBASE_ID
   payload: string | undefined
 }
 interface SetUserToLoggedIn {
-  type: typeof SET_USER_AS_LOGGEG_IN
+  type: typeof SET_USER_AS_LOGGED_IN
   payload: boolean
 }
 interface SetUserToLoggedOut {
-  type: typeof SET_USER_AS_LOGGEG_OUT
+  type: typeof SET_USER_AS_LOGGED_OUT
   payload: boolean
 }
 

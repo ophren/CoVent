@@ -12,7 +12,10 @@ interface TopBarSignInButtonProp {
 }
 
 export const TopBarLandingPageLogInButton = ({setShowModal} : TopBarSignInButtonProp): ReactElement => {
-  let userLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
+  let userLoggedIn =
+   useSelector((state: RootState) => state.system.loggedIn)
+   
+  
 
   function displayModal () {
     setShowModal(true);

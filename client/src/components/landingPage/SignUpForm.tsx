@@ -2,6 +2,7 @@ import './SignUpForm.css'
 import React, { FormEvent, useState } from 'react';
 import {userSignUp} from "../../utils/systemFunction";
 import { useDispatch } from "react-redux";
+import { setUserToLoggedIn } from '../../redux/systemState/systemStateActions';
 
 
 export const SignUpForm = ({setShowModal}: any) : JSX.Element => {
