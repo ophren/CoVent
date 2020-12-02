@@ -12,10 +12,10 @@ import SignInForm from '../SignInForm'
 export const TopBarLandingPage =
   (): ReactElement => {
 
-    const [showModalSignUp, setShowModalSignUp] = useState(false); 
-    const [showModalSignIn, setShowModalSignIn] = useState(false); 
+    const [showModalSignUp, setShowModalSignUp] = useState(false);
+    const [showModalSignIn, setShowModalSignIn] = useState(false);
 
-    let history = useHistory()
+    const history = useHistory()
     const userIsLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
 
     function handleClick() {
@@ -28,9 +28,9 @@ export const TopBarLandingPage =
       <TopBarNewMatchesButton />
       <TopBarSignUpButton setShowModal= {setShowModalSignUp}/>
       <TopBarLandingPageLogInButton setShowModal={setShowModalSignIn} />
-      {showModalSignUp? 
+      {showModalSignUp?
         <SignUpForm setShowModal={setShowModalSignUp}/> : null }
-      {showModalSignIn? 
+      {showModalSignIn?
         <SignInForm setShowModal={setShowModalSignIn}/> : null }
       {userIsLoggedIn &&
         <button onClick={handleClick} >Profile</button>

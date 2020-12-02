@@ -1,9 +1,9 @@
 import { Category, GiveLike, ReceivedLike } from './../types/userTypes';
-import { Profile, User } from "../types/userTypes";
+import { Profile, User, UserL } from "../types/userTypes";
 
-const baseUrl = "http://localhost:3002/";
+const baseUrl = "http://localhost:3002";
 
-export function getAllUsers(): Promise<User[]> {
+export const getAllUsers = (): Promise<UserL[]>  => {
   return fetch(`${baseUrl}/users`, {
     headers: {
       Accept: "application/json",
@@ -23,7 +23,7 @@ export function getUserById(id: number): Promise<User> {
 
 export function registerUserToDataBase(user: User): Promise<User> {
   return fetch(`${baseUrl}/register`, {
-    method:"POST",
+    method: "POST",
     body: JSON.stringify(user),
     headers: {
       Accept: "application/json",
@@ -34,7 +34,7 @@ export function registerUserToDataBase(user: User): Promise<User> {
 
 export function addProfileToUserAtDataBase(profile: Profile): Promise<User> {
   return fetch(`${baseUrl}/profile`, {
-    method:"POST",
+    method: "POST",
     body: JSON.stringify(profile),
     headers: {
       Accept: "application/json",
@@ -43,7 +43,7 @@ export function addProfileToUserAtDataBase(profile: Profile): Promise<User> {
 }
 export function addCategoryToUserAtDataBase(category: Category): Promise<User> {
   return fetch(`${baseUrl}/category`, {
-    method:"POST",
+    method: "POST",
     body: JSON.stringify(category),
     headers: {
       Accept: "application/json",
@@ -52,7 +52,7 @@ export function addCategoryToUserAtDataBase(category: Category): Promise<User> {
 }
 export function giveLikeToOtherUser(giveLike: GiveLike): Promise<User> {
   return fetch(`${baseUrl}/like/give`, {
-    method:"POST",
+    method: "POST",
     body: JSON.stringify(giveLike),
     headers: {
       Accept: "application/json",
@@ -61,7 +61,7 @@ export function giveLikeToOtherUser(giveLike: GiveLike): Promise<User> {
 }
 export function receivedLikeFromOther(receivedLike: ReceivedLike): Promise<User> {
   return fetch(`${baseUrl}/like/received`, {
-    method:"POST",
+    method: "POST",
     body: JSON.stringify(receivedLike),
     headers: {
       Accept: "application/json",
@@ -69,9 +69,9 @@ export function receivedLikeFromOther(receivedLike: ReceivedLike): Promise<User>
   }).then((res) => res.json());
 }
 
-export function updateUserProfileData (updatedUserProfile: Profile) :Promise<void>{
+export function updateUserProfileData(updatedUserProfile: Profile): Promise<void> {
   return fetch(`${baseUrl}/profile`, {
-    method:"POST",
+    method: "POST",
     body: JSON.stringify(updatedUserProfile),
     headers: {
       Accept: "application/json",

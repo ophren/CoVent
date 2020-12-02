@@ -1,7 +1,95 @@
+export interface CategoriesL {
+  name: string,
+}
+
+export interface LikedProfileL {
+  [index: number]: {
+    age: string,
+    gender: string,
+    id: number,
+    likedProfiles: {
+      createdAt: string,
+      givenLike: number,
+      likedProfile: number,
+      updatedAt: string
+    },
+    location: string,
+    picture: string,
+    user: User,
+  },
+  userId: number
+}
+
+export interface MatchedL {
+  [index: number]: {
+    age: string,
+    gender: string,
+    hasNewMatch: boolean,
+    id: number,
+    location: string,
+    matches: {
+      createdAt: string,
+      matched: number,
+      partner: number,
+      updatedAt: string
+    },
+    picture: string,
+    user: {
+      email: string,
+      firstName: string,
+      id: number,
+      lastName: string
+    },
+    userId: number,
+  }
+}
+
+export interface ReceivedLikeL {
+  [index: number]: {
+    age: string,
+    gender: string,
+    hasNewMatch: boolean,
+    id: number,
+    location: string,
+    picture: string,
+    receivedLikes: {
+      createdAt: string,
+      liked: number,
+      receivedLike: number,
+      updatedAt: string
+    },
+    userId: number,
+  }
+}
+
+export interface ProfileL {
+  age: string,
+  categories: CategoriesL,
+  gender: string,
+  hasNewMatch: boolean,
+  id: number,
+  likedProfile: LikedProfileL,
+  location: string,
+  matched: MatchedL,
+  picture: string,
+  receivedLike: ReceivedLike,
+  userId: number,
+}
+
+export interface UserL {
+  email: string,
+  firstName: string,
+  id: number,
+  lastName: string,
+  profile: Profile,
+  hasNewMatch: boolean,
+}
+
+
 export interface User {
   id?:number,
   firebaseId:number
-  
+
 
   name: string,
   age: number,
@@ -23,7 +111,7 @@ export interface Profile {
   location?:string,
   userId:number,
   categories?: Category[],
-  user?:User, //this is for the likedProfile structure 
+  user?:User, //this is for the likedProfile structure
   likedProfile?: User[],
   receivedLike?:User[],
   matched?:User[],
@@ -64,7 +152,7 @@ export const SET_USER_FIREBASE_ID = 'SET_USER_FIREBASE_ID'
 export const SET_USER_NAME = 'SET_USER_NAME'
 export const SET_USER_AGE = 'SET_USER_AGE'
 export const SET_USER_PROFILE_PIC = 'SET_USER_PROFILE_PIC'
-export const SET_USER_HAS_MATCHES_TO_FALSE= 'SET_USER_HAS_MATCHES_TO_FALSE'
+export const SET_USER_HAS_MATCHES_TO_FALSE = 'SET_USER_HAS_MATCHES_TO_FALSE'
 // export const SET_USER_AGE = 'SET_USER_AGE'
 
 interface SetUserNameAction {

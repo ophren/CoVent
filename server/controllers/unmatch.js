@@ -79,7 +79,6 @@ const unmatch = async (req, res) => {
   }
   // 3 if targetid is in my likes array
   if (profile[0].dataValues.likedProfile.length > 0) {
-    console.log('INSIDE 3 CHECK-->');
     const check = profile[0].dataValues.likedProfile.some((el) => {
       return el.dataValues.id === givenLikeId;
     });
@@ -135,37 +134,42 @@ const unmatch = async (req, res) => {
 
   // res.send({ message: 'Unmatched' });
 
-  const updatedProfile = await models.profile.findAll({
-    where: { id: profileId },
-    include: [
-      { model: models.user },
-      {
-        model: models.profile, as: 'likedProfile',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-          model: models.user,
-        }
-      },
-      {
-        model: models.profile, as: 'receivedLike',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          model: models.user,
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        }
-      },
-      {
-        model: models.profile, as: 'matched',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          model: models.user,
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        }
-      }
-    ]
+  const updatedUser = await models.user.findAll({
+    where: { id: profile[0].dataValues.userId },
+    attributes: ['id', 'firstName', 'lastName', 'email'],
+    include: {
+      model: models.profile,
+      attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
+      include: [
+        {
+          model: models.profile, as: 'likedProfile',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        },
+        {
+          model: models.profile, as: 'receivedLike',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        },
+        {
+          model: models.profile, as: 'matched',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        },
+        { model: models.category }
+      ]
+    }
   });
-  res.send(updatedProfile);
+  res.send(updatedUser);
 
 };
 

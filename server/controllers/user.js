@@ -32,12 +32,11 @@ const getAllUsers = async (req, res) => {
       attributes: ['id', 'firstName', 'lastName', 'email'],
       include: {
         model: models.profile,
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
         include: [
-          { model: models.category },
           {
             model: models.profile, as: 'likedProfile',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
             include: {
               model: models.user,
               attributes: ['id', 'firstName', 'lastName', 'email'],
@@ -45,7 +44,7 @@ const getAllUsers = async (req, res) => {
           },
           {
             model: models.profile, as: 'receivedLike',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
             include: {
               model: models.user,
               attributes: ['id', 'firstName', 'lastName', 'email'],
@@ -53,12 +52,13 @@ const getAllUsers = async (req, res) => {
           },
           {
             model: models.profile, as: 'matched',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
             include: {
               model: models.user,
               attributes: ['id', 'firstName', 'lastName', 'email'],
             }
-          }
+          },
+          { model: models.category }
         ]
       }
     });
@@ -76,19 +76,19 @@ const getUser = async (req, res) => {
       attributes: ['id', 'firstName', 'lastName', 'email'],
       include: {
         model: models.profile,
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
         include: [
           {
             model: models.profile, as: 'likedProfile',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
             include: {
-              attributes: ['id', 'firstName', 'lastName', 'email'],
               model: models.user,
+              attributes: ['id', 'firstName', 'lastName', 'email'],
             }
           },
           {
             model: models.profile, as: 'receivedLike',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
             include: {
               model: models.user,
               attributes: ['id', 'firstName', 'lastName', 'email'],
@@ -96,12 +96,13 @@ const getUser = async (req, res) => {
           },
           {
             model: models.profile, as: 'matched',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId', 'hasNewMatch'],
             include: {
               model: models.user,
               attributes: ['id', 'firstName', 'lastName', 'email'],
             }
-          }
+          },
+          { model: models.category }
         ]
       }
     });
