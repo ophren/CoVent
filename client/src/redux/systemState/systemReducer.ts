@@ -1,11 +1,13 @@
-import { SystemState, SystemActionTypes, UPDATE_SESSION } from './../../types/systemTypes';
+import { SET_USER_FIREBASE_ID } from './../../types/userTypes';
+import { SystemState, SystemActionTypes, SET_USER_AS_LOGGEG_IN , SET_USER_AS_LOGGEG_OUT } from './../../types/systemTypes';
 
 const initialSystemState: SystemState = {
 
-  loggedIn: true,
+  loggedIn: false,
   session: '',
   userName: '',
-  userFirebaseId: ''
+  userFirebaseId: '' ,
+  userEmail: ''
 
 }
 
@@ -14,12 +16,23 @@ export function systemReducer(
   action: SystemActionTypes
 ): SystemState {
   switch (action.type) {
-    case UPDATE_SESSION: {
+    case SET_USER_AS_LOGGEG_IN:
       return {
         ...state,
-        ...action.payload
+        loggedIn: action.payload
       }
-    }
+    case SET_USER_AS_LOGGEG_OUT:
+      return {
+        ...state,
+        loggedIn: action.payload
+      }
+    case SET_USER_FIREBASE_ID:
+      return {
+        ...state,
+        userFirebaseId: action.payload
+
+
+      }
     default: return state
   }
 }
