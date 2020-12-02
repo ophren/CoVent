@@ -133,7 +133,39 @@ const unmatch = async (req, res) => {
   // 4 -> remove the match from the target's matched array
   await targetProfile[0].removeMatched(profileId, givenLikeId);
 
-  res.send({ message: 'Unmatched' });
+  // res.send({ message: 'Unmatched' });
+
+  const updatedProfile = await models.profile.findAll({
+    where: { id: profileId },
+    include: [
+      { model: models.user },
+      {
+        model: models.profile, as: 'likedProfile',
+        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+        include: {
+          attributes: ['id', 'firstName', 'lastName', 'email'],
+          model: models.user,
+        }
+      },
+      {
+        model: models.profile, as: 'receivedLike',
+        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+        include: {
+          model: models.user,
+          attributes: ['id', 'firstName', 'lastName', 'email'],
+        }
+      },
+      {
+        model: models.profile, as: 'matched',
+        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+        include: {
+          model: models.user,
+          attributes: ['id', 'firstName', 'lastName', 'email'],
+        }
+      }
+    ]
+  });
+  res.send(updatedProfile);
 
 };
 
