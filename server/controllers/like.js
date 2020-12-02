@@ -85,11 +85,64 @@ const like = async (req, res) => {
         if (matchCheck) {
           await profile[0].addMatched(givenLikeId, profileId);
           await targetProfile[0].addMatched(profileId, givenLikeId);
-          return res.status(201).send({ message: 'You got a new match' });
+          const updatedProfile = await models.profile.findAll({
+            where: { id: profileId },
+            include: [
+              { model: models.user },
+              {
+                model: models.profile, as: 'likedProfile',
+                attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+                include: {
+                  attributes: ['id', 'firstName', 'lastName', 'email'],
+                  model: models.user,
+                }
+              },
+              {
+                model: models.profile, as: 'receivedLike',
+                attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+                include: {
+                  model: models.user,
+                  attributes: ['id', 'firstName', 'lastName', 'email'],
+                }
+              },
+              {
+                model: models.profile, as: 'matched',
+                attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+                include: {
+                  model: models.user,
+                  attributes: ['id', 'firstName', 'lastName', 'email'],
+                }
+              }
+            ]
+          });
+          // return res.status(201).send({ message: 'You got a new match' });
+          return res.status(201).send(updatedProfile);
         }
       }
 
-      res.status(201).send(targetProfile);
+      const updatedProfile = await models.profile.findAll({
+        where: { id: profileId },
+        include: [
+          { model: models.user },
+          {
+            model: models.profile, as: 'likedProfile',
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            include: {
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+              model: models.user,
+            }
+          },
+          {
+            model: models.profile, as: 'receivedLike',
+            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+            include: {
+              model: models.user,
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+            }
+          },
+        ]
+      });
+      res.status(201).send(updatedProfile);
 
     } else if (direction === 'receive') {
       const { receivedLikeId } = req.body;
