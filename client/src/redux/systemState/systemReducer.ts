@@ -19,12 +19,12 @@ export function systemReducer(
     case SET_USER_AS_LOGGEG_IN:
       return {
         ...state,
-        loggedIn: action.payload
+        loggedIn: true
       }
     case SET_USER_AS_LOGGEG_OUT:
       return {
         ...state,
-        loggedIn: action.payload
+        loggedIn: false
       }
     case SET_USER_FIREBASE_ID:
       return {
