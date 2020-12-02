@@ -7,15 +7,15 @@ export function setUserFirebaseId(firebaseId: string | undefined): SystemActionT
     payload: firebaseId  
   }
 }
-export function setUserToLoggedIn(userLoggedIn: boolean): SystemActionTypes {
+export function setUserToLoggedIn(): SystemActionTypes {
   return {
     type: SET_USER_AS_LOGGEG_IN,
-    payload: userLoggedIn
+    payload: true
   }
 }
-export function setUserToLoggedOut( userLoggedOut: boolean): SystemActionTypes {
+export function setUserToLoggedOut( ): SystemActionTypes {
   return {
     type: SET_USER_AS_LOGGEG_OUT,
-    payload: userLoggedOut
+    payload: false
   }
 }

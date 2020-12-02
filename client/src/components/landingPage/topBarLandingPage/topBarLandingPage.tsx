@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../types/combinedStoreTypes'
 import SignUpForm from '../SignUpForm'
+import SignInForm from '../SignInForm'
 
 export const TopBarLandingPage =
   (): ReactElement => {
@@ -30,7 +31,7 @@ export const TopBarLandingPage =
       {showModalSignUp? 
         <SignUpForm setShowModal={setShowModalSignUp}/> : null }
       {showModalSignIn? 
-        <SignUpForm setShowModal={setShowModalSignIn}/> : null }
+        <SignInForm setShowModal={setShowModalSignIn}/> : null }
       {userIsLoggedIn &&
         <button onClick={handleClick} >Profile</button>
       }

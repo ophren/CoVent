@@ -10,7 +10,7 @@ export const userLogin = (creds: any) => {
             .signInWithEmailAndPassword(creds.email, creds.password)
             .then((res) => {
                 dispatch(setUserFirebaseId (res.user?.uid));
-                dispatch(setUserToLoggedIn(true));
+                dispatch(setUserToLoggedIn());
             })
             .catch(err => {
                 dispatch({ type : "SIGN_IN_ERR", err});
@@ -31,10 +31,9 @@ export const userSignUp = (creds: any) => {
             .then((res) => {
                 console.log(res.user?.uid, ' Firebase res')
                 dispatch(setUserFirebaseId (res.user?.uid));
-                dispatch(setUserToLoggedIn(true));
+                dispatch(setUserToLoggedIn());
             })
             .catch(err => {
-                dispatch();
                 console.log(err)
             });
      };
