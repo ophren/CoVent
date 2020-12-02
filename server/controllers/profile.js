@@ -29,13 +29,13 @@ const getProfile = async (req, res) => {
       where: { userId: id },
       attributes: ['id', 'picture', 'description', 'age', 'gender', 'location', 'userId'],
       include: [
-        { include: models.user },
+        { model: models.user },
         {
           model: models.profile, as: 'likedProfile',
           attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
           include: {
-            model: models.user,
             attributes: ['id', 'firstName', 'lastName', 'email'],
+            model: models.user,
           }
         },
         {
@@ -53,7 +53,8 @@ const getProfile = async (req, res) => {
             model: models.user,
             attributes: ['id', 'firstName', 'lastName', 'email'],
           }
-        }
+        },
+        { model: models.category }
       ]
     });
     res.status(200).send(profile);
@@ -67,13 +68,13 @@ const getAllProfiles = async (req, res) => {
     const profiles = await models.profile.findAll({
       attributes: ['id', 'picture', 'description', 'age', 'gender', 'location', 'userId'],
       include: [
-        { model: models.user, attributes: ['id', 'firstName', 'lastName', 'email'] },
+        { model: models.user },
         {
           model: models.profile, as: 'likedProfile',
           attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
           include: {
-            model: models.user,
             attributes: ['id', 'firstName', 'lastName', 'email'],
+            model: models.user,
           }
         },
         {
@@ -91,7 +92,8 @@ const getAllProfiles = async (req, res) => {
             model: models.user,
             attributes: ['id', 'firstName', 'lastName', 'email'],
           }
-        }
+        },
+        { model: models.category }
       ]
     });
     res.status(200).send(profiles);
