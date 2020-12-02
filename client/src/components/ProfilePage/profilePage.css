@@ -1,0 +1,18 @@
+.profile_page_container {
+  background-color: brown;
+}
+
+.profile_page_header_container {
+  background-color: blueviolet;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile_page_image_container {
+  justify-self: flex-end;
+}
+
+.profile_page_image {
+  height: 20vh;
+  border-radius: 200px;
+}
