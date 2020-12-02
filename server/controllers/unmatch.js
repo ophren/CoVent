@@ -135,37 +135,42 @@ const unmatch = async (req, res) => {
 
   // res.send({ message: 'Unmatched' });
 
-  const updatedProfile = await models.profile.findAll({
-    where: { id: profileId },
-    include: [
-      { model: models.user },
-      {
-        model: models.profile, as: 'likedProfile',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-          model: models.user,
-        }
-      },
-      {
-        model: models.profile, as: 'receivedLike',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          model: models.user,
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        }
-      },
-      {
-        model: models.profile, as: 'matched',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          model: models.user,
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        }
-      }
-    ]
+  const updatedUser = await models.user.findAll({
+    where: { id: profile[0].dataValues.userId },
+    attributes: ['id', 'firstName', 'lastName', 'email'],
+    include: {
+      model: models.profile,
+      attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+      include: [
+        {
+          model: models.profile, as: 'likedProfile',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        },
+        {
+          model: models.profile, as: 'receivedLike',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        },
+        {
+          model: models.profile, as: 'matched',
+          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
+          include: {
+            model: models.user,
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+          }
+        },
+        { model: models.category }
+      ]
+    }
   });
-  res.send(updatedProfile);
+  res.send(updatedUser);
 
 };
 
