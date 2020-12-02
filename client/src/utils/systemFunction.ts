@@ -18,6 +18,8 @@ export const userLogOut = () => {
     console.log("logout function called")
 }
 
+
+
 export const userSignUp = (creds: any) => {
     return (dispatch : any) => {
         fire
