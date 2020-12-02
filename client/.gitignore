@@ -29,6 +29,6 @@ yarn-error.log*
 .env
 
 src/utils/firebase.ts
-
+.firebase.ts
 
 
