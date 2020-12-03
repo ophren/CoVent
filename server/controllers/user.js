@@ -29,7 +29,7 @@ const createUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await helperFuncs.getUsersObject(models);
+    const users = await helperFuncs.findAllUsers(models);
     res.status(200).send(users);
   } catch (error) {
     res.status(500).send({ error, message: 'Could not get all users' });
@@ -39,7 +39,7 @@ const getAllUsers = async (req, res) => {
 const getUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await helperFuncs.getUserObject(models, id);
+    const user = await helperFuncs.findUser(models, id);
     if (user.length > 0) {
       res.status(200).send(user);
     } else {

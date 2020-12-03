@@ -4,7 +4,7 @@ const userAttributes = ['id', 'firstName', 'lastName', 'email'];
 const profileAttributes = ['id', 'picture', 'description', 'age', 'gender', 'location', 'userId', 'hasNewMatch'];
 
 
-const getUsersObject = async (models) => {
+const findAllUsers = async (models) => {
   return await models.user.findAll({
     attributes: userAttributes,
     include: {
@@ -41,7 +41,7 @@ const getUsersObject = async (models) => {
   });
 };
 
-const getUserObject = async (models, id) => {
+const findUser = async (models, id) => {
   return await models.user.findAll({
     where: { id: id },
     attributes: userAttributes,
@@ -79,17 +79,19 @@ const getUserObject = async (models, id) => {
   });
 };
 
-const getProfileObject = async (models, id) => {
+const findProfile = async (models, id, by) => {
+  const identifier = by.includes('profile') ? 'id' : 'userId';
+
   return await models.profile.findAll({
-    where: { id: id },
+    where: { [identifier]: id },
     include: [
       { model: models.user },
       {
         model: models.profile, as: 'likedProfile',
         attributes: profileAttributes,
         include: {
-          attributes: userAttributes,
           model: models.user,
+          attributes: userAttributes,
         }
       },
       {
@@ -100,12 +102,54 @@ const getProfileObject = async (models, id) => {
           attributes: userAttributes,
         }
       },
+      {
+        model: models.profile, as: 'matched',
+        attributes: profileAttributes,
+        include: {
+          model: models.user,
+          attributes: userAttributes,
+        }
+      },
+      { model: models.category }
     ]
   });
 };
 
-const getProfilesObject = async (models) => {
-
+const findProfiles = async (models) => {
+  return await models.profile.findAll({
+    attributes: profileAttributes,
+    include: [
+      {
+        model: models.user,
+        attributes: userAttributes,
+      },
+      {
+        model: models.profile, as: 'likedProfile',
+        attributes: profileAttributes,
+        include: {
+          model: models.user,
+          attributes: userAttributes,
+        }
+      },
+      {
+        model: models.profile, as: 'receivedLike',
+        attributes: profileAttributes,
+        include: {
+          model: models.user,
+          attributes: userAttributes,
+        }
+      },
+      {
+        model: models.profile, as: 'matched',
+        attributes: profileAttributes,
+        include: {
+          model: models.user,
+          attributes: userAttributes,
+        }
+      },
+      { model: models.category }
+    ]
+  });
 };
 
-module.exports = { getUsersObject, getUserObject, getProfileObject };
+module.exports = { findAllUsers, findUser, findProfile, findProfiles };
