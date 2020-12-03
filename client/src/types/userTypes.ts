@@ -1,28 +1,55 @@
 export interface User {
+  firebaseId?:string
   id?:number,
-  firebaseId:number
-  name: string,
-  age: number,
-  profilePic: string,
-  oldMatchArray?: number[],
-  newMatchArray?: number[],
-  hasNewMatches : boolean
-  profile?:Profile
+  firstName?: string,
+  lastName?: string,
+  email?:string,
+  profile?:Profile,
+  password?:string
 }
 
 export interface Profile {
   id?:number,
-  description?:string
   picture?: string,
-  age?: number,
+  description?:string
+  age?: string,
   gender?:string,
   location?:string,
-  userId:number,
-  categories?: Category[],
+  userId?:number,
+  hasNewMatch?:boolean
+  likedProfile?: Profile[]
+
   user?:User, //this is for the likedProfile structure 
-  likedProfile?: User[],
-  receivedLike?:User[],
-  matched?:User[],
+  receivedLike?:Profile[],
+  matched?:Profile[],
+  categories?: Category[],
+  likedProfiles?:LikedProfiles,
+  receivedLikes? : ReceivedLikes,
+  matches?: Matches
+  
+
+
+}
+
+export interface Matches {
+  createdAt : string,
+  updatedAt : string,
+  matched: number,
+  partner:number
+
+}
+export interface ReceivedLikes {
+  createdAt : string,
+  updatedAt : string,
+  receivedLike: number,
+  liked:number
+}
+export interface LikedProfiles {
+  createdAt : string,
+  updatedAt : string,
+  likedProfile: number,
+  givenLike:number
+
 }
 
 export interface Category {
@@ -46,8 +73,8 @@ export interface ReceivedLike {
 export interface CategoryProfiles {
   createdAt?:string,
   updatedAt?:string,
-  categoryId:1,
-  profileId:1
+  categoryId:number,
+  profileId:number
 }
 
 //redux action types
@@ -57,6 +84,7 @@ export const SET_USER_NAME = 'SET_USER_NAME'
 export const SET_USER_AGE = 'SET_USER_AGE'
 export const SET_USER_PROFILE_PIC = 'SET_USER_PROFILE_PIC'
 export const SET_USER_HAS_MATCHES_TO_FALSE= 'SET_USER_HAS_MATCHES_TO_FALSE'
+export const SET_USER = "SET_USER"
 // export const SET_USER_AGE = 'SET_USER_AGE'
 
 interface SetUserNameAction {
@@ -69,4 +97,10 @@ interface SetUserAgeAction {
   payload: number
 }
 
-export type UserActionTypes = SetUserAgeAction | SetUserNameAction
+interface SetUserAction {
+  type:typeof SET_USER,
+  payload:User
+}
+
+
+export type UserActionTypes = SetUserAgeAction | SetUserNameAction | SetUserAction

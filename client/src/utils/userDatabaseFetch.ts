@@ -12,7 +12,7 @@ export function getAllUsers(): Promise<User[]> {
 }
 
 
-export function getUserById(id: number): Promise<User> {
+export function getUserById(id: string): Promise<User> {
   return fetch(`${baseUrl}/user/${id}`, {
     headers: {
       Accept: "application/json",

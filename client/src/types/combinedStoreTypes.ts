@@ -5,7 +5,5 @@ import { User } from "./userTypes";
 export interface RootState  {
   system: SystemState,
   user:User,
-  firebase: FirebaseReducer.Reducer,
-  firestore: any,
-  auth: boolean
+ 
 }

@@ -2,65 +2,63 @@ import './DescriptionForm.css'
 import React from "react";
 import { RootState } from '../../types/combinedStoreTypes'
 import { FormEvent, useState } from 'react'
-import { setUserDescription} from "../../redux/userState/userActions";
-import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/userState/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import { Profile, User } from "../../types/userTypes"
+import userEvent from '@testing-library/user-event';
 
-export const DescriptionForm = ({setShowDescriptionModal}: any) : JSX.Element => {
-
+export const DescriptionForm = ({ setShowDescriptionModal }: any): JSX.Element => {
+    let currentUser = useSelector((state: RootState) => state.user)
     const dispatch = useDispatch();
-    
-    const [newUserDescription, setNewUserDescription] = useState<object>({firstName: '', age: 0, location:''})
-    // import user with useselector
-    function handleChange (ev : React.ChangeEvent<HTMLInputElement>) {
-        let {name, value} = ev.target;
 
-        if (name === "age") {
-            const valueToInt = parseInt(value);
-            setNewUserDescription(prevState => ({...prevState, [name]: valueToInt}));
-        }
-        else {
-            setNewUserDescription(prevState => ({...prevState, [name]: value}));
-        }
+    const [newUserDescription, setNewUserDescription] = useState<Profile>({ gender: '', age: '', location: '' });
+
+    function handleChange(ev: React.ChangeEvent<HTMLInputElement>) {
+        let { name, value } = ev.target;
+        setNewUserDescription(prevState => ({ ...prevState, [name]: value }));
     }
 
-    function handleDescription () {
-        console.log(newUserDescription);
-        dispatch(setUserDescription(newUserDescription)); 
+    function handleDescription(e:FormEvent) {
+        e.preventDefault()
+        const newUser: User = { ...currentUser, profile: 
+            { ...currentUser.profile, ...newUserDescription }   }
+        dispatch(setUser(newUser));
+        setShowDescriptionModal(false);
     }
+    console.log(currentUser)
 
     return (
         <div id="modal-main">
             <div>Please complete your profile information:</div>
-
             <form id="modal" onSubmit={handleDescription}>
 
-            <input 
-                name="firstName"
-                id="" 
-                placeholder="First Name"
-                onChange={handleChange}
-            >                
-            </input>
+                <input
+                    name="gender"
+                    id=""
+                    placeholder="Gender"
+                    onChange={handleChange}
+                >
+                </input>
 
-            <input 
-                name="age"
-                id="" 
-                placeholder="Age"
-                onChange={handleChange}
-            >                
-            </input>
+                <input
+                    name="age"
+                    id=""
+                    placeholder="Age"
+                    onChange={handleChange}
+                >
+                </input>
 
-            <input 
-                name="location"
-                id="" 
-                placeholder="Location" 
-                onChange={handleChange}
-            >
-            </input>
+                <input
+                    name="location"
+                    id=""
+                    placeholder="Location"
+                    onChange={handleChange}
+                >
+                </input>
 
-          
 
-            <button type="submit">Submit</button>
+
+                <button type="submit">Submit</button>
 
             </form>
         </div>

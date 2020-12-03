@@ -1,57 +1,78 @@
 import './SignUpForm.css'
-import React, { FormEvent, useState } from 'react';
-import {userSignUp} from "../../utils/systemFunction";
-import { useDispatch } from "react-redux";
+import React, { FormEvent, useEffect, useState } from 'react';
+import { userSignUp } from "../../utils/systemFunction";
+import { setUser } from "../../redux/userState/userActions"
+import { useDispatch, useSelector } from "react-redux";
+import { User } from "../../types/userTypes"
+import { RootState } from '../../types/combinedStoreTypes';
 
 
-export const SignUpForm = ({setShowModal, setShowDescriptionModal} : any) : JSX.Element => {
+
+export const SignUpForm = ({ setShowModal, setShowDescriptionModal }: any): JSX.Element => {
 
     const dispatch = useDispatch();
-    const [userName, setUserName] = useState('');
-    const [userPassword, setUserPassword] = useState('');
+    const [userCredentials, setUserCredentials] = useState<User>({ email: '', password: '', firstName: '', lastName: '' });
+    let currentUser = useSelector((state: RootState) => state.user)
 
-    const handleUserName = (ev : React.ChangeEvent<HTMLInputElement>) => {
-        setUserName(ev.target.value);
+    // useEffect(() => { console.log('useEffect') }, [currentUser])
+
+    function handleChange(ev: React.ChangeEvent<HTMLInputElement>) {
+        let { name, value } = ev.target;
+        setUserCredentials(prevState => ({ ...prevState, [name]: value }));
     }
 
-    const handlePassword = (ev : React.ChangeEvent<HTMLInputElement>) => {
-        setUserPassword(ev.target.value);
-    }
-
-    function closeModal () {
+    function closeModal() {
         setShowModal(false);
     }
 
-    function handleSubmit (e : FormEvent) {
+    function handleSubmit(e: FormEvent) {
         e.preventDefault();
+        // 1 - Adding user data to Firebase
+        if (userCredentials.email && userCredentials.password) {
+            dispatch(userSignUp(userCredentials.email, userCredentials.password))
 
-        const creds = {email: "", password: ""};
-        creds.email = userName;
-        creds.password = userPassword;
+        };
+        // console.log(userCredentials, 'usercredentsdjfksd')
+        const newUser: User = { ...currentUser, email: userCredentials.email, firstName: userCredentials.firstName }
 
-        if (creds.email !== "") {
-        dispatch(userSignUp(creds)); 
+        // 2 - Creating new user
+        dispatch(setUser(newUser));
         setShowModal(false);
         setShowDescriptionModal(true);
-        }
     }
+
 
     return (
         <div id="modal-main">
+
             <form id="modal" onSubmit={handleSubmit}>
 
-                <input 
-                    id="inputUserEmail" 
-                    placeholder="Enter email" 
-                    onChange={(ev: React.ChangeEvent<HTMLInputElement>,): void =>
-                    handleUserName(ev)} >
+                <input
+                    name="email"
+                    placeholder="Email"
+                    onChange={handleChange}
+                >
                 </input>
 
-                <input 
-                    id="inputUserPassword" 
-                    placeholder="Enter password" 
-                    onChange={(ev: React.ChangeEvent<HTMLInputElement>,): void =>
-                        handlePassword(ev)} > 
+                <input
+                    name="password"
+                    placeholder="Password"
+                    onChange={handleChange}
+                >
+                </input>
+
+                <input
+                    name="firstName"
+                    placeholder="First name"
+                    onChange={handleChange}
+                >
+                </input>
+
+                <input
+                    name="lastName"
+                    placeholder="Last name"
+                    onChange={handleChange}
+                >
                 </input>
 
                 <button id="submitSignUp">Submit</button>

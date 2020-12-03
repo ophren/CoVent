@@ -8,7 +8,7 @@ const USER_MATCHES_BUTTON_TEXT = 'Machtes'
 
 export const TopBarNewMatchesButton = () => {
   let userIsLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
-  let userHasNewMatches = useSelector((state: RootState) => state.user.hasNewMatches)
+  let userHasNewMatches = useSelector((state: RootState) => state.user.profile?.hasNewMatch)
   let changeOnNewMatches = userHasNewMatches ? 'hasNewMatches top_bar_new_matches_button' : 'NoNewMatches top_bar_new_matches_button'
 
 
