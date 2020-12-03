@@ -6,6 +6,7 @@ const profileController = require('./controllers/profile');
 const categoryController = require('./controllers/category');
 const likeController = require('./controllers/like');
 const unmatchController = require('./controllers/unmatch');
+const cityController = require('./controllers/city');
 
 
 router.post('/register', userController.createUser);
@@ -23,5 +24,9 @@ router.get('/categories', categoryController.getAllCategories);
 router.post('/like/:direction', likeController.like);
 
 router.post('/unmatch', unmatchController.unmatch);
+
+router.post('/city', cityController.addCity);
+router.get('/cities', cityController.getAllCities);
+
 
 module.exports = router;

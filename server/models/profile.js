@@ -80,6 +80,11 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade'
     });
 
+    profile.belongsToMany(model.city, {
+      through: 'cityProfiles',
+      onDelete: 'cascade'
+    });
+
   };
 
   return profile;

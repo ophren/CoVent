@@ -35,7 +35,8 @@ const findAllUsers = async (models) => {
             attributes: userAttributes,
           }
         },
-        { model: models.category }
+        { model: models.category },
+        { model: models.city }
       ]
     }
   });
@@ -73,7 +74,8 @@ const findUser = async (models, id) => {
             attributes: userAttributes,
           }
         },
-        { model: models.category }
+        { model: models.category },
+        { model: models.city }
       ]
     }
   });
@@ -110,7 +112,8 @@ const findProfile = async (models, id, by) => {
           attributes: userAttributes,
         }
       },
-      { model: models.category }
+      { model: models.category },
+      { model: models.city }
     ]
   });
 };
@@ -147,7 +150,8 @@ const findProfiles = async (models) => {
           attributes: userAttributes,
         }
       },
-      { model: models.category }
+      { model: models.category },
+      { model: models.city }
     ]
   });
 };
