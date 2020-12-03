@@ -8,10 +8,7 @@ const unmatch = async (req, res) => {
 
   const profile = await helperFuncs.findProfile(models, profileId, 'profile');
   const targetProfile = await helperFuncs.findProfile(models, givenLikeId, 'profile');
-  console.log('profile-->', profile);
-  console.log('targetProfile-->', targetProfile);
-
-
+  
   // checks before unmatching
   // 1 if profile exists
   if (profile.length === 0) {
