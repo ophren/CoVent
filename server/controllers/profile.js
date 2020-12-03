@@ -27,6 +27,7 @@ const getProfile = async (req, res) => {
   try {
     const { id } = req.params;
     const profile = await helperFuncs.findProfile(models, id, 'user');
+
     res.status(200).send(profile);
   } catch (error) {
     res.status(500).send({ error, message: 'Could not get Profile' });

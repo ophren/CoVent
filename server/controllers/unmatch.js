@@ -81,6 +81,7 @@ const unmatch = async (req, res) => {
   // res.send({ message: 'Unmatched' });
 
   const updatedUser = await helperFuncs.findUser(models, profile[0].dataValues.userId);
+
   res.send(updatedUser);
 
 };
