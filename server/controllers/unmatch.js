@@ -1,73 +1,14 @@
 'use strict';
 
 const models = require('../models');
+const helperFuncs = require('./../utils/helperFuncs');
 
 const unmatch = async (req, res) => {
   const { profileId, givenLikeId } = req.body;
 
-
-  const profile = await models.profile.findAll({
-    where: { id: profileId },
-    include: [
-      {
-        model: models.profile, as: 'likedProfile',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-          model: models.user,
-        }
-      },
-      {
-        model: models.profile, as: 'receivedLike',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          model: models.user,
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        }
-      },
-      {
-        model: models.profile, as: 'matched',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          model: models.user,
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        }
-      }
-    ]
-  });
-
-  const targetProfile = await models.profile.findAll({
-    where: { id: givenLikeId },
-    include: [
-      { model: models.user },
-      {
-        model: models.profile, as: 'likedProfile',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-          model: models.user,
-        }
-      },
-      {
-        model: models.profile, as: 'receivedLike',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          model: models.user,
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        }
-      },
-      {
-        model: models.profile, as: 'matched',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          model: models.user,
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        }
-      }
-    ]
-  });
-
-
+  const profile = await helperFuncs.findProfile(models, profileId, 'profile');
+  const targetProfile = await helperFuncs.findProfile(models, givenLikeId, 'profile');
+  
   // checks before unmatching
   // 1 if profile exists
   if (profile.length === 0) {
@@ -79,7 +20,6 @@ const unmatch = async (req, res) => {
   }
   // 3 if targetid is in my likes array
   if (profile[0].dataValues.likedProfile.length > 0) {
-    console.log('INSIDE 3 CHECK-->');
     const check = profile[0].dataValues.likedProfile.some((el) => {
       return el.dataValues.id === givenLikeId;
     });
@@ -105,6 +45,7 @@ const unmatch = async (req, res) => {
     const check = profile[0].dataValues.matched.some((el) => {
       return el.dataValues.id === givenLikeId;
     });
+
     if (!check) {
       return res.status(500).send({ error: '500', message: 'Match is not available in my matched' });
     }
@@ -114,6 +55,7 @@ const unmatch = async (req, res) => {
     const check = targetProfile[0].dataValues.matched.some((el) => {
       return el.dataValues.id === profileId;
     });
+
     if (!check) {
       return res.status(500).send({ error: '500', message: 'Match is not available in targets array' });
     }
@@ -135,37 +77,9 @@ const unmatch = async (req, res) => {
 
   // res.send({ message: 'Unmatched' });
 
-  const updatedProfile = await models.profile.findAll({
-    where: { id: profileId },
-    include: [
-      { model: models.user },
-      {
-        model: models.profile, as: 'likedProfile',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-          model: models.user,
-        }
-      },
-      {
-        model: models.profile, as: 'receivedLike',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          model: models.user,
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        }
-      },
-      {
-        model: models.profile, as: 'matched',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          model: models.user,
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        }
-      }
-    ]
-  });
-  res.send(updatedProfile);
+  const updatedUser = await helperFuncs.findUser(models, profile[0].dataValues.userId);
+
+  res.send(updatedUser);
 
 };
 
