@@ -28,10 +28,7 @@ export const SignUpForm = ({ setShowModal, setShowDescriptionModal }: any): JSX.
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
         // 1 - Adding user data to Firebase
-        if (userCredentials.email && userCredentials.password) {
-            dispatch(userSignUp(userCredentials.email, userCredentials.password))
-
-        };
+        
         // console.log(userCredentials, 'usercredentsdjfksd')
         const newUser: User = { ...currentUser, email: userCredentials.email, firstName: userCredentials.firstName }
 

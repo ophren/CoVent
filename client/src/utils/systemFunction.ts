@@ -3,6 +3,7 @@ import { Dispatch } from 'react';
 import { setUserFirebaseId, setUserToLoggedIn, setUserToLoggedOut } from '../redux/systemState/systemStateActions';
 import fire from './firebase';
 import { getUserById, registerUserToDataBase } from './userDatabaseFetch';
+import { User } from '../types/userTypes';
 
 export const userLogin = (creds: any) => {
     return (dispatch: any) => {
@@ -34,20 +35,28 @@ export const userLogOut = () => {
         });
     }
 }
+let currentUser 
 
-export const userSignUp = (email: string, password: string) => {
+export const userSignUp = (user:User) => {
     console.log('system func firebase sign upx')
     return (dispatch: any) => {
-        fire
+        if(user.email&& user.password) {
+
+            fire
             .auth()
-            .createUserWithEmailAndPassword(email, password)
+            .createUserWithEmailAndPassword(user.email, user.password)
             .then((res) => {
                 console.log(res.user?.uid, ' Firebase res')
                 dispatch(setUserFirebaseId(res.user?.uid));
                 dispatch(setUserToLoggedIn());
+                registerUserToDataBase(user).then(user=>{
+                    console.log('registered user: ' , user.firstName)
+                }).catch(e=> console.log(e))
+                
             })
             .catch(err => {
                 console.log(err)
             });
+        }
     };
 };
