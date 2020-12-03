@@ -1,36 +1,16 @@
 'use strict';
 
 const models = require('../models');
+const helperFuncs = require('./../utils/helperFuncs');
 
 const like = async (req, res) => {
 
   const { direction } = req.params;
   const { profileId } = req.body;
-
   const values = Object.values(req.body);
 
-  const profile = await models.profile.findAll({
-    where: { id: profileId },
-    include: [
-      {
-        model: models.profile, as: 'likedProfile',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-          model: models.user,
-        }
-      },
-      {
-        model: models.profile, as: 'receivedLike',
-        attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-        include: {
-          model: models.user,
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        }
-      },
-    ]
-  });
-  console.log('profile[0].dataValues.userId-->', profile[0].dataValues.userId);
+
+  const profile = await helperFuncs.findProfile(models, profileId, 'profile');
 
   if (values[0] === values[1]) {
     return res.status(500).send({ error: '500', message: 'You cannot like yourself' });
@@ -42,7 +22,6 @@ const like = async (req, res) => {
 
   try {
     if (direction === 'give') {
-
       const { givenLikeId } = req.body;
       const likedProfile = await models.profile.findAll({
         where: { id: givenLikeId }
@@ -55,28 +34,7 @@ const like = async (req, res) => {
       await profile[0].addLikedProfile(givenLikeId, profileId);
       await likedProfile[0].addReceivedLike(profileId, givenLikeId);
 
-      const targetProfile = await models.profile.findAll({
-        where: { id: values[1] },
-        include: [
-          { model: models.user },
-          {
-            model: models.profile, as: 'likedProfile',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-            include: {
-              attributes: ['id', 'firstName', 'lastName', 'email'],
-              model: models.user,
-            }
-          },
-          {
-            model: models.profile, as: 'receivedLike',
-            attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-            include: {
-              model: models.user,
-              attributes: ['id', 'firstName', 'lastName', 'email'],
-            }
-          },
-        ]
-      });
+      const targetProfile = await helperFuncs.findProfile(models, values[1], 'profile');
 
       if (targetProfile[0].dataValues.likedProfile.length > 0) {
         const matchCheck = targetProfile[0].dataValues.likedProfile.some((el) => {
@@ -88,81 +46,15 @@ const like = async (req, res) => {
           console.log('profile[0]-->', profile[0]);
 
           await targetProfile[0].addMatched(profileId, givenLikeId);
-          const updatedUser = await models.user.findAll({
-            where: { id: profile[0].dataValues.userId },
-            attributes: ['id', 'firstName', 'lastName', 'email'],
-            include: {
-              model: models.profile,
-              attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-              include: [
-                {
-                  model: models.profile, as: 'likedProfile',
-                  attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-                  include: {
-                    model: models.user,
-                    attributes: ['id', 'firstName', 'lastName', 'email'],
-                  }
-                },
-                {
-                  model: models.profile, as: 'receivedLike',
-                  attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-                  include: {
-                    model: models.user,
-                    attributes: ['id', 'firstName', 'lastName', 'email'],
-                  }
-                },
-                {
-                  model: models.profile, as: 'matched',
-                  attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-                  include: {
-                    model: models.user,
-                    attributes: ['id', 'firstName', 'lastName', 'email'],
-                  }
-                },
-                { model: models.category }
-              ]
-            }
-          });
+          const updatedUser = await helperFuncs.findUser(models, profile[0].dataValues.userId);
+
           // return res.status(201).send({ message: 'You got a new match' });
           return res.status(201).send(updatedUser);
         }
       }
 
-      const updatedUser = await models.user.findAll({
-        where: { id: profile[0].dataValues.userId },
-        attributes: ['id', 'firstName', 'lastName', 'email'],
-        include: {
-          model: models.profile,
-          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-          include: [
-            {
-              model: models.profile, as: 'likedProfile',
-              attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-              include: {
-                model: models.user,
-                attributes: ['id', 'firstName', 'lastName', 'email'],
-              }
-            },
-            {
-              model: models.profile, as: 'receivedLike',
-              attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-              include: {
-                model: models.user,
-                attributes: ['id', 'firstName', 'lastName', 'email'],
-              }
-            },
-            {
-              model: models.profile, as: 'matched',
-              attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-              include: {
-                model: models.user,
-                attributes: ['id', 'firstName', 'lastName', 'email'],
-              }
-            },
-            { model: models.category }
-          ]
-        }
-      });
+      const updatedUser = await helperFuncs.findUser(models, profile[0].dataValues.userId);
+
       res.status(201).send(updatedUser);
 
     } else if (direction === 'receive') {

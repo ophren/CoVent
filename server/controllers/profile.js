@@ -1,6 +1,7 @@
 'use strict';
 
 const models = require('./../models/');
+const helperFuncs = require('./../utils/helperFuncs');
 
 const createProfile = async (req, res) => {
   const { userId } = req.body;
@@ -25,38 +26,8 @@ const createProfile = async (req, res) => {
 const getProfile = async (req, res) => {
   try {
     const { id } = req.params;
-    const profile = await models.profile.findAll({
-      where: { userId: id },
-      attributes: ['id', 'picture', 'description', 'age', 'gender', 'location', 'userId'],
-      include: [
-        { model: models.user },
-        {
-          model: models.profile, as: 'likedProfile',
-          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-          include: {
-            attributes: ['id', 'firstName', 'lastName', 'email'],
-            model: models.user,
-          }
-        },
-        {
-          model: models.profile, as: 'receivedLike',
-          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-          include: {
-            model: models.user,
-            attributes: ['id', 'firstName', 'lastName', 'email'],
-          }
-        },
-        {
-          model: models.profile, as: 'matched',
-          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-          include: {
-            model: models.user,
-            attributes: ['id', 'firstName', 'lastName', 'email'],
-          }
-        },
-        { model: models.category }
-      ]
-    });
+    const profile = await helperFuncs.findProfile(models, id, 'user');
+
     res.status(200).send(profile);
   } catch (error) {
     res.status(500).send({ error, message: 'Could not get Profile' });
@@ -65,37 +36,7 @@ const getProfile = async (req, res) => {
 
 const getAllProfiles = async (req, res) => {
   try {
-    const profiles = await models.profile.findAll({
-      attributes: ['id', 'picture', 'description', 'age', 'gender', 'location', 'userId'],
-      include: [
-        { model: models.user },
-        {
-          model: models.profile, as: 'likedProfile',
-          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-          include: {
-            attributes: ['id', 'firstName', 'lastName', 'email'],
-            model: models.user,
-          }
-        },
-        {
-          model: models.profile, as: 'receivedLike',
-          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-          include: {
-            model: models.user,
-            attributes: ['id', 'firstName', 'lastName', 'email'],
-          }
-        },
-        {
-          model: models.profile, as: 'matched',
-          attributes: ['id', 'picture', 'age', 'gender', 'location', 'userId'],
-          include: {
-            model: models.user,
-            attributes: ['id', 'firstName', 'lastName', 'email'],
-          }
-        },
-        { model: models.category }
-      ]
-    });
+    const profiles = await helperFuncs.findProfiles(models);
     res.status(200).send(profiles);
   } catch (error) {
     res.status(500).send({ error, message: 'Could not get Profiles' });
