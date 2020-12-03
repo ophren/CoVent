@@ -1,17 +1,16 @@
-import {  SET_USER_NAME, SET_USER_AGE, UserActionTypes } from '../../types/userTypes';
+import {  SET_USER_NAME, SET_USER_PROFILE, UserActionTypes } from '../../types/userTypes';
 
 export function setUserName(newName: string): UserActionTypes {
   return {
     type: SET_USER_NAME,
     payload: newName
   }
-
 }
  
-export function setUserAge(newAge: number): UserActionTypes {
+export function setUserDescription(userDescription: User): UserActionTypes {
   return {
-    type: SET_USER_AGE,
-    payload: newAge
+    type: SET_USER_PROFILE,
+    payload: UPDATED_USER_IN_DESCRIPTION
   }
 }
 

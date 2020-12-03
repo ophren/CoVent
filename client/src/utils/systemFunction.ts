@@ -1,16 +1,20 @@
 import { setUserFirebaseId, setUserToLoggedIn } from '../redux/systemState/systemStateActions';
 import fire from './firebase';
+import { getUserById } from './userDatabaseFetch';
 
 export const userLogin = (creds: any) => {
     return (dispatch: any) => {
         fire
             .auth()
             .signInWithEmailAndPassword(creds.email, creds.password)
-            .then(() => {
-                dispatch({type: "SIGN_IN"});
+    
+            .then((res) => {
+                dispatch(setUserFirebaseId (res.user?.uid));
+                dispatch(setUserToLoggedIn());
+                // dispatch(setUserState (getUserById(res.user?.uid)))
             })
             .catch(err => {
-                dispatch({ type : "SIGN_IN_ERR", err});
+                console.log(err)
             });
     };
 };

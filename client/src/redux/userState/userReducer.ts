@@ -11,7 +11,6 @@ const initialUserState: User = {
   hasNewMatches: true
 }
 
-
 export function userReducer(state = initialUserState, action: UserActionTypes) {
   switch (action.type) {
     case SET_USER_NAME:
@@ -19,7 +18,7 @@ export function userReducer(state = initialUserState, action: UserActionTypes) {
         ...state, name: action.payload
 
       }
-    case SET_USER_AGE:
+    case SET_USER_PROFILE:
       return {
         ...state, age: action.payload
       }

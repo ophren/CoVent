@@ -9,7 +9,6 @@ export const SignUpForm = ({setShowModal, setShowDescriptionModal} : any) : JSX.
     const dispatch = useDispatch();
     const [userName, setUserName] = useState('');
     const [userPassword, setUserPassword] = useState('');
-    const creds = {email: "", password: ""};
 
     const handleUserName = (ev : React.ChangeEvent<HTMLInputElement>) => {
         setUserName(ev.target.value);
@@ -25,11 +24,16 @@ export const SignUpForm = ({setShowModal, setShowDescriptionModal} : any) : JSX.
 
     function handleSubmit (e : FormEvent) {
         e.preventDefault();
+
+        const creds = {email: "", password: ""};
         creds.email = userName;
         creds.password = userPassword;
+
+        if (creds.email !== "") {
         dispatch(userSignUp(creds)); 
         setShowModal(false);
         setShowDescriptionModal(true);
+        }
     }
 
     return (
