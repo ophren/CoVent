@@ -1,4 +1,4 @@
-import {  SET_USER_NAME, SET_USER_AGE, UserActionTypes } from '../../types/userTypes';
+import { SET_USER_NAME, SET_USER_AGE, UserActionTypes } from '../../types/userTypes';
 
 export function setUserName(newName: string): UserActionTypes {
   return {
