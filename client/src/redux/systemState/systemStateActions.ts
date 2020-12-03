@@ -1,5 +1,5 @@
 import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
-import { SystemState, SystemActionTypes, SET_USER_FIREBASE_ID, SET_USER_AS_LOGGED_IN, SET_USER_AS_LOGGED_OUT } from './../../types/systemTypes';
+import { SystemState, SystemActionTypes, SET_USER_FIREBASE_ID, SET_USER_AS_LOGGED_IN, SET_USER_AS_LOGGED_OUT, SET_USER_NEW_USER_BOOLEAN } from './../../types/systemTypes';
 
 
 //  interface User {
@@ -38,5 +38,11 @@ export function setUserToLoggedOut( ): SystemActionTypes {
   return {
     type: SET_USER_AS_LOGGED_OUT,
     payload: false
+  }
+}
+export function setUserNewUserBoolean(newUserBool: boolean): SystemActionTypes {
+  return {
+    type: SET_USER_NEW_USER_BOOLEAN,
+    payload: newUserBool
   }
 }

@@ -26,12 +26,12 @@ export const userLogin = (creds: any) => {
 };
 
 export const userLogOut = () => {
-    return (dispatch:Dispatch<SystemActionTypes>) => {
+    return (dispatch: Dispatch<SystemActionTypes>) => {
 
-        fire.auth().signOut().then(function() {
+        fire.auth().signOut().then(function () {
             dispatch(setUserToLoggedOut())
-        }).catch(function(error) {
-            // An error happened.
+        }).catch(function (error) {
+            console.log(error)
         });
     }
 }
