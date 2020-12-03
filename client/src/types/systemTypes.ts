@@ -3,7 +3,9 @@ export interface SystemState {
   session?: string,
   userName?: string,
   userFirebaseId: string | undefined,
-  userEmail?:string
+  userEmail?:string,
+  newUser?:boolean,
+  
 }
 
 
@@ -14,6 +16,11 @@ export const SET_USER_EMAIL= 'SET_USER_EMAIL'
 export const SET_USER_AS_LOGGED_IN= 'SET_USER_AS_LOGGED_IN'
 export const SET_USER_AS_LOGGED_OUT= 'SET_USER_AS_LOGGED_OUT'
 
+export const SET_USER_NEW_USER_BOOLEAN = "SET_USER_NEW_USER_BOOLEAN"
+interface SetUserNewUserBoolean{
+  type: typeof SET_USER_NEW_USER_BOOLEAN
+  payload: boolean
+}
 interface SetUserFirebaseId {
   type: typeof SET_USER_FIREBASE_ID
   payload: string | undefined
@@ -27,4 +34,4 @@ interface SetUserToLoggedOut {
   payload: boolean
 }
 
-export type SystemActionTypes = SetUserFirebaseId | SetUserToLoggedIn | SetUserToLoggedOut
+export type SystemActionTypes = SetUserNewUserBoolean| SetUserFirebaseId | SetUserToLoggedIn | SetUserToLoggedOut

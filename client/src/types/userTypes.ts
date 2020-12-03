@@ -1,11 +1,11 @@
 export interface User {
   firebaseId?:string
   id?:number,
-  firstName: string,
-  lastName: string,
-  email:string,
-  profile?:Profile
-  
+  firstName?: string,
+  lastName?: string,
+  email?:string,
+  profile?:Profile,
+  password?:string
   
 }
 
@@ -87,6 +87,7 @@ export const SET_USER_NAME = 'SET_USER_NAME'
 export const SET_USER_AGE = 'SET_USER_AGE'
 export const SET_USER_PROFILE_PIC = 'SET_USER_PROFILE_PIC'
 export const SET_USER_HAS_MATCHES_TO_FALSE= 'SET_USER_HAS_MATCHES_TO_FALSE'
+export const SET_USER = "SET_USER"
 // export const SET_USER_AGE = 'SET_USER_AGE'
 
 interface SetUserNameAction {
@@ -99,4 +100,10 @@ interface SetUserAgeAction {
   payload: number
 }
 
-export type UserActionTypes = SetUserAgeAction | SetUserNameAction
+interface SetUserAction {
+  type:typeof SET_USER,
+  payload:User
+}
+
+
+export type UserActionTypes = SetUserAgeAction | SetUserNameAction | SetUserAction

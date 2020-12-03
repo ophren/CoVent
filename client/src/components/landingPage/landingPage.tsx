@@ -8,15 +8,24 @@ import { setUserName } from '../../redux/userState/userActions';
 import { TopBarLandingPage } from './topBarLandingPage/topBarLandingPage';
 import { Searchbar } from './searchbar/searchbar';
 import { ProfilePage } from '../ProfilePage/profilePage';
+import { getUserByIdDispatch } from '../../utils/userFunction';
+import { registerUserToDataBase } from '../../utils/userDatabaseFetch';
 
 
 
 
 
 export const LandingPage = (): ReactElement => {
+  const dispatch = useDispatch()
 
 
-  // let userLoggedInWithFireBase = useSelector((state: RootState) => state.system.loggedIn)
+  let firebaseUser = useSelector((state: RootState) => state.system)
+  // const user
+  // if(firebaseUser.newUser) registerUserToDataBase(firebaseUser)
+  if(firebaseUser.loggedIn && firebaseUser.userFirebaseId) {
+    dispatch(getUserByIdDispatch(firebaseUser.userFirebaseId))
+
+  }
 
 
 
