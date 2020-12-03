@@ -7,19 +7,17 @@ const USER_SIGN_UP_TEXT = 'Sign Up'
 interface TopBarSignUpButtonProp {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 }
-
-export const TopBarSignUpButton = ({setShowModal} : TopBarSignUpButtonProp )=> {
+export const TopBarSignUpButton = ({ setShowModal }: TopBarSignUpButtonProp) => {
   let userIsLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
   let showSignUp = userIsLoggedIn || null
 
-  function displayModal () {
+  function displayModal() {
     setShowModal(true);
   }
 
-  function hideModal () {
+  function hideModal() {
     setShowModal(false);
   }
-
   return (
     <div className="top_bar_sign_up_button_container">
       {showSignUp ?? 

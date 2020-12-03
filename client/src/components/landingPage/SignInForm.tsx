@@ -3,7 +3,6 @@ import React, { FormEvent, useState } from 'react';
 import {userLogin} from "../../utils/systemFunction";
 import { useDispatch } from "react-redux";
 
-
 export const SignInForm = ({setShowModal}: any) : JSX.Element => {
 
     const dispatch = useDispatch();
@@ -58,16 +57,3 @@ export const SignInForm = ({setShowModal}: any) : JSX.Element => {
 }
 
 export default SignInForm;
-
-
-
-// adds the following function to props for the above function
-// dispatch will pass the object to all reducers
-// const mapDispatchToProps = (dispatch : Dispatch) => {
-//     return {
-//         signUp: (creds) => dispatch(userSignUp(creds))
-//         // add one calling till's reducer to set loggedIn state to true 
-//     }
-// }
-
-// export default connect(null, mapDispatchToProps)(userSignUp);

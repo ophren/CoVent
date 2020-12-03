@@ -1,15 +1,22 @@
-import { SystemState, UPDATE_SESSION, SystemActionTypes } from './../../types/systemTypes';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
+import { SystemState, SystemActionTypes, SET_USER_FIREBASE_ID, SET_USER_AS_LOGGED_IN, SET_USER_AS_LOGGED_OUT } from './../../types/systemTypes';
 
-export function updateSession(newSession: SystemState): SystemActionTypes {
+
+export function setUserFirebaseId(firebaseId: string | undefined): SystemActionTypes {
   return {
-    type: UPDATE_SESSION,
-    payload: newSession
+    type: SET_USER_FIREBASE_ID,
+    payload: firebaseId  
   }
 }
-
-// export function updateLoginState (newLogin: SystemState): SystemActionTypes {
-//   return {
-//     type: UPDATE_LOGIN,
-//     payload: newLogin
-//   }
-// }
+export function setUserToLoggedIn(): SystemActionTypes {
+  return {
+    type: SET_USER_AS_LOGGED_IN,
+    payload: true
+  }
+}
+export function setUserToLoggedOut( ): SystemActionTypes {
+  return {
+    type: SET_USER_AS_LOGGED_OUT,
+    payload: false
+  }
+}

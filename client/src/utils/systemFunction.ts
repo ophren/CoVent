@@ -1,4 +1,5 @@
-import fire from './fire';
+import { setUserFirebaseId, setUserToLoggedIn } from '../redux/systemState/systemStateActions';
+import fire from './firebase';
 
 export const userLogin = (creds: any) => {
     return (dispatch: any) => {
@@ -18,18 +19,18 @@ export const userLogOut = () => {
     console.log("logout function called")
 }
 
-
-
 export const userSignUp = (creds: any) => {
     return (dispatch : any) => {
         fire
             .auth()
             .createUserWithEmailAndPassword(creds.email, creds.password)
-            .then(() => {
-                dispatch({type: "SIGN_UP"});
+            .then((res) => {
+                console.log(res.user?.uid, ' Firebase res')
+                dispatch(setUserFirebaseId (res.user?.uid));
+                dispatch(setUserToLoggedIn());
             })
             .catch(err => {
-                dispatch({ type : "SIGN_UP_ERR", err});
+                console.log(err)
             });
-    };
+     };
 };

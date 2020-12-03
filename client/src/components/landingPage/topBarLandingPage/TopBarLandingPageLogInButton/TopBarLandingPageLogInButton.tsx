@@ -7,13 +7,15 @@ import { userLogin, userLogOut } from '../../../../utils/systemFunction'
 const USER_LOGGED_IN_TEXT = 'Log In'
 const USER_LOGGED_OUT_TEXT = 'Log Out'
 const buttonClassName = 'log_in_button'
-
 interface TopBarSignInButtonProp {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const TopBarLandingPageLogInButton = ({setShowModal} : TopBarSignInButtonProp )=> {
-  let userLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
+export const TopBarLandingPageLogInButton = ({setShowModal} : TopBarSignInButtonProp): ReactElement => {
+  let userLoggedIn =
+   useSelector((state: RootState) => state.system.loggedIn)
+   
+  
 
   function displayModal () {
     setShowModal(true);
@@ -21,13 +23,13 @@ export const TopBarLandingPageLogInButton = ({setShowModal} : TopBarSignInButton
 
   return (
     <div className="log_in_button_container">
-      {userLoggedIn
-        ? <button className={buttonClassName} onClick={()=>userLogOut}>{USER_LOGGED_OUT_TEXT}</button>
-        : <button className={buttonClassName} onClick= {displayModal}>
-          {USER_LOGGED_IN_TEXT}
-          </button>
-      }
-    </div>
+    {userLoggedIn
+      ? <button className={buttonClassName} onClick={()=>userLogOut}>{USER_LOGGED_OUT_TEXT}</button>
+      : <button className={buttonClassName} onClick= {displayModal}>
+        {USER_LOGGED_IN_TEXT}
+        </button>
+    }
+  </div>
   )
 
 

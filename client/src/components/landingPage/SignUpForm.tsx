@@ -4,7 +4,7 @@ import {userSignUp} from "../../utils/systemFunction";
 import { useDispatch } from "react-redux";
 
 
-export const SignUpForm = ({setShowModal}: any) : JSX.Element => {
+export const SignUpForm = ({setShowModal, setShowDescriptionModal} : any) : JSX.Element => {
 
     const dispatch = useDispatch();
     const [userName, setUserName] = useState('');
@@ -29,6 +29,7 @@ export const SignUpForm = ({setShowModal}: any) : JSX.Element => {
         creds.password = userPassword;
         dispatch(userSignUp(creds)); 
         setShowModal(false);
+        setShowDescriptionModal(true);
     }
 
     return (
@@ -59,15 +60,3 @@ export const SignUpForm = ({setShowModal}: any) : JSX.Element => {
 
 export default SignUpForm;
 
-
-
-// adds the following function to props for the above function
-// dispatch will pass the object to all reducers
-// const mapDispatchToProps = (dispatch : Dispatch) => {
-//     return {
-//         signUp: (creds) => dispatch(userSignUp(creds))
-//         // add one calling till's reducer to set loggedIn state to true 
-//     }
-// }
-
-// export default connect(null, mapDispatchToProps)(userSignUp);

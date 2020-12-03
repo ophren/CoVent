@@ -5,7 +5,8 @@ const userController = require('./controllers/user');
 const profileController = require('./controllers/profile');
 const categoryController = require('./controllers/category');
 const likeController = require('./controllers/like');
-const matchController = require('./controllers/match');
+const unmatchController = require('./controllers/unmatch');
+
 
 router.post('/register', userController.createUser);
 router.get('/users', userController.getAllUsers);
@@ -14,12 +15,13 @@ router.post('/login', userController.login);
 
 router.post('/profile', profileController.createProfile);
 router.get('/profile/:id', profileController.getProfile);
+router.get('/profiles', profileController.getAllProfiles);
 
 router.post('/category', categoryController.addCategory);
 router.get('/categories', categoryController.getAllCategories);
 
 router.post('/like/:direction', likeController.like);
 
-router.post('/match', matchController.addMatch);
+router.post('/unmatch', unmatchController.unmatch);
 
 module.exports = router;

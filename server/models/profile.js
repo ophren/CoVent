@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    hasNewMatch: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    }
 
   });
 
@@ -29,48 +33,51 @@ module.exports = (sequelize, DataTypes) => {
 
     profile.belongsTo(model.user);
 
-    profile.hasMany(model.like);
-
-    profile.hasMany(model.liked);
-
     profile.belongsToMany(model.profile, {
       through: 'likedProfiles',
       as: 'likedProfile',
-      foreignKey: 'likedProfile'
+      foreignKey: 'likedProfile',
+      onDelete: 'cascade'
     });
 
     profile.belongsToMany(model.profile, {
       through: 'likedProfiles',
       as: 'givenLike',
-      foreignKey: 'givenLike'
+      foreignKey: 'givenLike',
+      onDelete: 'cascade'
     });
 
     profile.belongsToMany(model.profile, {
       through: 'receivedLikes',
       as: 'receivedLike',
-      foreignKey: 'receivedLike'
+      foreignKey: 'receivedLike',
+      onDelete: 'cascade'
     });
 
     profile.belongsToMany(model.profile, {
       through: 'receivedLikes',
       as: 'liked',
-      foreignKey: 'liked'
+      foreignKey: 'liked',
+      onDelete: 'cascade'
     });
 
     profile.belongsToMany(model.profile, {
       through: 'matches',
       as: 'matched',
-      foreignKey: 'matched'
+      foreignKey: 'matched',
+      onDelete: 'cascade'
     });
 
     profile.belongsToMany(model.profile, {
       through: 'matches',
       as: 'partner',
-      foreignKey: 'partner'
+      foreignKey: 'partner',
+      onDelete: 'cascade'
     });
 
     profile.belongsToMany(model.category, {
-      through: 'categoryProfiles'
+      through: 'categoryProfiles',
+      onDelete: 'cascade'
     });
 
   };
