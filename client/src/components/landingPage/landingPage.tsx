@@ -16,7 +16,10 @@ import { ProfilePage } from '../ProfilePage/profilePage';
 export const LandingPage = (): ReactElement => {
 
 
-  // let userLoggedInWithFireBase = useSelector((state: RootState) => state.system.loggedIn)
+  let firebaseUser = useSelector((state: RootState) => state.system)
+  if(firebaseUser.loggedIn) {
+
+  }
 
 
 
