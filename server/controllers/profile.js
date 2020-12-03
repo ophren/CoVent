@@ -26,7 +26,7 @@ const createProfile = async (req, res) => {
 const getProfile = async (req, res) => {
   try {
     const { id } = req.params;
-    const profile = await helperFuncs.findProfile(models, id, 'user');
+    const profile = await helperFuncs.findProfile(models, id, 'profile');
 
     res.status(200).send(profile);
   } catch (error) {
