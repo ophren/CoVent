@@ -1,16 +1,16 @@
 import { Category, GiveLike, ReceivedLike } from './../types/userTypes';
-import { Profile, User, UserL } from "../types/userTypes";
+import { Profile, User } from "../types/userTypes";
+import { UserL, City, ProfileNew  } from "../types/userLucasTypes";
 
 const baseUrl = "http://localhost:3002";
 
-export const getAllUsers = (): Promise<UserL[]>  => {
+export const getAllUsers = (): Promise<UserL[]> => {
   return fetch(`${baseUrl}/users`, {
     headers: {
       Accept: "application/json",
     },
   }).then((res) => res.json());
 }
-
 
 export function getUserById(id: number): Promise<User> {
   return fetch(`${baseUrl}/user/${id}`, {
@@ -19,7 +19,6 @@ export function getUserById(id: number): Promise<User> {
     },
   }).then((res) => res.json());
 }
-
 
 export function registerUserToDataBase(user: User): Promise<User> {
   return fetch(`${baseUrl}/register`, {
@@ -30,7 +29,6 @@ export function registerUserToDataBase(user: User): Promise<User> {
     },
   }).then((res) => res.json());
 }
-
 
 export function addProfileToUserAtDataBase(profile: Profile): Promise<User> {
   return fetch(`${baseUrl}/profile`, {
@@ -50,6 +48,7 @@ export function addCategoryToUserAtDataBase(category: Category): Promise<User> {
     },
   }).then((res) => res.json());
 }
+
 export function giveLikeToOtherUser(giveLike: GiveLike): Promise<User> {
   return fetch(`${baseUrl}/like/give`, {
     method: "POST",
@@ -59,6 +58,7 @@ export function giveLikeToOtherUser(giveLike: GiveLike): Promise<User> {
     },
   }).then((res) => res.json());
 }
+
 export function receivedLikeFromOther(receivedLike: ReceivedLike): Promise<User> {
   return fetch(`${baseUrl}/like/received`, {
     method: "POST",
@@ -77,4 +77,20 @@ export function updateUserProfileData(updatedUserProfile: Profile): Promise<void
       Accept: "application/json",
     },
   }).then((res) => res.json());
+}
+
+export const getAllCities = (): Promise<City[]> => {
+  return fetch(`${baseUrl}/cities`, {
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json())
+}
+
+export const getAllProfiles = (): Promise<ProfileNew[]> => {
+  return fetch(`${baseUrl}/profiles`, {
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json())
 }

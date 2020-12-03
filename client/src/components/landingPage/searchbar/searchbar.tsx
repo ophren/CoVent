@@ -1,131 +1,97 @@
-import React, { ReactElement, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from './../../../types/combinedStoreTypes';
-import { Profile, User, UserL } from './../../../types/userTypes';
-import { getAllUsers } from './../../../utils/userDatabaseFetch';
+import React, { ReactElement, useState, useEffect, FormEvent } from 'react';
+// import { useSelector } from 'react-redux';
+// import { RootState } from './../../../types/combinedStoreTypes';
+import { UserL, City, ProfileNew } from './../../../types/userLucasTypes';
+import { getAllUsers, getAllCities, getAllProfiles } from './../../../utils/userDatabaseFetch';
+import './searchbar.css'
 
-
-// interface Categories {
-//   name: string,
+// const cityProfiles: City = {
+//   id: '',
+//   name: '',
+//   profiles: []
 // }
 
-// interface LikedProfile {
-//   [index: number]: {
-//     age: string,
-//     gender: string,
-//     id: number,
-//     likedProfiles: {
-//       createdAt: string,
-//       givenLike: number,
-//       likedProfile: number,
-//       updatedAt: string
-//     },
-//     location: string,
-//     picture: string,
-//     user: User,
-//   },
-//   userId: number
+// const User: UserL = {
+//   email: '',
+//   firstName: '',
+//   id: 0,
+//   lastName: '',
+//   hasNewMatch: false,
 // }
 
-// interface Matched {
-//   [index: number]: {
-//     age: string,
-//     gender: string,
-//     id: number,
-//     location: string,
-//     matches: {
-//       createdAt: string,
-//       matched: number,
-//       partner: number,
-//       updatedAt: string
-//     },
-//     picture: string,
-//     user: {
-//       email: string,
-//       firstName: string,
-//       id: number,
-//       lastName: string
-//     },
-//     userId: number,
-//   }
+// const initialStateProfiles: ProfileNew = {
+//   id: 0,
+//   picture: '',
+//   description: '',
+//   age: '',
+//   location: '',
+//   cities: [cityProfiles],
+//   hasNewMatch: false,
+//   createdAt: '',
+//   updatedAt: '',
+//   userId: 0,
+//   cityProfiles: cityProfiles,
+//   user: User,
 // }
-
-// interface ReceivedLike {
-//   [index: number]: {
-//     age: string,
-//     gender: string,
-//     id: number,
-//     location: string,
-//     picture: string,
-//     receivedLikes: {
-//       createdAt: string,
-//       liked: number,
-//       receivedLike: number,
-//       updatedAt: string
-//     },
-//     userId: number,
-//   }
-// }
-
-// interface Profile {
-//   age: string,
-//   categories: Categories,
-//   gender: string,
-//   id: number,
-//   likedProfile: LikedProfile,
-//   location: string,
-//   matched: Matched,
-//   picture: string,
-//   receivedLike: ReceivedLike,
-//   userId: number,
-// }
-
-// interface User {
-//   email: string,
-//   firstName: string,
-//   id: number,
-//   lastName: string,
-//   profile: Profile,
-// }
-
 
 
 export const Searchbar = (): ReactElement => {
 
-  // const user = useSelector((state: RootState) => state.user);
 
-  const [users, setUsers] = useState<UserL[]>([])
+
+
+  const [users, setUsers] = useState<ProfileNew[]>([]);
+  const [cities, setCities] = useState<City[]>([]);
+  const [city, setCity] = useState('');
 
   useEffect(() => {
-    getAllUsers()
+    getAllCities()
       .then((list) => {
-        // console.log('list-->', list);
+        setCities(list)
+      })
+
+    getAllProfiles()
+      .then((list) => {
         setUsers(list)
       })
   }, []);
 
-  console.log('users-->', users);
+  const filterCity = (arr: City[], city: string) => {
+    return arr.filter((el) => el.name.toLowerCase().includes(city.toLowerCase()))
+  };
 
+  const handleChange = async (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setCity(ev.target.value.toLowerCase());
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setCity(city)
+    const filteredCity = filterCity(cities, city)
+    if (filteredCity.length > 1) {
+      setUsers(filteredCity.flatMap((el) => el.profiles))
+    } else if (filteredCity.length === 1) {
+      setUsers(filteredCity[0].profiles)
+    } else {
+      alert('There are no users in the selected city')
+    }
+  };
 
   return (
-
     <div>
-      <form>
-        <input type="text" placeholder="city" />
-        <input type="text" placeholder="category" />
+      <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="city" value={city} onChange={handleChange} />
         <button type="submit">Search</button>
-        <div>
-          <ul>
-            {users.map((el, i) => {
-              console.log('el-->', el);
-              return <li key={i}>{el.firstName}</li>
-            }
-            )}
-          </ul>
-        </div>
       </form>
+      <div className="container">
+        {users.filter(user => user.cities.length && user.cities[0].name.toLowerCase().includes(city)).map((el, i) => {
+          return <div key={i} className="image_container">
+            <img src={el.picture} className="searchbar_image" alt="profile pic" />
+          </div>
+        }
+        )}
+      </div>
+
     </div>
-
   )
-
-}
+};

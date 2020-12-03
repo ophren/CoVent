@@ -1,150 +1,53 @@
-export interface CategoriesL {
-  name: string,
-}
-
-export interface LikedProfileL {
-  [index: number]: {
-    age: string,
-    gender: string,
-    id: number,
-    likedProfiles: {
-      createdAt: string,
-      givenLike: number,
-      likedProfile: number,
-      updatedAt: string
-    },
-    location: string,
-    picture: string,
-    user: User,
-  },
-  userId: number
-}
-
-export interface MatchedL {
-  [index: number]: {
-    age: string,
-    gender: string,
-    hasNewMatch: boolean,
-    id: number,
-    location: string,
-    matches: {
-      createdAt: string,
-      matched: number,
-      partner: number,
-      updatedAt: string
-    },
-    picture: string,
-    user: {
-      email: string,
-      firstName: string,
-      id: number,
-      lastName: string
-    },
-    userId: number,
-  }
-}
-
-export interface ReceivedLikeL {
-  [index: number]: {
-    age: string,
-    gender: string,
-    hasNewMatch: boolean,
-    id: number,
-    location: string,
-    picture: string,
-    receivedLikes: {
-      createdAt: string,
-      liked: number,
-      receivedLike: number,
-      updatedAt: string
-    },
-    userId: number,
-  }
-}
-
-export interface ProfileL {
-  age: string,
-  categories: CategoriesL,
-  gender: string,
-  hasNewMatch: boolean,
-  id: number,
-  likedProfile: LikedProfileL,
-  location: string,
-  matched: MatchedL,
-  picture: string,
-  receivedLike: ReceivedLike,
-  userId: number,
-}
-
-export interface UserL {
-  email: string,
-  firstName: string,
-  id: number,
-  lastName: string,
-  profile: Profile,
-  hasNewMatch: boolean,
-}
-
-
 export interface User {
-  id?:number,
-  firebaseId:number
-
-
+  id?: number,
+  firebaseId: number
   name: string,
   age: number,
   profilePic: string,
   oldMatchArray?: number[],
   newMatchArray?: number[],
-  hasNewMatches : boolean
-  profile?:Profile
-
-
+  hasNewMatches: boolean
+  profile?: Profile
 }
 
 export interface Profile {
-  id?:number,
-  description?:string
+  id?: number,
+  description?: string
   picture?: string,
   age?: number,
-  gender?:string,
-  location?:string,
-  userId:number,
+  gender?: string,
+  location?: string,
+  userId: number,
   categories?: Category[],
-  user?:User, //this is for the likedProfile structure
+  user?: User, //this is for the likedProfile structure
   likedProfile?: User[],
-  receivedLike?:User[],
-  matched?:User[],
-
-
+  receivedLike?: User[],
+  matched?: User[],
 }
 
 export interface Category {
-  id?:number,
-  name:string,
+  id?: number,
+  name: string,
   createdAt?: string,
-  updatedAt?:string,
+  updatedAt?: string,
   categoryProfiles?: CategoryProfiles
 }
 
 export interface GiveLike {
   profileId: number,
-  givenLikeId:number
+  givenLikeId: number
 }
 export interface ReceivedLike {
   profileId: number,
-  receivedLikeId:number
+  receivedLikeId: number
 }
 
 export interface CategoryProfiles {
-  createdAt?:string,
-  updatedAt?:string,
-  categoryId:1,
-  profileId:1
+  createdAt?: string,
+  updatedAt?: string,
+  categoryId: 1,
+  profileId: 1
 }
-
-
-
 
 //redux action types
 

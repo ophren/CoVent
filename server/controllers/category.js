@@ -29,7 +29,7 @@ const addCategory = async (req, res) => {
           } else {
             const newCategory = await models.category.create(req.body);
             await profile[0].addCategory(newCategory);
-            res.status(201).send(profile);
+            res.status(201).send(newCategory);
           }
         } catch (error) {
           res.status(400).send({ error, message: 'Could not add category' });
@@ -43,7 +43,7 @@ const addCategory = async (req, res) => {
         } else {
           const newCategory = await models.category.create(req.body);
           await profile[0].addCategory(newCategory);
-          res.status(201).send(profile);
+          res.status(201).send(newCategory);
         }
       } catch (error) {
         res.status(400).send({ error, message: 'Could not add category' });
