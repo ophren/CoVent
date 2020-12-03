@@ -1,14 +1,9 @@
 export interface User {
+  firebaseId?:string
   id?:number,
-  firebaseId:number
-  email:string
   firstName: string,
   lastName: string,
-  picture: string,
-  oldMatchArray?: number[],
-  newMatchArray?: number[],
-  age: string,
-  hasNewMatches : boolean
+  email:string,
   profile?:Profile
   
   
@@ -16,18 +11,45 @@ export interface User {
 
 export interface Profile {
   id?:number,
-  description?:string
   picture?: string,
+  description?:string
   age?: string,
   gender?:string,
   location?:string,
-  userId:number,
-  categories?: Category[],
-  user?:User, //this is for the likedProfile structure 
-  likedProfile?: Profile[],
-  receivedLike?:User[],
-  matched?:User[],
+  userId?:number,
+  hasNewMatch?:boolean
+  likedProfile?: Profile[]
 
+  user?:User, //this is for the likedProfile structure 
+  receivedLike?:Profile[],
+  matched?:Profile[],
+  categories?: Category[],
+  likedProfiles?:LikedProfiles,
+  receivedLikes? : ReceivedLikes,
+  matches?: Matches
+  
+
+
+}
+
+export interface Matches {
+  createdAt : string,
+  updatedAt : string,
+  matched: number,
+  partner:number
+
+}
+export interface ReceivedLikes {
+  createdAt : string,
+  updatedAt : string,
+  receivedLike: number,
+  liked:number
+}
+export interface LikedProfiles {
+  createdAt : string,
+  updatedAt : string,
+  likedProfile: number,
+  givenLike:number
 
 }
 
