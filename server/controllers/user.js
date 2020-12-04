@@ -5,6 +5,8 @@ const models = require('../models');
 const helperFuncs = require('./../utils/helperFuncs');
 
 const createUser = async (req, res) => {
+  console.log('INSIDE CREATE USER-->');
+
   const { email, password } = req.body;
   const user = await models.user.findAll({
     where: { email: email }
@@ -14,15 +16,18 @@ const createUser = async (req, res) => {
       .status(409)
       .send({ error: '409', message: 'User already exists' });
   try {
+
     if (password === '') throw new Error();
-    const hash = await bcrypt.hash(password, 10);
+    // const hash = await bcrypt.hash(password, 10);
+
     const newUser = {
       ...req.body,
-      password: hash,
     };
+
     const user = await models.user.create(newUser);
     res.status(201).send(user);
   } catch (error) {
+    console.log('error-->', error);
     res.status(400).send({ error, message: 'Could not create user' });
   }
 };
@@ -51,11 +56,15 @@ const getUser = async (req, res) => {
 };
 
 const login = async (req, res) => {
+  console.log('INISIDE LOGIN-->');
+
   try {
     const { email, password } = req.body;
-    const user = await await models.user.findAll({ where: { email: email } });
-    const validatedPass = await bcrypt.compare(password, user[0].password);
+    const user = await models.user.findOne({ where: { email: email } });
+    // const validatedPass = await bcrypt.compare(password, user[0].password);
+    const validatedPass = user.password === password ? true : false;
     if (!validatedPass) throw new Error();
+    console.log('user INSIDE LOGIN-->', user);
     res.status(200).send(user);
   } catch (error) {
     res

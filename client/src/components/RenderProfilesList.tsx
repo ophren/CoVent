@@ -11,9 +11,9 @@ export const RenderProfilesList = () => {
   return (
     <>
       <div id="renderedProfilesZone">
-        {fakeProfiles.map(fake => 
+        {/* {fakeProfiles.map(fake =>
           <RenderProfileItem fake={fake}/>
-        )}
+        )} */}
       </div>
     </>
   )

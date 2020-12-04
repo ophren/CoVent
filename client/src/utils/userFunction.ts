@@ -9,7 +9,7 @@ export function getUserByIdDispatch(firebaseId : string ) {
 
   return (dispatch : Dispatch<UserActionTypes>) =>{
     getUserById(firebaseId).then(user=> {
-      dispatch(setUser(user))
+      dispatch(setUser(user[0]))
     })
 
 

@@ -14,16 +14,22 @@ export const getAllUsers = (): Promise<UserL[]> => {
 
 
 export function getUserByEmailAndPassword(email: string, password:string): Promise<User> {
+  const user: User = {
+    email,
+    password
+  }
   return fetch(`${baseUrl}/login`, {
+    method: "POST",
     headers: {
-      Accept: "application/json",
+      'Content-Type': 'application/json'
     },
+    body: JSON.stringify(user),
   }).then((res) => res.json());
 }
-export function getUserById(id: string): Promise<User> {
+export function getUserById(id: string): Promise<User[]> {
   return fetch(`${baseUrl}/user/${id}`, {
     headers: {
-      Accept: "application/json",
+      'Content-Type': 'application/json'
     },
   }).then((res) => res.json());
 }

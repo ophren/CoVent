@@ -13,7 +13,7 @@ export function setUserName(newName: string): UserActionTypes {
     payload: newName
   }
 }
- 
+
 // export function setUserDescription(userDescription: User): UserActionTypes {
 //   return {
 //     type: SET_USER_AGE,
