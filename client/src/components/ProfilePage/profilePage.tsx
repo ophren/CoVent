@@ -4,6 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../types/combinedStoreTypes';
 import { Profile, User } from "../../types/userTypes";
 import { Button, Modal } from 'react-bootstrap';
+import { setUser } from "../../redux/userState/userActions";
+import { profileUpdate } from '../../utils/systemFunction';
+
+
 
 import './profilePage.css'
 
@@ -24,16 +28,41 @@ export const ProfilePage = () => {
 
   const [newUserDescription, setNewUserDescription] = useState<Profile>(initialState);
   const [show, setShow] = useState(false);
+  const [picture, setPicture] = useState('')
+  const [description, setDescription] = useState('')
+  const [age, setAge] = useState('')
+  const [gender, setGender] = useState('')
+  const [location, setLocation] = useState('')
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-
-  // }
+  const handleChange = (ev: React.ChangeEvent<HTMLInputElement>, cb: any) => {
+    // console.log('ev.target-->', ev.target);
+    cb(ev.target.value)
+  };
 
   const handleSubmit = (e: FormEvent) => {
-    console.log('e-->', e);
+    e.preventDefault()
+    console.log('INSIDE HANDLE SUBMIT-->');
+    console.log('user.profile-->', user.profile);
+
+    if (user && user.profile) {
+      const newUs: User = {
+        ...user, profile: {
+          userId: user.id,
+          picture: picture !== "" ? picture : user.profile.picture,
+          description: description !== "" ? description : user.profile.description,
+          age: age !== "" ? age : user.profile.age,
+          gender: gender !== "" ? gender : user.profile.gender,
+          location: location !== "" ? location : user.profile.location,
+        }
+      }
+      console.log('newUs-->', newUs);
+      console.log('newUs.profile-->', newUs.profile);
+      dispatch(profileUpdate(newUs))
+    }
+    // dispatch(setUser(newUs))
   }
 
   return (
@@ -42,7 +71,6 @@ export const ProfilePage = () => {
         <div className="profile_page_header_container">
 
           <div>Hello {user.firstName} </div>
-
           <div>{user.profile && user.profile.age} </div>
 
           <div className="profile_page_image_container">
@@ -59,11 +87,21 @@ export const ProfilePage = () => {
                 <Modal.Title>Edit Your Profile</Modal.Title>
                 <Modal.Body>
                   <form>
-                    <input name="picture" id="" placeholder="Picture"></input>
-                    <input name="description" id="" placeholder="Description"></input>
-                    <input name="age" id="" placeholder="Age"></input>
-                    <input name="gender" id="" placeholder="Gender"></input>
-                    <input name="location" id="" placeholder="Location"></input>
+                    <input name="picture" id="" placeholder="Picture" onChange={(e) => {
+                      handleChange(e, setPicture)
+                    }}></input>
+                    <input name="description" id="" placeholder="Description" onChange={(e) => {
+                      handleChange(e, setDescription)
+                    }}></input>
+                    <input name="age" id="" placeholder="Age" onChange={(e) => {
+                      handleChange(e, setAge)
+                    }}></input>
+                    <input name="gender" id="" placeholder="Gender" onChange={(e) => {
+                      handleChange(e, setGender)
+                    }}></input>
+                    <input name="location" id="" placeholder="Location" onChange={(e) => {
+                      handleChange(e, setLocation)
+                    }}></input>
                   </form>
                 </Modal.Body>
                 <Modal.Footer>

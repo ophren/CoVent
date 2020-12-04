@@ -87,14 +87,14 @@ export function receivedLikeFromOther(receivedLike: ReceivedLike): Promise<User>
   }).then((res) => res.json());
 }
 
-export function updateUserProfileData(updatedUserProfile: Profile): Promise<void> {
+export const updateUserProfileData = (updatedUserProfile: Profile): any => {
   return fetch(`${baseUrl}/profile`, {
     method: "POST",
-    body: JSON.stringify(updatedUserProfile),
     headers: {
-      Accept: "application/json",
+      'Content-Type': 'application/json'
     },
-  }).then((res) => res.json());
+    body: JSON.stringify(updatedUserProfile),
+  }).then((res) => res);
 }
 
 export const getAllCities = (): Promise<City[]> => {

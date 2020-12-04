@@ -2,8 +2,8 @@ import { SystemActionTypes } from './../types/systemTypes';
 import { Dispatch } from 'react';
 import { setUserFirebaseId, setUserToLoggedIn, setUserToLoggedOut } from '../redux/systemState/systemStateActions';
 import fire from './firebase';
-import { addProfileToUserAtDataBase, getUserById, registerUserToDataBase, getUserByEmailAndPassword } from './userDatabaseFetch';
-import { User } from '../types/userTypes';
+import { addProfileToUserAtDataBase, getUserById, registerUserToDataBase, getUserByEmailAndPassword, updateUserProfileData } from './userDatabaseFetch';
+import { User, Profile } from '../types/userTypes';
 import { setUser } from '../redux/userState/userActions';
 
 export const userLogin = (creds: any) => {
@@ -55,7 +55,7 @@ export const userSignUp = (user: User) => {
                             if (user.profile) {
                                 user.profile.userId = Number(registeredUser.id);
                                 addProfileToUserAtDataBase(user.profile)
-                                    .then(one => {
+                                    .then(() => {
                                         if (user.id) {
                                             getUserById(user.id.toString()).then(updatedUser => {
                                                 dispatch(setUser(updatedUser[0]))
@@ -72,3 +72,19 @@ export const userSignUp = (user: User) => {
         }
     };
 };
+
+export const profileUpdate = (user: User) => {
+    console.log('INSIDE SYSTEM FUNCTION-->');
+    console.log('user.profile-->', user.profile);
+
+    return (dispatch: any) => {
+        if (user && user.profile) {
+            updateUserProfileData(user.profile)
+                .then(() => {
+                    console.log('INSIDE SYSTEM FUNCTION PROFILE UPDATE-->');
+                    console.log('user-->', user);
+                    dispatch(setUser(user))
+                })
+        }
+    }
+}

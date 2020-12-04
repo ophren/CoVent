@@ -5,8 +5,6 @@ const models = require('../models');
 const helperFuncs = require('./../utils/helperFuncs');
 
 const createUser = async (req, res) => {
-  console.log('INSIDE CREATE USER-->');
-
   const { email, password } = req.body;
   const user = await models.user.findAll({
     where: { email: email }
