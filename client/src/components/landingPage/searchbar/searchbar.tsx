@@ -36,10 +36,7 @@ import './searchbar.css'
 
 
 export const Searchbar = (): ReactElement => {
-
-
-
-
+  
   const [users, setUsers] = useState<ProfileNew[]>([]);
   const [cities, setCities] = useState<City[]>([]);
   const [city, setCity] = useState('');
