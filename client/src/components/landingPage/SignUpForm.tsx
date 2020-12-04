@@ -12,12 +12,12 @@ export const SignUpForm = ({ setShowModal, setShowDescriptionModal }: any): JSX.
 
     const dispatch = useDispatch();
     const [userCredentials, setUserCredentials] = useState<User>({ email: '', password: '', firstName: '', lastName: '' });
-    let currentUser = useSelector((state: RootState) => state.user)
+    const currentUser = useSelector((state: RootState) => state.user)
 
     // useEffect(() => { console.log('useEffect') }, [currentUser])
 
     function handleChange(ev: React.ChangeEvent<HTMLInputElement>) {
-        let { name, value } = ev.target;
+        const { name, value } = ev.target;
         setUserCredentials(prevState => ({ ...prevState, [name]: value }));
     }
 
@@ -28,7 +28,7 @@ export const SignUpForm = ({ setShowModal, setShowDescriptionModal }: any): JSX.
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
         // 1 - Adding user data to Firebase
-        
+
         const newUser: User = { ...currentUser,
             ...userCredentials}
 
