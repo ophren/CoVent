@@ -1,0 +1,10 @@
+.top_bar_sign_up_button {
+    border-radius : 5px;
+    color: white;
+    background-color: rebeccapurple;
+    border: none;
+    height: 30px;
+    width: 80px;
+    margin-top: 20px;
+    margin-right: 20px;
+}

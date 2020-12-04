@@ -1,13 +1,13 @@
 .container {
   display:flex;
   margin-top: 10px;
-  max-width: 400px;
-  min-width: 0;
+  /* max-width: 400px;
+  min-width: 0; */
 }
 
 .image_container {
   justify-content: space-around;
-  max-width: 400px;
+  /* max-width: 400px; */
 }
 
 .searchbar_image {

@@ -4,10 +4,14 @@ const models = require('./../models/');
 const helperFuncs = require('./../utils/helperFuncs');
 
 const createProfile = async (req, res) => {
+  console.log('INSIDE CONTROLLER SERVER-->');
+  console.log('req.body-->', req.body);
+
   const { userId } = req.body;
   const profile = await models.profile.findAll({
     where: { userId: userId }
   });
+  console.log('profile-->', profile);
   try {
     if (profile.length > 0) {
       const updatedProfile = await models.profile.update((req.body), {
@@ -15,7 +19,9 @@ const createProfile = async (req, res) => {
       });
       res.status(204).send(updatedProfile);
     } else {
+      console.log('INSIDE ELSE STATEMENT-->');
       const newProfile = await models.profile.create(req.body);
+      console.log('newProfile-->', newProfile);
       res.status(201).send(newProfile);
     }
   } catch (error) {

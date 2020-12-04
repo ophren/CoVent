@@ -12,9 +12,10 @@ export const ProfilePage = () => {
 
     <div className="profile_page_container">
       <div className="profile_page_header_container">
-        <div>Hello {user.name} </div>
+        <div>Hello {user.firstName} </div>
+        <div>{user.profile && user.profile.age} </div>
         <div className="profile_page_image_container">
-          <img className="profile_page_image" src={user.profilePic} alt="profile" />
+          <img className="profile_page_image" src={user.profile?.picture} alt="profile" />
         </div>
       </div>
     </div>

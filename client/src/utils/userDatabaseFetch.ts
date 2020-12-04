@@ -12,7 +12,15 @@ export const getAllUsers = (): Promise<UserL[]> => {
   }).then((res) => res.json());
 }
 
-export function getUserById(id: number): Promise<User> {
+
+export function getUserByEmailAndPassword(email: string, password:string): Promise<User> {
+  return fetch(`${baseUrl}/login`, {
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json());
+}
+export function getUserById(id: string): Promise<User> {
   return fetch(`${baseUrl}/user/${id}`, {
     headers: {
       Accept: "application/json",
@@ -21,22 +29,32 @@ export function getUserById(id: number): Promise<User> {
 }
 
 export function registerUserToDataBase(user: User): Promise<User> {
+  const userAdoped:User = {
+    firstName: user.firstName, lastName: user.lastName,
+    email: user.email, password: user.password
+  }
+
+  // console.log('userAdoped', userAdoped)
   return fetch(`${baseUrl}/register`, {
     method: "POST",
-    body: JSON.stringify(user),
     headers: {
-      Accept: "application/json",
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
+    body: JSON.stringify(userAdoped),
   }).then((res) => res.json());
 }
 
 export function addProfileToUserAtDataBase(profile: Profile): Promise<User> {
+  console.log('INSIDE FETCH PROFILE-->');
+  console.log('profile-->', profile);
   return fetch(`${baseUrl}/profile`, {
     method: "POST",
-    body: JSON.stringify(profile),
     headers: {
-      Accept: "application/json",
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
+    body: JSON.stringify(profile),
   }).then((res) => res.json());
 }
 export function addCategoryToUserAtDataBase(category: Category): Promise<User> {

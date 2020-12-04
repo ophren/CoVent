@@ -3,16 +3,17 @@ import firebase from 'firebase';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyD4tComQzw7ujcExFaC6saRxo14DKGJo38",
-  authDomain: "covent-f2bb2.firebaseapp.com",
-  databaseURL: "https://covent-f2bb2.firebaseio.com",
-  projectId: "covent-f2bb2",
-  storageBucket: "covent-f2bb2.appspot.com",
-  messagingSenderId: "422585074955",
-  appId: "1:422585074955:web:a21859b4877320ee478e0e",
-  measurementId: "G-B3GBBMM7PD"
+  apiKey: "AIzaSyBQHcrCWn75xfhkH4gFSPYeA4Fovkrs6Gw",
+  authDomain: "covent-3da54.firebaseapp.com",
+  projectId: "covent-3da54",
+  storageBucket: "covent-3da54.appspot.com",
+  messagingSenderId: "917329844187",
+  appId: "1:917329844187:web:b65d2244efd6ecd3a139fe",
+  measurementId: "G-T9BCS54VF4"
 };
+
 // Initialize Firebase
+
 const fire = firebase.initializeApp(firebaseConfig);
 
 //const fireBaseAppAuth = fireBaseApp.auth()

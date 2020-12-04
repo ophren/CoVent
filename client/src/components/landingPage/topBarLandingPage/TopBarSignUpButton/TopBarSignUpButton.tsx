@@ -1,7 +1,7 @@
-
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../../types/combinedStoreTypes'
+import './TopBarSignUpButton.css'
 
 const USER_SIGN_UP_TEXT = 'Sign Up'
 

@@ -8,12 +8,14 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../../types/combinedStoreTypes'
 import SignUpForm from '../SignUpForm'
 import SignInForm from '../SignInForm'
+import DescriptionForm from '../DescriptionForm'
 
 export const TopBarLandingPage =
   (): ReactElement => {
 
     const [showModalSignUp, setShowModalSignUp] = useState(false);
     const [showModalSignIn, setShowModalSignIn] = useState(false);
+    const [showDescriptionModal, setShowDescriptionModal] = useState(false);
 
     const history = useHistory()
     const userIsLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
@@ -22,19 +24,19 @@ export const TopBarLandingPage =
       history.push("/profile")
     }
 
-    return (<div
-      className="top_bar_landing_page_container"
-    >
+    return (
+    <div className="top_bar_landing_page_container">
       <TopBarNewMatchesButton />
       <TopBarSignUpButton setShowModal= {setShowModalSignUp}/>
       <TopBarLandingPageLogInButton setShowModal={setShowModalSignIn} />
       {showModalSignUp?
-        <SignUpForm setShowModal={setShowModalSignUp}/> : null }
+        <SignUpForm setShowModal={setShowModalSignUp} setShowDescriptionModal= {setShowDescriptionModal}/> : null }
       {showModalSignIn?
         <SignInForm setShowModal={setShowModalSignIn}/> : null }
+      {showDescriptionModal?
+        <DescriptionForm setShowDescriptionModal= {setShowDescriptionModal}/> : null}
       {userIsLoggedIn &&
         <button onClick={handleClick} >Profile</button>
       }
-
     </div>)
   }

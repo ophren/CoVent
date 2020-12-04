@@ -12,6 +12,8 @@ const initialSystemState: SystemState = {
 
 }
 
+// create action to toggle true/false in systemStateActions.js
+
 export function systemReducer(
   state = initialSystemState,
   action: SystemActionTypes
