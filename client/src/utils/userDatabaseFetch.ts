@@ -1,6 +1,6 @@
 import { Category, GiveLike, ReceivedLike } from './../types/userTypes';
 import { Profile, User } from "../types/userTypes";
-import { UserL, City, ProfileNew  } from "../types/userLucasTypes";
+import { UserL, City, ProfileNew } from "../types/userLucasTypes";
 
 const baseUrl = "http://localhost:3002";
 
@@ -12,8 +12,7 @@ export const getAllUsers = (): Promise<UserL[]> => {
   }).then((res) => res.json());
 }
 
-
-export function getUserByEmailAndPassword(email: string, password:string): Promise<User> {
+export function getUserByEmailAndPassword(email: string, password: string): Promise<User> {
   const user: User = {
     email,
     password
@@ -35,34 +34,29 @@ export function getUserById(id: string): Promise<User[]> {
 }
 
 export function registerUserToDataBase(user: User): Promise<User> {
-  const userAdoped:User = {
+  const userAdoped: User = {
     firstName: user.firstName, lastName: user.lastName,
     email: user.email, password: user.password
   }
-
-  // console.log('userAdoped', userAdoped)
   return fetch(`${baseUrl}/register`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: JSON.stringify(userAdoped),
   }).then((res) => res.json());
 }
 
 export function addProfileToUserAtDataBase(profile: Profile): Promise<User> {
-  console.log('INSIDE FETCH PROFILE-->');
-  console.log('profile-->', profile);
   return fetch(`${baseUrl}/profile`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: JSON.stringify(profile),
   }).then((res) => res.json());
 }
+
 export function addCategoryToUserAtDataBase(category: Category): Promise<User> {
   return fetch(`${baseUrl}/category`, {
     method: "POST",

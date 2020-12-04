@@ -13,31 +13,15 @@ import { registerUserToDataBase } from '../../utils/userDatabaseFetch';
 
 export const LandingPage = (): ReactElement => {
   const dispatch = useDispatch()
-
-
   const firebaseUser = useSelector((state: RootState) => state.system)
-  const currentUser = useSelector((state:RootState) => state.user)
-  // const user
-  // if(firebaseUser.newUser) registerUserToDataBase(firebaseUser)
-  // if(firebaseUser.loggedIn && firebaseUser.userFirebaseId) {
-  //   dispatch(getUserByIdDispatch(firebaseUser.userFirebaseId))
-
-  // }
-
-
-
-  // const dispatch = useDispatch()
-  // const user = useSelector((state: RootState) => state.user);
-  // dispatch(setUserName('Peter'))
-
+  const currentUser = useSelector((state: RootState) => state.user)
 
   return (
     <>
-    <div className="landing_page_container">
-      {console.log(currentUser, 'current user from landingpage')}
-      <TopBarLandingPage />
-      <Searchbar />
-    </div>
+      <div className="landing_page_container">
+        {console.log(currentUser, 'current user from landingpage')}
+        <TopBarLandingPage />
+      </div>
       <Searchbar />
     </>
   )

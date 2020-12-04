@@ -25,14 +25,7 @@ export const DescriptionForm = ({ setShowDescriptionModal }: any): JSX.Element =
             ...currentUser, profile:
                 { ...currentUser.profile, ...newUserDescription }
         }
-
-
-
-        // console.log(currentUser,'description form before userSignup')
-            dispatch(userSignUp(newUser))
-
-
-
+        dispatch(userSignUp(newUser))
         dispatch(setUser(newUser));
         setShowDescriptionModal(false);
     }
@@ -41,7 +34,6 @@ export const DescriptionForm = ({ setShowDescriptionModal }: any): JSX.Element =
         <div id="modal-main">
             <div>Please complete your profile information:</div>
             <form id="modal" onSubmit={handleDescription}>
-
                 <input
                     name="gender"
                     id=""
@@ -65,11 +57,7 @@ export const DescriptionForm = ({ setShowDescriptionModal }: any): JSX.Element =
                     onChange={handleChange}
                 >
                 </input>
-
-
-
                 <button type="submit">Submit</button>
-
             </form>
         </div>
     );

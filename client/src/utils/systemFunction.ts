@@ -7,34 +7,24 @@ import { User } from '../types/userTypes';
 import { setUser } from '../redux/userState/userActions';
 
 export const userLogin = (creds: any) => {
-    console.log('INSIDE LOGIN FRONT END-->',);
-
     return (dispatch: any) => {
         fire
             .auth()
             .signInWithEmailAndPassword(creds.email, creds.password)
             .then((res) => {
-                console.log('res-->', res);
-
                 dispatch(setUserFirebaseId(res.user?.uid));
                 dispatch(setUserToLoggedIn());
                 getUserByEmailAndPassword(creds.email, creds.password).then(updatedUser => {
-                    console.log('INSIDE EMAIL AND PASSWORD-->');
-                    console.log('updatedUser[0]-->', updatedUser);
-
                     if (updatedUser.id) {
                         getUserById(updatedUser.id.toString()).then(user => {
-                            console.log('user-->', user);
                             const newUser = user[0]
                             dispatch(setUser(newUser))
                         })
                     }
                 })
-
-
-                // dispatch(setUserState (getUserById(res.user?.uid)))
             })
             .catch(err => {
+                alert(err)
                 console.log(err)
             });
     };
@@ -42,7 +32,6 @@ export const userLogin = (creds: any) => {
 
 export const userLogOut = () => {
     return (dispatch: Dispatch<SystemActionTypes>) => {
-
         fire.auth().signOut().then(function () {
             dispatch(setUserToLoggedOut())
         }).catch(function (error) {
@@ -62,7 +51,6 @@ export const userSignUp = (user: User) => {
                     dispatch(setUserFirebaseId(firebaseUser.user?.uid));
                     dispatch(setUserToLoggedIn());
                     registerUserToDataBase(user).then(registeredUser => {
-                        console.log('RESPONSE FROM BACKEND-->', registeredUser);
                         if (registeredUser.id) {
                             if (user.profile) {
                                 user.profile.userId = Number(registeredUser.id);
