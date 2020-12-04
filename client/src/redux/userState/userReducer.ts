@@ -106,7 +106,7 @@ const initialUserState: User = {
 
 
 export function userReducer(state = initialUserState, action: UserActionTypes):User {
-    console.log(action.payload, 'payload_--------------')
+    // console.log(action.payload, 'payload_--------------')
     switch (action.type) {
   /*     case SET_USER_NAME:
         return {

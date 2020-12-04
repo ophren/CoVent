@@ -2,15 +2,16 @@ import { SystemActionTypes } from './../types/systemTypes';
 import { Dispatch } from 'react';
 import { setUserFirebaseId, setUserToLoggedIn, setUserToLoggedOut } from '../redux/systemState/systemStateActions';
 import fire from './firebase';
-import { getUserById, registerUserToDataBase } from './userDatabaseFetch';
+import { addProfileToUserAtDataBase, getUserById, registerUserToDataBase } from './userDatabaseFetch';
 import { User } from '../types/userTypes';
+import { setUser } from '../redux/userState/userActions';
 
 export const userLogin = (creds: any) => {
     return (dispatch: any) => {
         fire
             .auth()
             .signInWithEmailAndPassword(creds.email, creds.password)
-    
+
             .then((res) => {
                 dispatch(setUserFirebaseId(res.user?.uid));
                 dispatch(setUserToLoggedIn());
@@ -35,28 +36,38 @@ export const userLogOut = () => {
         });
     }
 }
-let currentUser 
 
-export const userSignUp = (user:User) => {
-    console.log('system func firebase sign upx')
+
+export const userSignUp = (user: User) => {
+    // console.log(user, 'system func firebase sign upx')
     return (dispatch: any) => {
-        if(user.email&& user.password) {
+        if (user.email && user.password) {
 
             fire
-            .auth()
-            .createUserWithEmailAndPassword(user.email, user.password)
-            .then((res) => {
-                console.log(res.user?.uid, ' Firebase res')
-                dispatch(setUserFirebaseId(res.user?.uid));
-                dispatch(setUserToLoggedIn());
-                registerUserToDataBase(user).then(user=>{
-                    console.log('registered user: ' , user.firstName)
-                }).catch(e=> console.log(e))
-                
-            })
-            .catch(err => {
-                console.log(err)
-            });
+                .auth()
+                .createUserWithEmailAndPassword(user.email, user.password)
+                .then((firebaseUser) => {
+                    // console.log(firebaseUser.user?.uid, ' Firebase res')
+                    dispatch(setUserFirebaseId(firebaseUser.user?.uid));
+                    dispatch(setUserToLoggedIn());
+                    registerUserToDataBase(user).then(user => {
+
+                        console.log('registered user: ', user)
+                        if (user.profile) addProfileToUserAtDataBase(user.profile)
+                            .then(one => {
+                                if (user.id) {
+
+                                    getUserById(user.id.toString()).then(user => console.log(user, 'user after getUserByID'))
+                                }
+
+                            })
+
+                    }).catch(e => console.log(e))
+
+                })
+                .catch(err => {
+                    console.log(err)
+                });
         }
     };
 };

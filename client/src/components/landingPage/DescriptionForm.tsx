@@ -26,6 +26,9 @@ export const DescriptionForm = ({ setShowDescriptionModal }: any): JSX.Element =
                 { ...currentUser.profile, ...newUserDescription }
         }
 
+
+
+        console.log(currentUser,'description form before userSignup')
             dispatch(userSignUp(newUser))
         
 
@@ -33,7 +36,6 @@ export const DescriptionForm = ({ setShowDescriptionModal }: any): JSX.Element =
         dispatch(setUser(newUser));
         setShowDescriptionModal(false);
     }
-    console.log(currentUser)
 
     return (
         <div id="modal-main">
