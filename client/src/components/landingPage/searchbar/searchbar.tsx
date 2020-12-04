@@ -9,21 +9,24 @@ export const Searchbar = (): ReactElement => {
 
   const [users, setUsers] = useState<ProfileNew[]>([]);
   const [city, setCity] = useState('');
+  const [flag, setFlag] = useState(false)
 
   useEffect(() => {
     getAllProfiles()
       .then((list) => {
         setUsers(list)
+        setFlag(true)
       })
   }, []);
 
   const handleChange = async (ev: React.ChangeEvent<HTMLInputElement>) => {
     setCity(ev.target.value.toLowerCase());
+    setFlag(false)
   };
 
-  let render;
+  let renderUserWithCities;
   if (users[0] && users[0].cities) {
-    render = (
+    renderUserWithCities = (
       users.filter(user => user.cities.length
         && user.cities[0].name.toLowerCase().includes(city)).map((el, i) => {
           return <div key={i} className="image_container">
@@ -34,15 +37,25 @@ export const Searchbar = (): ReactElement => {
     )
   }
 
+  let renderAllUsers;
+  if (users[0]) {
+    renderAllUsers = (
+      users.map((el, i) => {
+        return <div key={i} className="image_container">
+          <img src={el.picture} className="searchbar_image" alt="profile pic" />
+        </div>
+      })
+    )
+  }
+
   return (
     <div>
       <form>
         <input type="text" placeholder="city" value={city} onChange={handleChange} />
       </form>
       <div className="container">
-        {render}
+        {flag ? renderAllUsers : renderUserWithCities}
       </div>
-
     </div>
   )
 };

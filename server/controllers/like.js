@@ -9,7 +9,6 @@ const like = async (req, res) => {
   const { profileId } = req.body;
   const values = Object.values(req.body);
 
-
   const profile = await helperFuncs.findProfile(models, profileId, 'profile');
 
   if (values[0] === values[1]) {
@@ -43,8 +42,6 @@ const like = async (req, res) => {
 
         if (matchCheck) {
           await profile[0].addMatched(givenLikeId, profileId);
-          console.log('profile[0]-->', profile[0]);
-
           await targetProfile[0].addMatched(profileId, givenLikeId);
           const updatedUser = await helperFuncs.findUser(models, profile[0].dataValues.userId);
 

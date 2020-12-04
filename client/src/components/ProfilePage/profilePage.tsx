@@ -38,14 +38,11 @@ export const ProfilePage = () => {
   const handleShow = () => setShow(true);
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>, cb: any) => {
-    // console.log('ev.target-->', ev.target);
     cb(ev.target.value)
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    console.log('INSIDE HANDLE SUBMIT-->');
-    console.log('user.profile-->', user.profile);
 
     if (user && user.profile) {
       const newUs: User = {
@@ -58,11 +55,8 @@ export const ProfilePage = () => {
           location: location !== "" ? location : user.profile.location,
         }
       }
-      console.log('newUs-->', newUs);
-      console.log('newUs.profile-->', newUs.profile);
       dispatch(profileUpdate(newUs))
     }
-    // dispatch(setUser(newUs))
   }
 
   return (
@@ -120,8 +114,6 @@ export const ProfilePage = () => {
             </Modal>
 
           </div>
-
-
         </div>
       </div>
     </>
