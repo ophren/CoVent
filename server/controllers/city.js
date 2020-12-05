@@ -27,12 +27,21 @@ const addCity = async (req, res) => {
       } else {
         try {
           if (city.length > 0) {
-            await profile[0].removeCity(profile[0].cities[0].dataValues.id, profileId);
+            console.log('INSIDE IF-->');
+            console.log('profile[0].cities[0]-->', profile[0].cities[0]);
+            if (profile[0].cities[0]) {
+              await profile[0].removeCity(profile[0].cities[0].dataValues.id, profileId);
+            }
             await profile[0].addCity(city);
             res.status(201).send(city[0]);
           } else {
+            console.log('INSIDE ELSE-->');
+
+            console.log('profile[0]-->', profile[0]);
             const newCity = await models.city.create(req.body);
-            await profile[0].removeCity(profile[0].cities[0].dataValues.id, profileId);
+            if (profile[0].cities[0]) {
+              await profile[0].removeCity(profile[0].cities[0].dataValues.id, profileId);
+            }
             await profile[0].addCity(newCity);
             res.status(201).send(newCity);
 

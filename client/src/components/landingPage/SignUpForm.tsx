@@ -23,7 +23,7 @@ export const SignUpForm = ({ setShowModal, setShowDescriptionModal }: any): JSX.
 
     function closeModal() {
         setShowModal(false);
-    }
+    } 
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
