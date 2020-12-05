@@ -19,7 +19,7 @@ export const LandingPage = (): ReactElement => {
   return (
     <>
       <div className="landing_page_container">
-        {/* {console.log(currentUser, 'current user from landingpage')} */}
+        {console.log('current user from landingpage', currentUser, )}
         <TopBarLandingPage />
       </div>
       <Searchbar />

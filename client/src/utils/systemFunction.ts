@@ -31,9 +31,23 @@ export const userLogin = (creds: any) => {
 };
 
 export const userLogOut = () => {
-    return (dispatch: Dispatch<SystemActionTypes>) => {
+    return (dispatch: any) => {
         fire.auth().signOut().then(function () {
             dispatch(setUserToLoggedOut())
+            dispatch(setUser({
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                profile: {
+                    age: '',
+                    description: '',
+                    gender: '',
+                    location: '',
+                    picture: '',
+                    userId: 0,
+                }
+            }))
         }).catch(function (error) {
             console.log(error)
         });
@@ -56,8 +70,8 @@ export const userSignUp = (user: User) => {
                                 user.profile.userId = Number(registeredUser.id);
                                 addProfileToUserAtDataBase(user.profile)
                                     .then(() => {
-                                        if (user.id) {
-                                            getUserById(user.id.toString()).then(updatedUser => {
+                                        if (user.profile && user.profile.userId) {
+                                            getUserById(user.profile.userId.toString()).then(updatedUser => {
                                                 dispatch(setUser(updatedUser[0]))
                                             })
                                         }
@@ -74,9 +88,6 @@ export const userSignUp = (user: User) => {
 };
 
 export const profileUpdate = (user: User) => {
-    console.log('INSIDE SYSTEM FUNCTION-->');
-    console.log('user.profile-->', user.profile);
-
     return (dispatch: any) => {
         if (user && user.profile) {
             updateUserProfileData(user.profile)

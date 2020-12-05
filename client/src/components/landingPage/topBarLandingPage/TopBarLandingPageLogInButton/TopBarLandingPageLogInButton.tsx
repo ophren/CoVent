@@ -11,25 +11,24 @@ interface TopBarSignInButtonProp {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const TopBarLandingPageLogInButton = ({setShowModal} : TopBarSignInButtonProp): ReactElement => {
+export const TopBarLandingPageLogInButton = ({ setShowModal }: TopBarSignInButtonProp): ReactElement => {
   const dispatch = useDispatch()
-  const userLoggedIn =
-   useSelector((state: RootState) => state.system.loggedIn)
+  const userLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
 
-   function handleLogOut () {
-     dispatch(userLogOut())
-   }
+  function handleLogOut() {
+    dispatch(userLogOut())
+  }
 
-  function displayModal () {
+  function displayModal() {
     setShowModal(true);
   }
 
   return (
     <div className="log_in_button_container">
-    {userLoggedIn
-      ? <button className={buttonClassName} onClick={handleLogOut}>{USER_LOGGED_OUT_TEXT}</button>
-      : <button className={buttonClassName} onClick= {displayModal}>
-        {USER_LOGGED_IN_TEXT}
+      {userLoggedIn
+        ? <button className={buttonClassName} onClick={handleLogOut}>{USER_LOGGED_OUT_TEXT}</button>
+        : <button className={buttonClassName} onClick={displayModal}>
+          {USER_LOGGED_IN_TEXT}
         </button>
       }
     </div>

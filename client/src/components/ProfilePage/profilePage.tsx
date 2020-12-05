@@ -26,7 +26,7 @@ export const ProfilePage = () => {
   console.log('INSIDE PROFILE-->');
   console.log('user-->', user);
 
-  const [newUserDescription, setNewUserDescription] = useState<Profile>(initialState);
+  // const [newUserDescription, setNewUserDescription] = useState<Profile>(initialState);
   const [show, setShow] = useState(false);
   const [picture, setPicture] = useState('')
   const [description, setDescription] = useState('')
@@ -43,7 +43,7 @@ export const ProfilePage = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-
+    
     if (user && user.profile) {
       const newUs: User = {
         ...user, profile: {

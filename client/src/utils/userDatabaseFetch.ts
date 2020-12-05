@@ -47,14 +47,20 @@ export function registerUserToDataBase(user: User): Promise<User> {
   }).then((res) => res.json());
 }
 
-export function addProfileToUserAtDataBase(profile: Profile): Promise<User> {
+export function addProfileToUserAtDataBase(profile: Profile): any {
   return fetch(`${baseUrl}/profile`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(profile),
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (res.status === 204) {
+      return res;
+    } else {
+      res.json()
+    }
+  });
 }
 
 export function addCategoryToUserAtDataBase(category: Category): Promise<User> {
