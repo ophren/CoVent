@@ -94,6 +94,10 @@ export const profileUpdate = (user: User) => {
         if (user && user.profile) {
             updateUserProfileData(user.profile)
                 .then(() => {
+                    console.log('INSIDE SYSTEM PROFILE-->');
+
+                    console.log('user-->', user);
+
                     dispatch(setUser(user))
                 })
         }
@@ -110,6 +114,8 @@ export const addCityToProfile = (city: CityAdd, user: User) => {
                 console.log('el-->', el);
                 if (user.profile && user.profile.cities) {
                     user.profile.cities[0] = el
+                    console.log('user AFTER CITY HAS BEEN ADDED -->', user);
+
                     dispatch(setUser(user))
                 }
             })

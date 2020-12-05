@@ -55,14 +55,25 @@ export const ProfilePage = () => {
     e.preventDefault()
 
     if (user && user.profile) {
+      console.log('BEFORE SETTING NEW FIELDS-->')
+      console.log('user-->', user);
+
+
       const newUs: User = {
         ...user, profile: {
-          userId: user.id,
-          picture: picture !== "" ? picture : user.profile.picture,
-          description: description !== "" ? description : user.profile.description,
           age: age !== "" ? age : user.profile.age,
+          categories: user.profile.categories,
+          cities: user.profile.cities,
+          description: description !== "" ? description : user.profile.description,
           gender: gender !== "" ? gender : user.profile.gender,
+          hasNewMatch: user.profile.hasNewMatch,
+          id: user.profile.id,
+          likedProfile: user.profile.likedProfile,
           location: location !== "" ? location : user.profile.location,
+          matched: user.profile.matched,
+          picture: picture !== "" ? picture : user.profile.picture,
+          receivedLike: user.profile.receivedLike,
+          userId: user.id,
         }
       }
       dispatch(profileUpdate(newUs))

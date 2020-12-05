@@ -39,8 +39,9 @@ const addCity = async (req, res) => {
 
             console.log('profile[0]-->', profile[0]);
             const newCity = await models.city.create(req.body);
-
-            await profile[0].removeCity(profile[0].cities[0].dataValues.id, profileId);
+            if (profile[0].cities[0]) {
+              await profile[0].removeCity(profile[0].cities[0].dataValues.id, profileId);
+            }
             await profile[0].addCity(newCity);
             res.status(201).send(newCity);
 
