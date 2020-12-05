@@ -2,7 +2,7 @@ import { SystemActionTypes } from './../types/systemTypes';
 import { Dispatch } from 'react';
 import { setUserFirebaseId, setUserToLoggedIn, setUserToLoggedOut } from '../redux/systemState/systemStateActions';
 import fire from './firebase';
-import { addProfileToUserAtDataBase, getUserById, registerUserToDataBase, getUserByEmailAndPassword, updateUserProfileData, addCity } from './userDatabaseFetch';
+import { addProfileToUserAtDataBase, getUserById, registerUserToDataBase, getUserByEmailAndPassword, updateUserProfileData, addCity, giveLike } from './userDatabaseFetch';
 import { User, Profile } from '../types/userTypes';
 import { setUser } from '../redux/userState/userActions';
 import { UserL, City, ProfileNew, CityAdd } from "../types/userLucasTypes";
@@ -103,8 +103,6 @@ export const profileUpdate = (user: User) => {
 export const addCityToProfile = (city: CityAdd, user: User) => {
     console.log('INSIDE SYSTEM ADD CITY------->');
     return (dispatch: any) => {
-        console.log('city-->', city);
-        console.log('user-->', user);
         addCity(city)
             .then((el: any) => {
                 console.log('el-->', el);
@@ -112,6 +110,18 @@ export const addCityToProfile = (city: CityAdd, user: User) => {
                     user.profile.cities[0] = el
                     dispatch(setUser(user))
                 }
+            })
+    }
+}
+
+export const addLike = (like: any): any => {
+
+    return (dispatch: any) => {
+        giveLike(like)
+            .then((newUser: any) => {
+                console.log('newUser INSIDE SYSTEM FUNCTION-->', newUser);
+
+                dispatch(setUser(newUser[0]))
             })
     }
 }

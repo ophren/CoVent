@@ -1,15 +1,18 @@
 import React, { ReactElement, useState, useEffect, FormEvent } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './../../../types/combinedStoreTypes';
 import { UserL, City, ProfileNew } from './../../../types/userLucasTypes';
 import { getAllUsers, getAllCities, getAllProfiles } from './../../../utils/userDatabaseFetch';
 import { Button, Modal } from 'react-bootstrap';
 import './searchbar.css'
+import { addLike } from './../../../utils/systemFunction'
 
 export const Searchbar = (): ReactElement => {
   console.log('INSIDE SEARCHBAR-->');
 
   const currentUser = useSelector((state: RootState) => state.user)
+  const dispatch = useDispatch();
+
   const [users, setUsers] = useState<ProfileNew[]>([]);
   const [city, setCity] = useState('');
   const [show, setShow] = useState(false);
@@ -33,6 +36,17 @@ export const Searchbar = (): ReactElement => {
     console.log('fuck')
   }
 
+  const handleLike = (e: FormEvent, id: number) => {
+    e.preventDefault()
+    if (currentUser.profile) {
+      const like: any = {
+        profileId: currentUser.profile.id,
+        givenLikeId: id,
+      }
+      dispatch(addLike(like))
+    }
+  }
+
   let renderUserWithCities;
   if (users[0] && users[0].cities) {
     renderUserWithCities = (
@@ -40,6 +54,10 @@ export const Searchbar = (): ReactElement => {
         && user.cities[0].name.toLowerCase().includes(city)).map((el, i) => {
           return <div key={i} className="image_container">
             <img src={el.picture} className="searchbar_image" alt="profile pic" />
+            <h1>{el.description}</h1>
+            <Button onClick={(e) => {
+              handleLike(e, el.id)
+            }}>💌</Button>
           </div>
         }
         )
@@ -52,6 +70,10 @@ export const Searchbar = (): ReactElement => {
       users.map((el, i) => {
         return <div key={i} className="image_container">
           <img src={el.picture} className="searchbar_image" alt="profile pic" onClick={handleShow} />
+          <div>{el.description}</div>
+          <Button onClick={(e) => {
+            handleLike(e, el.id)
+          }}>💌</Button>
         </div>
       })
     )

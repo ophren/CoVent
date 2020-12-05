@@ -57,12 +57,19 @@ export const ProfilePage = () => {
     if (user && user.profile) {
       const newUs: User = {
         ...user, profile: {
-          userId: user.id,
-          picture: picture !== "" ? picture : user.profile.picture,
-          description: description !== "" ? description : user.profile.description,
           age: age !== "" ? age : user.profile.age,
+          categories: user.profile.categories,
+          cities: user.profile.cities,
+          description: description !== "" ? description : user.profile.description,
           gender: gender !== "" ? gender : user.profile.gender,
+          hasNewMatch: user.profile.hasNewMatch,
+          id: user.profile.id,
+          likedProfile: user.profile.likedProfile,
           location: location !== "" ? location : user.profile.location,
+          matched: user.profile.matched,
+          picture: picture !== "" ? picture : user.profile.picture,
+          receivedLike: user.profile.receivedLike,
+          userId: user.id,
         }
       }
       dispatch(profileUpdate(newUs))
@@ -84,10 +91,9 @@ export const ProfilePage = () => {
 
   return (
     <>
-    {console.log('user-->', user)}
+      {console.log('user INSIDE PROFILE ----------->', user)}
       <div className="profile_page_container">
         <div className="profile_page_header_container">
-
           <div>Hello {user.firstName} </div>
           <div>{user.profile && user.profile.age} </div>
           <div className="profile_page_image_container">
@@ -175,6 +181,45 @@ export const ProfilePage = () => {
       <div>You selected {user && user.profile && user.profile.cities && user.profile.cities[0] && user.profile.cities[0].name} </div>
 
       <div>Select activity first before going to matching</div>
+      <div>Liked profiles {user && user.profile && user.profile.likedProfile &&
+      user.profile.likedProfile[0] && user.profile.likedProfile[0].user
+      && user.profile.likedProfile.map(el => el.user && el.user.firstName) } </div>
+
+
+      <div>Received likes {user && user.profile && user.profile.receivedLike &&
+      user.profile.receivedLike[0] && user.profile.receivedLike[0].user
+      && user.profile.receivedLike.map(el => el.user && el.user.firstName) } </div>
+      <Button>Yes or No</Button>
+      <div>
+            <Button variant="primary" onClick={handleShowCity} className="city_add">
+              Where do you wanna fucking go?
+              </Button>
+
+            <Modal show={showCityModal} onHide={handleCloseCity}>
+              <Modal.Header>
+                <Modal.Title>Add your City</Modal.Title>
+                <Modal.Body>
+                  <form>
+                    <input name="city" id="" placeholder="City" onChange={(e) => {
+                      handleChange(e, setCity)
+                    }}></input>
+                  </form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleCloseCity}>
+                    Close
+                  </Button>
+                  <Button variant="primary" onClick={(e) => {
+                    handleCitySubmit(e)
+                    handleCloseCity()
+                  }}>
+                    Select
+                  </Button>
+                </Modal.Footer>
+              </Modal.Header>
+            </Modal>
+
+          </div>
 
 
     </>
