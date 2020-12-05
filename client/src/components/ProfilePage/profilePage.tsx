@@ -172,7 +172,7 @@ export const ProfilePage = () => {
         </div>
       </div>
 
-      <div>You selected {user.profile && user.profile.cities && user.profile.cities[0].name} </div>
+      <div>You selected {user && user.profile && user.profile.cities && user.profile.cities[0] && user.profile.cities[0].name} </div>
 
       <div>Select activity first before going to matching</div>
 
