@@ -7,23 +7,17 @@ import { Button, Modal } from 'react-bootstrap';
 import './searchbar.css'
 
 export const Searchbar = (): ReactElement => {
+  console.log('INSIDE SEARCHBAR-->');
 
   const currentUser = useSelector((state: RootState) => state.user)
   const [users, setUsers] = useState<ProfileNew[]>([]);
   const [city, setCity] = useState('');
   const [show, setShow] = useState(false);
 
-
   useEffect(() => {
     getAllProfiles()
       .then((list) => {
-        console.log('INSIDE SEARCH BAR USE EFFECT-->');
-        console.log('currentUser-->', currentUser);
-        console.log('currentUser.id-->', currentUser.id);
-
         const filteredList = list.filter((el) => el.id !== currentUser.id)
-        console.log('filteredList-->', filteredList);
-
         setUsers(filteredList)
       })
   }, []);

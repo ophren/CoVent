@@ -94,20 +94,24 @@ export const profileUpdate = (user: User) => {
         if (user && user.profile) {
             updateUserProfileData(user.profile)
                 .then(() => {
-                    console.log('INSIDE SYSTEM FUNCTION PROFILE UPDATE-->');
-                    console.log('user-->', user);
                     dispatch(setUser(user))
                 })
         }
     }
 }
 
-export const addCityToProfile = (city: CityAdd) => {
+export const addCityToProfile = (city: CityAdd, user: User) => {
+    console.log('INSIDE SYSTEM ADD CITY------->');
     return (dispatch: any) => {
         console.log('city-->', city);
+        console.log('user-->', user);
         addCity(city)
             .then((el: any) => {
                 console.log('el-->', el);
+                if (user.profile && user.profile.cities) {
+                    user.profile.cities[0] = el
+                    dispatch(setUser(user))
+                }
             })
     }
 }
