@@ -126,13 +126,5 @@ export const addCity = (city: CityAdd): any => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(city),
-  }).then((res) => {
-    console.log('res-->', res);
-
-    if (res.status === 204) {
-      return res;
-    } else {
-      res.json()
-    }
-  });
+  }).then((res) => res.json());
 };

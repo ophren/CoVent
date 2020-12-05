@@ -27,6 +27,6 @@ router.post('/unmatch', unmatchController.unmatch);
 
 router.post('/city', cityController.addCity);
 router.get('/cities', cityController.getAllCities);
-
+router.post('/city/delete', cityController.removeCityFromUser);
 
 module.exports = router;

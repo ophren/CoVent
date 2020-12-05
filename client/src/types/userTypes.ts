@@ -1,3 +1,6 @@
+import { City } from './userLucasTypes'
+
+
 export interface User {
   firebaseId?:string
   id?:number,
@@ -26,8 +29,7 @@ export interface Profile {
   likedProfiles?:LikedProfiles,
   receivedLikes? : ReceivedLikes,
   matches?: Matches
-
-
+  cities?: City[]
 
 }
 

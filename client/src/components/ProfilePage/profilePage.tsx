@@ -27,7 +27,7 @@ export const ProfilePage = () => {
   }
 
   console.log('INSIDE PROFILE-->');
-  console.log('user-->', user);
+
 
   // const [newUserDescription, setNewUserDescription] = useState<Profile>(initialState);
   const [show, setShow] = useState(false);
@@ -78,18 +78,18 @@ export const ProfilePage = () => {
       }
       console.log('city-->', city);
       console.log('cityObj-->', cityObj);
-      dispatch(addCityToProfile(cityObj))
+      dispatch(addCityToProfile(cityObj, user))
     }
   };
 
   return (
     <>
+    {console.log('user-->', user)}
       <div className="profile_page_container">
         <div className="profile_page_header_container">
 
           <div>Hello {user.firstName} </div>
           <div>{user.profile && user.profile.age} </div>
-
           <div className="profile_page_image_container">
             <img className="profile_page_image" src={user.profile?.picture} alt="profile" />
           </div>
@@ -171,6 +171,12 @@ export const ProfilePage = () => {
 
         </div>
       </div>
+
+      {/* <div>You selected {user.profile && user.profile.cities && user.profile.cities[0].name} </div> */}
+
+      <div>Select activity first before going to matching</div>
+
+
     </>
   )
 }

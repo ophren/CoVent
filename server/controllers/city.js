@@ -5,9 +5,10 @@ const helperFuncs = require('./../utils/helperFuncs');
 
 const addCity = async (req, res) => {
   console.log('SERVER CITY-->');
-  console.log('req.body-->', req.body);
 
   const { name, profileId } = req.body;
+  console.log('req.body-->', req.body);
+
   const city = await models.city.findAll({
     where: { name: name },
   });
@@ -26,15 +27,17 @@ const addCity = async (req, res) => {
       } else {
         try {
           if (city.length > 0) {
+            await profile[0].removeCity(profile[0].cities[0].dataValues.id, profileId);
             await profile[0].addCity(city);
-            res.status(201).send(profile);
+            res.status(201).send(city[0]);
           } else {
             const newCity = await models.city.create(req.body);
+            await profile[0].removeCity(profile[0].cities[0].dataValues.id, profileId);
             await profile[0].addCity(newCity);
-            // res.status(201).send(newCity);
+            res.status(201).send(newCity);
 
             // sending back new user object
-            res.status(201).send(helperFuncs.findUser(models, profile.id));
+            // res.status(201).send(helperFuncs.findUser(models, profile.id));
           }
         } catch (error) {
           res.status(400).send({ error, message: 'Could not add city' });
@@ -74,4 +77,13 @@ const getAllCities = async (req, res) => {
   }
 };
 
-module.exports = { addCity, getAllCities };
+const removeCityFromUser = async (req, res) => {
+  const { cityId, profileId } = req.body;
+  const profile = await helperFuncs.findProfile(models, profileId, 'profile');
+  // console.log('profile[0]-->', profile[0]);
+  await profile[0].removeCity(cityId, profileId);
+  const updatedProf = await helperFuncs.findProfile(models, profileId, 'profile');
+  res.send(updatedProf);
+};
+
+module.exports = { addCity, getAllCities, removeCityFromUser };
