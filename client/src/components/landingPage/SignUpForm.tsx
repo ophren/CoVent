@@ -27,6 +27,7 @@ export const SignUpForm = ({ setShowModal, setShowDescriptionModal }: any): JSX.
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
+        
         // 1 - Adding user data to Firebase
         
         // console.log(userCredentials, 'usercredentsdjfksd')

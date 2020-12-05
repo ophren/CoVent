@@ -6,7 +6,6 @@ import { setUser } from "../../redux/userState/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Profile, User } from "../../types/userTypes"
 import userEvent from '@testing-library/user-event';
-import { userSignUp } from '../../utils/systemFunction';
 
 export const DescriptionForm = ({ setShowDescriptionModal }: any): JSX.Element => {
     let currentUser = useSelector((state: RootState) => state.user)
@@ -19,17 +18,13 @@ export const DescriptionForm = ({ setShowDescriptionModal }: any): JSX.Element =
         setNewUserDescription(prevState => ({ ...prevState, [name]: value }));
     }
 
-    function handleDescription(e: FormEvent) {
+    function handleDescription(e:FormEvent) {
         e.preventDefault()
-        const newUser: User = {
-            ...currentUser, profile:
-                { ...currentUser.profile, ...newUserDescription }
-        }
-
-            dispatch(userSignUp(newUser))
-        
-
-
+        const newUser: User = { ...currentUser, profile: 
+            { ...currentUser.profile, ...newUserDescription }   }
+            
+        dispatch(userSignUp(newUser.email, newUser.password))
+    
         dispatch(setUser(newUser));
         setShowDescriptionModal(false);
     }
