@@ -1,7 +1,6 @@
 import { Category, GiveLike, ReceivedLike } from './../types/userTypes';
 import { Profile, User } from "../types/userTypes";
-import { UserL, City, ProfileNew } from "../types/userLucasTypes";
-
+import { UserL, City, ProfileNew, CityAdd } from "../types/userLucasTypes";
 const baseUrl = "http://localhost:3002";
 
 export const getAllUsers = (): Promise<UserL[]> => {
@@ -10,7 +9,7 @@ export const getAllUsers = (): Promise<UserL[]> => {
       Accept: "application/json",
     },
   }).then((res) => res.json());
-}
+};
 
 export function getUserByEmailAndPassword(email: string, password: string): Promise<User> {
   const user: User = {
@@ -25,6 +24,7 @@ export function getUserByEmailAndPassword(email: string, password: string): Prom
     body: JSON.stringify(user),
   }).then((res) => res.json());
 }
+
 export function getUserById(id: string): Promise<User[]> {
   return fetch(`${baseUrl}/user/${id}`, {
     headers: {
@@ -101,7 +101,7 @@ export const updateUserProfileData = (updatedUserProfile: Profile): any => {
     },
     body: JSON.stringify(updatedUserProfile),
   }).then((res) => res);
-}
+};
 
 export const getAllCities = (): Promise<City[]> => {
   return fetch(`${baseUrl}/cities`, {
@@ -109,7 +109,7 @@ export const getAllCities = (): Promise<City[]> => {
       Accept: "application/json",
     },
   }).then((res) => res.json())
-}
+};
 
 export const getAllProfiles = (): Promise<ProfileNew[]> => {
   return fetch(`${baseUrl}/profiles`, {
@@ -117,4 +117,22 @@ export const getAllProfiles = (): Promise<ProfileNew[]> => {
       Accept: "application/json",
     },
   }).then((res) => res.json())
-}
+};
+
+export const addCity = (city: CityAdd): any => {
+  return fetch(`${baseUrl}/city`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(city),
+  }).then((res) => {
+    console.log('res-->', res);
+
+    if (res.status === 204) {
+      return res;
+    } else {
+      res.json()
+    }
+  });
+};

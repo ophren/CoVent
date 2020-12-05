@@ -19,10 +19,10 @@ export const LandingPage = (): ReactElement => {
   return (
     <>
       <div className="landing_page_container">
-        {console.log('current user from landingpage', currentUser, )}
+        {console.log('current user from landingpage', currentUser,)}
         <TopBarLandingPage />
       </div>
-      <Searchbar />
+      {currentUser.id ? <Searchbar key={Math.random()}/> : <Searchbar />}
     </>
   )
 };

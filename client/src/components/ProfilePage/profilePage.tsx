@@ -5,10 +5,8 @@ import { RootState } from '../../types/combinedStoreTypes';
 import { Profile, User } from "../../types/userTypes";
 import { Button, Modal } from 'react-bootstrap';
 import { setUser } from "../../redux/userState/userActions";
-import { profileUpdate } from '../../utils/systemFunction';
-
-
-
+import { profileUpdate, addCityToProfile } from '../../utils/systemFunction';
+import { UserL, City, ProfileNew, CityAdd } from "../../types/userLucasTypes";
 import './profilePage.css'
 
 export const ProfilePage = () => {
@@ -23,19 +21,31 @@ export const ProfilePage = () => {
     location: '',
   }
 
+  const initialStateCity: CityAdd = {
+    profileId: 0,
+    name: ''
+  }
+
   console.log('INSIDE PROFILE-->');
   console.log('user-->', user);
 
   // const [newUserDescription, setNewUserDescription] = useState<Profile>(initialState);
   const [show, setShow] = useState(false);
+  const [showCityModal, setShowCityModal] = useState(false);
   const [picture, setPicture] = useState('')
   const [description, setDescription] = useState('')
   const [age, setAge] = useState('')
   const [gender, setGender] = useState('')
   const [location, setLocation] = useState('')
+  const [city, setCity] = useState('');
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleCloseCity = () => setShowCityModal(false);
+  const handleShowCity = () => setShowCityModal(true);
+
+
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>, cb: any) => {
     cb(ev.target.value)
@@ -43,7 +53,7 @@ export const ProfilePage = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    
+
     if (user && user.profile) {
       const newUs: User = {
         ...user, profile: {
@@ -57,7 +67,20 @@ export const ProfilePage = () => {
       }
       dispatch(profileUpdate(newUs))
     }
-  }
+  };
+
+  const handleCitySubmit = (e: FormEvent) => {
+    e.preventDefault()
+    if (user.profile && user.profile.id) {
+      const cityObj: CityAdd = {
+        profileId: user.profile.id,
+        name: city
+      }
+      console.log('city-->', city);
+      console.log('cityObj-->', cityObj);
+      dispatch(addCityToProfile(cityObj))
+    }
+  };
 
   return (
     <>
@@ -114,6 +137,38 @@ export const ProfilePage = () => {
             </Modal>
 
           </div>
+
+          <div>
+            <Button variant="primary" onClick={handleShowCity} className="city_add">
+              Where do you wanna fucking go?
+              </Button>
+
+            <Modal show={showCityModal} onHide={handleCloseCity}>
+              <Modal.Header>
+                <Modal.Title>Add your City</Modal.Title>
+                <Modal.Body>
+                  <form>
+                    <input name="city" id="" placeholder="City" onChange={(e) => {
+                      handleChange(e, setCity)
+                    }}></input>
+                  </form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleCloseCity}>
+                    Close
+                  </Button>
+                  <Button variant="primary" onClick={(e) => {
+                    handleCitySubmit(e)
+                    handleCloseCity()
+                  }}>
+                    Select
+                  </Button>
+                </Modal.Footer>
+              </Modal.Header>
+            </Modal>
+
+          </div>
+
         </div>
       </div>
     </>

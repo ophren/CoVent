@@ -2,9 +2,11 @@ import { SystemActionTypes } from './../types/systemTypes';
 import { Dispatch } from 'react';
 import { setUserFirebaseId, setUserToLoggedIn, setUserToLoggedOut } from '../redux/systemState/systemStateActions';
 import fire from './firebase';
-import { addProfileToUserAtDataBase, getUserById, registerUserToDataBase, getUserByEmailAndPassword, updateUserProfileData } from './userDatabaseFetch';
+import { addProfileToUserAtDataBase, getUserById, registerUserToDataBase, getUserByEmailAndPassword, updateUserProfileData, addCity } from './userDatabaseFetch';
 import { User, Profile } from '../types/userTypes';
 import { setUser } from '../redux/userState/userActions';
+import { UserL, City, ProfileNew, CityAdd } from "../types/userLucasTypes";
+
 
 export const userLogin = (creds: any) => {
     return (dispatch: any) => {
@@ -35,6 +37,7 @@ export const userLogOut = () => {
         fire.auth().signOut().then(function () {
             dispatch(setUserToLoggedOut())
             dispatch(setUser({
+                id: 0,
                 email: '',
                 password: '',
                 firstName: '',
@@ -52,8 +55,7 @@ export const userLogOut = () => {
             console.log(error)
         });
     }
-}
-
+};
 
 export const userSignUp = (user: User) => {
     return (dispatch: any) => {
@@ -97,5 +99,15 @@ export const profileUpdate = (user: User) => {
                     dispatch(setUser(user))
                 })
         }
+    }
+}
+
+export const addCityToProfile = (city: CityAdd) => {
+    return (dispatch: any) => {
+        console.log('city-->', city);
+        addCity(city)
+            .then((el: any) => {
+                console.log('el-->', el);
+            })
     }
 }

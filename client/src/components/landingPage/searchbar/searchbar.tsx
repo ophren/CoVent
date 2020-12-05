@@ -1,15 +1,14 @@
 import React, { ReactElement, useState, useEffect, FormEvent } from 'react';
-// import { useSelector } from 'react-redux';
-// import { RootState } from './../../../types/combinedStoreTypes';
+import { useSelector } from 'react-redux';
+import { RootState } from './../../../types/combinedStoreTypes';
 import { UserL, City, ProfileNew } from './../../../types/userLucasTypes';
 import { getAllUsers, getAllCities, getAllProfiles } from './../../../utils/userDatabaseFetch';
 import { Button, Modal } from 'react-bootstrap';
 import './searchbar.css'
 
-
-
 export const Searchbar = (): ReactElement => {
 
+  const currentUser = useSelector((state: RootState) => state.user)
   const [users, setUsers] = useState<ProfileNew[]>([]);
   const [city, setCity] = useState('');
   const [show, setShow] = useState(false);
@@ -18,7 +17,14 @@ export const Searchbar = (): ReactElement => {
   useEffect(() => {
     getAllProfiles()
       .then((list) => {
-        setUsers(list)
+        console.log('INSIDE SEARCH BAR USE EFFECT-->');
+        console.log('currentUser-->', currentUser);
+        console.log('currentUser.id-->', currentUser.id);
+
+        const filteredList = list.filter((el) => el.id !== currentUser.id)
+        console.log('filteredList-->', filteredList);
+
+        setUsers(filteredList)
       })
   }, []);
 

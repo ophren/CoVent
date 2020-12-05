@@ -1,5 +1,10 @@
 import { User, ReceivedLike } from './userTypes'
 
+export interface CityAdd {
+  profileId: number,
+  name: string
+}
+
 export interface City {
   id: string,
   name: string,

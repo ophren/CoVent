@@ -4,6 +4,8 @@ const models = require('./../models/');
 const helperFuncs = require('./../utils/helperFuncs');
 
 const addCity = async (req, res) => {
+  console.log('SERVER CITY-->');
+  console.log('req.body-->', req.body);
 
   const { name, profileId } = req.body;
   const city = await models.city.findAll({
@@ -29,7 +31,10 @@ const addCity = async (req, res) => {
           } else {
             const newCity = await models.city.create(req.body);
             await profile[0].addCity(newCity);
-            res.status(201).send(newCity);
+            // res.status(201).send(newCity);
+
+            // sending back new user object
+            res.status(201).send(helperFuncs.findUser(models, profile.id));
           }
         } catch (error) {
           res.status(400).send({ error, message: 'Could not add city' });
