@@ -128,3 +128,17 @@ export const addCity = (city: CityAdd): any => {
     body: JSON.stringify(city),
   }).then((res) => res.json());
 };
+
+export const giveLike = (like: any): any => {
+  console.log('FETCH FRON END-->');
+  console.log('like-->', like);
+
+
+  return fetch(`${baseUrl}/like/give`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(like),
+  }).then((res) => res.json());
+}
