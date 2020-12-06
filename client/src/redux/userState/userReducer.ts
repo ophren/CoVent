@@ -1,4 +1,4 @@
-import { User, UserActionTypes, SET_USER_AGE, SET_USER_NAME, SET_USER, } from '../../types/userTypes';
+import { User, UserActionTypes, SET_USER_AGE, SET_USER_NAME, SET_USER, SET_USER_DIRECTION, } from '../../types/userTypes';
 
 // const initialUserState: User = {
 //     firebaseId: '342354',

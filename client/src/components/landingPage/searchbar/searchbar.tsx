@@ -1,16 +1,17 @@
 import React, { ReactElement, useState, useEffect, FormEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './../../../types/combinedStoreTypes';
-import { UserL, City, ProfileNew } from './../../../types/userLucasTypes';
-import { getAllUsers, getAllCities, getAllProfiles } from './../../../utils/userDatabaseFetch';
+import { ProfileNew } from './../../../types/userLucasTypes';
+import { getAllProfiles } from './../../../utils/userDatabaseFetch';
 import { Button, Modal } from 'react-bootstrap';
 import './searchbar.css'
 import { addLike } from './../../../utils/systemFunction'
 
 export const Searchbar = (): ReactElement => {
-  console.log('INSIDE SEARCHBAR-->');
 
   const currentUser = useSelector((state: RootState) => state.user)
+  const currentDirection = useSelector((state: RootState) => state.direction)
+
   const dispatch = useDispatch();
 
   const [users, setUsers] = useState<ProfileNew[]>([]);
@@ -31,10 +32,6 @@ export const Searchbar = (): ReactElement => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const handleSubmit = (e: FormEvent) => {
-    console.log('fuck')
-  }
 
   const handleLike = (e: FormEvent, id: number) => {
     e.preventDefault()
@@ -81,11 +78,14 @@ export const Searchbar = (): ReactElement => {
 
   return (
     <div>
+      {console.log('searchbar Current dir-->', currentDirection)}
+
       <form>
         <input type="text" placeholder="city" value={city} onChange={handleChange} />
       </form>
       <div className="container">
         {!city ? renderAllUsers : renderUserWithCities}
+
         <Modal size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
@@ -104,6 +104,7 @@ export const Searchbar = (): ReactElement => {
           </Modal.Header>
 
         </Modal>
+
       </div>
     </div>
   )

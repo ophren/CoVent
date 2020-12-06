@@ -5,7 +5,6 @@ const helperFuncs = require('./../utils/helperFuncs');
 
 const createProfile = async (req, res) => {
   console.log('INSIDE SERVER PROFILE CONTROLLER-->');
-  console.log('req.body-->', req.body);
   const { userId } = req.body;
   const profile = await models.profile.findAll({
     where: { userId: userId }

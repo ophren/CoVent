@@ -5,5 +5,5 @@ import { User } from "./userTypes";
 export interface RootState  {
   system: SystemState,
   user:User,
- 
+  direction: string[],
 }

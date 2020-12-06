@@ -1,16 +1,21 @@
 import React from 'react';
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../types/combinedStoreTypes';
-import { Profile, User } from "../../types/userTypes";
+import { User } from "../../types/userTypes";
 import { Button, Modal } from 'react-bootstrap';
-import { setUser } from "../../redux/userState/userActions";
-import { profileUpdate, addCityToProfile } from '../../utils/systemFunction';
-import { UserL, City, ProfileNew, CityAdd } from "../../types/userLucasTypes";
-import './profilePage.css'
+import { profileUpdate, addCityToProfile, addCategoryToProfile } from '../../utils/systemFunction';
+import { ProfileNew, CityAdd } from "../../types/userLucasTypes";
+import './profilePage.css';
+import { Link } from 'react-router-dom';
+import { getAllProfiles } from './../../utils/userDatabaseFetch';
+import { addLike } from './../../utils/systemFunction';
 
 export const ProfilePage = () => {
+
+  console.log('INSIDE PROFILE-->');
   const user = useSelector((state: RootState) => state.user)
+  const currentDirection = useSelector((state: RootState) => state.direction)
   const dispatch = useDispatch();
 
   const initialState = {
@@ -26,10 +31,47 @@ export const ProfilePage = () => {
     name: ''
   }
 
-  console.log('INSIDE PROFILE-->');
 
+  const categories = [
+    'Athletics',
+    'Ball Sports',
+    'Beach Sports',
+    'Body & Mind',
+    'Cars',
+    'City',
+    'Climbing',
+    'Combat Sports',
+    'Cycling',
+    'Dancing',
+    'Equestrianism',
+    'Fishing: Catch & Release',
+    'Fitness',
+    'For Fun',
+    'Games',
+    'Hiking',
+    'Ice',
+    'Motorcycles',
+    'Multi-Sport',
+    'Nature',
+    'Party',
+    'Photography',
+    'Piloting',
+    'Pool',
+    'Racket Sports',
+    'Radio-controlled Piloting',
+    'Rowing',
+    'Shooting',
+    'Sky',
+    'Slacklining',
+    'Snow',
+    'Strength',
+    'Traveling',
+    'Underwater',
+    'Water',
+    'Wildlife Viewing',
+    'Wind'
+  ]
 
-  // const [newUserDescription, setNewUserDescription] = useState<Profile>(initialState);
   const [show, setShow] = useState(false);
   const [showCityModal, setShowCityModal] = useState(false);
   const [picture, setPicture] = useState('')
@@ -38,14 +80,25 @@ export const ProfilePage = () => {
   const [gender, setGender] = useState('')
   const [location, setLocation] = useState('')
   const [city, setCity] = useState('');
+  const [category, setCategory] = useState('');
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+
+  const [profiles, setProfiles] = useState<ProfileNew[]>([]);
+
+  useEffect(() => {
+    getAllProfiles()
+      .then((list) => {
+        const filteredList = list.filter((el) => el.id !== user.id)
+        setProfiles(filteredList)
+      })
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const handleCloseCity = () => setShowCityModal(false);
   const handleShowCity = () => setShowCityModal(true);
-
-
+  const handleShowCategory = () => setShowCategoryModal(true);
+  const handleCloseCategory = () => setShowCategoryModal(false);
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>, cb: any) => {
     cb(ev.target.value)
@@ -83,15 +136,52 @@ export const ProfilePage = () => {
         profileId: user.profile.id,
         name: city
       }
-      console.log('city-->', city);
-      console.log('cityObj-->', cityObj);
       dispatch(addCityToProfile(cityObj, user))
     }
   };
 
+  const handleCategorySubmit = (ev: any): any => {
+    console.log('e.target.value-->', ev.target.value);
+    setCategory(ev.target.value)
+    const categoryToSend = {
+      profileId: user.profile && user.profile.id,
+      name: ev.target.value
+    }
+    dispatch(addCategoryToProfile(categoryToSend, user))
+  };
+
+  const filterSwipedProfiles = (profiles: ProfileNew[], currentDir: string[]): ProfileNew[] => {
+    const result = [];
+    console.log('profiles profilePage.tsx, line 155 profiles: ',profiles);
+    console.log('currentDir profilePage.tsx, line 156 currentDir: ',currentDir);
+    for (let i = 0; i < profiles.length; i++) {
+      console.log('profiles[i]-->', profiles[i]);
+      let flag;
+      for (let a = 0; a < currentDir.length; a++) {
+        console.log('currentDir[a]-->', currentDir[a]);
+
+        if (Number(currentDir[a].match(/\d+/g)) === profiles[i].id) {
+          flag = true;
+          break;
+        }
+      }
+      if (!flag) {
+        result.push(profiles[i]);
+      } else {
+        flag = false;
+      }
+    }
+    console.log('result profilePage.tsx, line 174 result: ',result);
+    return result;
+  }
+
   return (
     <>
-      {console.log('user INSIDE PROFILE ----------->', user)}
+      {/* {console.log('PROFILE PAGE currentDirection-->', currentDirection)}
+      {console.log('profiles-->', profiles)}
+      {console.log('PROFILE PAGE currentDirection.length-->', currentDirection.length)}
+      {console.log('profiles.length-->', profiles.length)} */}
+
       <div className="profile_page_container">
         <div className="profile_page_header_container">
           <div>Hello {user.firstName} </div>
@@ -178,49 +268,52 @@ export const ProfilePage = () => {
         </div>
       </div>
 
-      <div>You selected {user && user.profile && user.profile.cities && user.profile.cities[0] && user.profile.cities[0].name} </div>
+      <div>You selected destination {user && user.profile && user.profile.cities &&
+        user.profile.cities[0] && user.profile.cities[0].name} </div>
 
-      <div>Select activity first before going to matching</div>
       <div>Liked profiles {user && user.profile && user.profile.likedProfile &&
-      user.profile.likedProfile[0] && user.profile.likedProfile[0].user
-      && user.profile.likedProfile.map(el => el.user && el.user.firstName) } </div>
+        user.profile.likedProfile[0] && user.profile.likedProfile[0].user
+        && user.profile.likedProfile.map(el => el.user && el.user.firstName)} </div>
 
 
       <div>Received likes {user && user.profile && user.profile.receivedLike &&
-      user.profile.receivedLike[0] && user.profile.receivedLike[0].user
-      && user.profile.receivedLike.map(el => el.user && el.user.firstName) } </div>
+        user.profile.receivedLike[0] && user.profile.receivedLike[0].user
+        && user.profile.receivedLike.map(el => el.user && el.user.firstName)} </div>
       <Button>Yes or No</Button>
+
+      <div>Matched with {user && user.profile && user.profile.matched &&
+        user.profile.matched[0] && user.profile.matched[0].user
+        && user.profile.matched.map(el => el.user && el.user.firstName)} </div>
+
       <div>
-            <Button variant="primary" onClick={handleShowCity} className="city_add">
-              Where do you wanna fucking go?
-              </Button>
+        <p>Select activity first before going to matching</p>
 
-            <Modal show={showCityModal} onHide={handleCloseCity}>
-              <Modal.Header>
-                <Modal.Title>Add your City</Modal.Title>
-                <Modal.Body>
-                  <form>
-                    <input name="city" id="" placeholder="City" onChange={(e) => {
-                      handleChange(e, setCity)
-                    }}></input>
-                  </form>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleCloseCity}>
-                    Close
-                  </Button>
-                  <Button variant="primary" onClick={(e) => {
-                    handleCitySubmit(e)
-                    handleCloseCity()
-                  }}>
-                    Select
-                  </Button>
-                </Modal.Footer>
-              </Modal.Header>
-            </Modal>
+        <select id="mySelect" onChange={(e) => { handleCategorySubmit(e) }}>
+          {categories.map((el, i) => {
+            return <option key={i} value={el}>{el}</option>
+          })
+          }
+        </select>
 
-          </div>
 
+      </div>
+
+      <Link to={{
+        pathname: '/swiping',
+        state: {
+          profiles: currentDirection.length === 0 ? profiles : filterSwipedProfiles(profiles, currentDirection)
+        }
+      }}>
+        <Button>Swiping</Button>
+      </Link>
+
+      <Link to="/matches">
+        <Button>Matches</Button>
+      </Link>
+
+      <Link to="/chat">
+        <Button>Chat</Button>
+      </Link>
 
     </>
   )
