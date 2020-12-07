@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../../../types/combinedStoreTypes'
 import './TopBarNewMatchesButton.css'
 
-const USER_MATCHES_BUTTON_TEXT = 'Machtes'
+const USER_MATCHES_BUTTON_TEXT = 'Matches'
 
 
 export const TopBarNewMatchesButton = () => {

@@ -11,7 +11,7 @@ const firebaseConfig = {
     storageBucket: "covent-2b7ac.appspot.com",
     messagingSenderId: "16244326109",
     appId: "1:16244326109:web:1fc139df113913abf9a534"
-};
+  };
 
 
 // Initialize Firebase
@@ -21,7 +21,7 @@ const fire = firebase.initializeApp(firebaseConfig);
 //const fireBaseAppAuth = fireBaseApp.auth()
 
 
-//const providers = { googleProvider: new firebase.auth.GoogleAuthProvider() }
+//const providers = { googleProvider : new firebase.auth.GoogleAuthProvider() }
 
 
 export default fire;
