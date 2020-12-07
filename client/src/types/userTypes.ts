@@ -17,7 +17,7 @@ export interface Profile {
   description?:string
   age?: string,
   gender?:string,
-  location?:string,
+  location?:string, 
   userId?:number,
   hasNewMatch?:boolean
   likedProfile?: Profile[]
