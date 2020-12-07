@@ -31,10 +31,14 @@ export interface ProfileNew {
     profileId: number,
   },
   user: UserL,
+  categories: CategoriesL[]
 }
 
 export interface CategoriesL {
   name: string,
+  id: number,
+  createdAt: string,
+  updatedAt: string
 }
 
 export interface LikedProfileL {

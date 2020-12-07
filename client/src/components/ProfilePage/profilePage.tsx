@@ -90,7 +90,7 @@ export const ProfilePage = () => {
       .then((list) => {
         const filteredList = list.filter((el) => el.id !== user.id)
         setProfiles(filteredList)
-        filterProfilesToShowExceptSwipedOnes(user, list)
+        // filterProfilesToShowExceptSwipedOnes(user, list)
         if (currentDirection.length && user.profile && user.profile.id) {
           sendLikesToBackEnd(currentDirection, user.profile.id)
         }
@@ -155,23 +155,54 @@ export const ProfilePage = () => {
   };
 
   const filterSwipedProfiles = (profiles: ProfileNew[], currentDir: string[]): ProfileNew[] => {
+
+    console.log('PROFILE PAGE ---> SWIPED PROFILES FUNCTION-->');
+    console.log('profiles-->', profiles);
+
+    // filter profiles according to selected city from user
+    const filteredByCity = filterByCity(profiles);
+    // filter the above list based on selected activity from user
+    const filteredByCityAndActivity = filterByActivity(filteredByCity)
+
     const result = [];
-    for (let i = 0; i < profiles.length; i++) {
+    for (let i = 0; i < filteredByCityAndActivity.length; i++) {
       let flag;
       for (let a = 0; a < currentDir.length; a++) {
-        if (Number(currentDir[a].match(/\d+/g)) === profiles[i].id) {
+        if (Number(currentDir[a].match(/\d+/g)) === filteredByCityAndActivity[i].id) {
           flag = true;
           break;
         }
       }
       if (!flag) {
-        result.push(profiles[i]);
+        result.push(filteredByCityAndActivity[i]);
       } else {
         flag = false;
       }
     }
     return result;
   };
+
+  const filterByCity = (profiles: ProfileNew[]): ProfileNew[] => {
+    console.log('INSIDE FILTER BY CITY-->');
+    console.log('profiles-->', profiles);
+    console.log('user.profile.cities-->', user.profile);
+
+    const res = profiles.filter((el) => {
+      if (user && user.profile && user.profile.cities && user.profile.cities[0].name) {
+        console.log('el.cities[0].name-->', el.cities[0].name);
+        console.log('el.cities[0].name === user.profile.ciities[0].name-->', el.cities[0].name === user.profile.cities[0].name);
+
+        console.log('user.profile.cities[0].name-->', user.profile.cities[0].name);
+        return el.cities[0].name === user.profile.cities[0].name;
+      }
+    })
+    console.log('res-->', res);
+    return res;
+  }
+
+  const filterByActivity = (profiles: ProfileNew[]): ProfileNew[] => {
+    return profiles.filter((el) => el.categories[categories.length - 1].name === user && user.profile && user.profile.categories && user.profile.categories[categories.length - 1].name)
+  }
 
   const sendLikesToBackEnd = (currentDir: string[], profileId: number): void => {
     currentDir.forEach((el) => {
@@ -185,14 +216,15 @@ export const ProfilePage = () => {
     })
   }
 
-  const filterProfilesToShowExceptSwipedOnes = (user: User, list: ProfileNew[]): void => {
-    console.log('user profilePage.tsx, line 188 user: ', user);
-    console.log('list profilePage.tsx, line 189 list: ', list);
-    // create table in back end where you keep track of swiped profiles
-    // user has many swipes ->  a swipe belongs to one user
-  }
+  // const filterProfilesToShowExceptSwipedOnes = (user: User, list: ProfileNew[]): void => {
+  //   console.log('user profilePage.tsx, line 188 user: ', user);
+  //   console.log('list profilePage.tsx, line 189 list: ', list);
+  //   // create table in back end where you keep track of swiped profiles
+  //   // user has many swipes ->  a swipe belongs to one user
+  // }
 
   return (
+
     <div id="profile_body">
 
       <div className="profile_page_container">
@@ -355,12 +387,14 @@ export const ProfilePage = () => {
 
       </div>
 
+      {console.log('user', user)}
+
       {/* {user.profile && user.profile.id && currentDirection && currentDirection.length && sendLikesToBackEnd(currentDirection, user.profile.id)} */}
 
       <Link to={{
         pathname: '/swiping',
         state: {
-          profiles: currentDirection.length === 0 ? profiles : filterSwipedProfiles(profiles, currentDirection)
+          profiles: currentDirection.length === 0 ? filterByCity(profiles) : filterSwipedProfiles(profiles, currentDirection)
         }
       }}>
         <Button>Swiping</Button>

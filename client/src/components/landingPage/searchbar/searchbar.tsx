@@ -78,7 +78,7 @@ export const Searchbar = (): ReactElement => {
 
   return (
     <div>
-      {console.log('searchbar Current dir-->', currentDirection)}
+      {/* {console.log('searchbar Current dir-->', currentDirection)} */}
 
       <form>
         <input type="text" placeholder="city" value={city} onChange={handleChange} />
