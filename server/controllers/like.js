@@ -4,9 +4,6 @@ const models = require('../models');
 const helperFuncs = require('./../utils/helperFuncs');
 
 const like = async (req, res) => {
-  console.log('BACKEND LIKE-->');
-  console.log('req.body-->', req.body);
-  // console.log('req.params-->', req.params);
 
   const { direction } = req.params;
   const { profileId } = req.body;
@@ -49,8 +46,6 @@ const like = async (req, res) => {
           const updatedUser = await helperFuncs.findUser(models, profile[0].dataValues.userId);
 
           // return res.status(201).send({ message: 'You got a new match' });
-          console.log('updatedUser-->', updatedUser);
-
           return res.status(201).send(updatedUser);
         }
       }

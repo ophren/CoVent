@@ -140,7 +140,6 @@ export const giveLike = (like: any): any => {
 };
 
 export const addCategory = (category: any): any => {
-  console.log('category-->', category);
   return fetch(`${baseUrl}/category`, {
     method: "POST",
     headers: {
@@ -148,4 +147,14 @@ export const addCategory = (category: any): any => {
     },
     body: JSON.stringify(category),
   }).then((res) => res.json());
+}
+
+export const addSwipe = (swipe: any): any => {
+  return fetch(`${baseUrl}/swipe`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(swipe)
+  }).then((res) => res.json())
 }

@@ -91,6 +91,8 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade'
     });
 
+    profile.hasMany(model.swipe);
+
   };
 
   return profile;

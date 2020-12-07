@@ -7,6 +7,7 @@ const categoryController = require('./controllers/category');
 const likeController = require('./controllers/like');
 const unmatchController = require('./controllers/unmatch');
 const cityController = require('./controllers/city');
+const swipeController = require('./controllers/swipe');
 
 
 router.post('/register', userController.createUser);
@@ -28,5 +29,7 @@ router.post('/unmatch', unmatchController.unmatch);
 router.post('/city', cityController.addCity);
 router.get('/cities', cityController.getAllCities);
 router.post('/city/delete', cityController.removeCityFromUser);
+
+router.post('/swipe', swipeController.addSwipe);
 
 module.exports = router;

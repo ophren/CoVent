@@ -2,7 +2,7 @@ import { userInfo } from 'os'
 import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../../types/combinedStoreTypes'
-import { userLogin, userLogOut } from '../../../../utils/systemFunction'
+import { userLogin, userLogOut, addSwipeToProfile } from '../../../../utils/systemFunction'
 
 const USER_LOGGED_IN_TEXT = 'Log In'
 const USER_LOGGED_OUT_TEXT = 'Log Out'
@@ -14,8 +14,21 @@ interface TopBarSignInButtonProp {
 export const TopBarLandingPageLogInButton = ({ setShowModal }: TopBarSignInButtonProp): ReactElement => {
   const dispatch = useDispatch()
   const userLoggedIn = useSelector((state: RootState) => state.system.loggedIn)
+  const currentDirection = useSelector((state: RootState) => state.direction)
+  const currentUser = useSelector((state: RootState) => state.user)
 
   function handleLogOut() {
+    currentDirection.forEach((el) => {
+      if (currentUser.profile) {
+        const swipeToSend = {
+          profileId: currentUser.profile.id,
+          swipeId: el.match(/\d+/g)
+        }
+        console.log('TOP BAR INSIDE HANDLE LOGOUT-->');
+        console.log('swipeToSend-->', swipeToSend);
+        addSwipeToProfile(swipeToSend)
+      }
+    })
     dispatch(userLogOut())
   }
 

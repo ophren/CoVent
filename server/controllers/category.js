@@ -24,10 +24,16 @@ const addCategory = async (req, res) => {
       } else {
         try {
           if (category.length > 0) {
+            if (profile[0].categories[0]) {
+              await profile[0].removeCategory(profile[0].categories[0].dataValues.id, profileId);
+            }
             await profile[0].addCategory(category);
             res.status(201).send(category[0]);
           } else {
             const newCategory = await models.category.create(req.body);
+            if (profile[0].categories[0]) {
+              await profile[0].removeCategory(profile[0].categories[0].dataValues.id, profileId);
+            }
             await profile[0].addCategory(newCategory);
             res.status(201).send(newCategory);
           }

@@ -210,7 +210,7 @@ export const ProfilePage = () => {
         console.log('el.categories-->', el.categories);
         console.log('el.categories[el.categories.length - 1].name-->', el.categories[el.categories.length - 1].name);
         console.log('user.profile.categories[categories.length - 1].name-->', user.profile.categories[user.profile.categories.length - 1].name);
-        return el.categories[el.categories.length - 1].name === user.profile.categories[user.profile.categories.length - 1].name
+        return el.categories[0].name === user.profile.categories[user.profile.categories.length - 1].name
       }
     })
     console.log('res from filter by activity-->', res);

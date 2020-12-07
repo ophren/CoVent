@@ -4,7 +4,6 @@ const models = require('./../models/');
 const helperFuncs = require('./../utils/helperFuncs');
 
 const createProfile = async (req, res) => {
-  console.log('INSIDE SERVER PROFILE CONTROLLER-->');
   const { userId } = req.body;
   const profile = await models.profile.findAll({
     where: { userId: userId }
@@ -29,7 +28,6 @@ const getProfile = async (req, res) => {
   try {
     const { id } = req.params;
     const profile = await helperFuncs.findProfile(models, id, 'profile');
-
     res.status(200).send(profile);
   } catch (error) {
     res.status(500).send({ error, message: 'Could not get Profile' });

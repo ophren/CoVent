@@ -81,7 +81,6 @@ const getAllCities = async (req, res) => {
 const removeCityFromUser = async (req, res) => {
   const { cityId, profileId } = req.body;
   const profile = await helperFuncs.findProfile(models, profileId, 'profile');
-  // console.log('profile[0]-->', profile[0]);
   await profile[0].removeCity(cityId, profileId);
   const updatedProf = await helperFuncs.findProfile(models, profileId, 'profile');
   res.send(updatedProf);

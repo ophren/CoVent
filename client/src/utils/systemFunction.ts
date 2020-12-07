@@ -3,8 +3,10 @@ import { Dispatch } from 'react';
 import { setUserFirebaseId, setUserToLoggedIn, setUserToLoggedOut } from '../redux/systemState/systemStateActions';
 import fire from './firebase';
 import {
-    addProfileToUserAtDataBase, getUserById, registerUserToDataBase,
-    getUserByEmailAndPassword, updateUserProfileData, addCity, giveLike, addCategory
+    addProfileToUserAtDataBase, getUserById,
+    registerUserToDataBase, getUserByEmailAndPassword,
+    updateUserProfileData, addCity, giveLike, addCategory,
+    addSwipe
 } from './userDatabaseFetch';
 import { User, Profile } from '../types/userTypes';
 import { setUser } from '../redux/userState/userActions';
@@ -103,7 +105,7 @@ export const profileUpdate = (user: User) => {
                 })
         }
     }
-}
+};
 
 export const addCityToProfile = (city: CityAdd, user: User) => {
     return (dispatch: any) => {
@@ -115,7 +117,7 @@ export const addCityToProfile = (city: CityAdd, user: User) => {
                 }
             })
     }
-}
+};
 
 export const addLike = (like: any): any => {
     console.log('SYSTEM FUNC ADD LIKE-->');
@@ -126,7 +128,7 @@ export const addLike = (like: any): any => {
                 dispatch(setUser(newUser[0]))
             })
     }
-}
+};
 
 export const addCategoryToProfile = (category: any, user: User): any => {
     return (dispatch: any) => {
@@ -136,11 +138,19 @@ export const addCategoryToProfile = (category: any, user: User): any => {
                 if (user.profile && user.profile.categories) {
                     console.log('activity-->', activity);
                     if (!activity.error) {
-                        user.profile.categories.push(activity)
+                        user.profile.categories[0] = activity
                         console.log('user after inserting category-->', user);
                         dispatch(setUser(user))
                     }
                 }
             })
+    }
+};
+
+export const addSwipeToProfile = (swipe: any): any => {
+    console.log('SYSTEM FUNC ADD SWIPE-->');
+    console.log('swipe-->', swipe);
+    return (dispatch: any) => {
+        addSwipe(swipe)
     }
 }
