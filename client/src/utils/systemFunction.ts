@@ -9,6 +9,7 @@ import {
 import { User, Profile } from '../types/userTypes';
 import { setUser } from '../redux/userState/userActions';
 import { UserL, City, ProfileNew, CityAdd } from "../types/userLucasTypes";
+import { setDirection, clearDirection } from './../redux/directionState/directionActions';
 
 
 export const userLogin = (creds: any) => {
@@ -54,6 +55,7 @@ export const userLogOut = () => {
                     userId: 0,
                 }
             }))
+            dispatch(clearDirection([]))
         }).catch(function (error) {
             console.log(error)
         });
@@ -128,13 +130,16 @@ export const addLike = (like: any): any => {
 
 export const addCategoryToProfile = (category: any, user: User): any => {
     return (dispatch: any) => {
-        console.log('category-->', category);
+        console.log('SYSTEM FUNC ADD CATEGORY TO PROFILE-->');
         addCategory(category)
             .then((activity: any) => {
                 if (user.profile && user.profile.categories) {
-                    user.profile.categories.push(activity)
-                    console.log('user after inserting category-->', user);
-                    dispatch(setUser(user))
+                    console.log('activity-->', activity);
+                    if (!activity.error) {
+                        user.profile.categories.push(activity)
+                        console.log('user after inserting category-->', user);
+                        dispatch(setUser(user))
+                    }
                 }
             })
     }

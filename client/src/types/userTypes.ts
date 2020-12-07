@@ -93,6 +93,7 @@ export const SET_USER_HAS_MATCHES_TO_FALSE = 'SET_USER_HAS_MATCHES_TO_FALSE'
 export const SET_USER = "SET_USER"
 // export const SET_USER_AGE = 'SET_USER_AGE'
 export const SET_USER_DIRECTION = "SET_USER_DIRECTION"
+export const CLEAR_USER_DIRECTION = "CLEAR_USER_DIRECTION"
 
 interface SetUserNameAction {
   type: typeof SET_USER_NAME,
@@ -114,5 +115,10 @@ interface SetUserDirection {
   payload: string[]
 }
 
+interface ClearUserDirection {
+  type: typeof CLEAR_USER_DIRECTION,
+  payload: []
+}
 
-export type UserActionTypes = SetUserAgeAction | SetUserNameAction | SetUserAction | SetUserDirection
+
+export type UserActionTypes = SetUserAgeAction | SetUserNameAction | SetUserAction | SetUserDirection | ClearUserDirection

@@ -25,7 +25,7 @@ const addCategory = async (req, res) => {
         try {
           if (category.length > 0) {
             await profile[0].addCategory(category);
-            res.status(201).send(profile);
+            res.status(201).send(category[0]);
           } else {
             const newCategory = await models.category.create(req.body);
             await profile[0].addCategory(newCategory);

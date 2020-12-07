@@ -151,6 +151,7 @@ export const ProfilePage = () => {
       profileId: user.profile && user.profile.id,
       name: ev.target.value
     }
+    console.log('categoryToSend-->', categoryToSend);
     dispatch(addCategoryToProfile(categoryToSend, user))
   };
 
@@ -183,16 +184,16 @@ export const ProfilePage = () => {
   };
 
   const filterByCity = (profiles: ProfileNew[]): ProfileNew[] => {
-    console.log('INSIDE FILTER BY CITY-->');
-    console.log('profiles-->', profiles);
-    console.log('user.profile.cities-->', user.profile);
+    // console.log('INSIDE FILTER BY CITY-->');
+    // console.log('profiles-->', profiles);
+    // console.log('user.profile.cities-->', user.profile);
 
     const res = profiles.filter((el) => {
       if (user && user.profile && user.profile.cities && user.profile.cities[0].name) {
-        console.log('el.cities[0].name-->', el.cities[0].name);
-        console.log('el.cities[0].name === user.profile.ciities[0].name-->', el.cities[0].name === user.profile.cities[0].name);
+        // console.log('el.cities[0].name-->', el.cities[0].name);
+        // console.log('el.cities[0].name === user.profile.ciities[0].name-->', el.cities[0].name === user.profile.cities[0].name);
 
-        console.log('user.profile.cities[0].name-->', user.profile.cities[0].name);
+        // console.log('user.profile.cities[0].name-->', user.profile.cities[0].name);
         return el.cities[0].name === user.profile.cities[0].name;
       }
     })
@@ -201,7 +202,20 @@ export const ProfilePage = () => {
   }
 
   const filterByActivity = (profiles: ProfileNew[]): ProfileNew[] => {
-    return profiles.filter((el) => el.categories[categories.length - 1].name === user && user.profile && user.profile.categories && user.profile.categories[categories.length - 1].name)
+    console.log('PROFILE PAGE FILTER BY ACTIVITY-->', );
+    console.log('profiles-->', profiles);
+
+    const res = profiles.filter((el) => {
+      if (user && user.profile && user.profile.categories && user.profile.categories.length > 0 && el.categories && el.categories.length > 0) {
+        console.log('el.categories-->', el.categories);
+        console.log('el.categories[el.categories.length - 1].name-->', el.categories[el.categories.length - 1].name);
+        console.log('user.profile.categories[categories.length - 1].name-->', user.profile.categories[user.profile.categories.length - 1].name);
+        return el.categories[el.categories.length - 1].name === user.profile.categories[user.profile.categories.length - 1].name
+      }
+    })
+    console.log('res from filter by activity-->', res);
+
+    return res;
   }
 
   const sendLikesToBackEnd = (currentDir: string[], profileId: number): void => {
@@ -388,13 +402,14 @@ export const ProfilePage = () => {
       </div>
 
       {console.log('user', user)}
+      {console.log('currentDirection', currentDirection)}
 
       {/* {user.profile && user.profile.id && currentDirection && currentDirection.length && sendLikesToBackEnd(currentDirection, user.profile.id)} */}
 
       <Link to={{
         pathname: '/swiping',
         state: {
-          profiles: currentDirection.length === 0 ? filterByCity(profiles) : filterSwipedProfiles(profiles, currentDirection)
+          profiles: currentDirection.length === 0 ? filterByActivity(filterByCity(profiles)) : filterSwipedProfiles(profiles, currentDirection)
         }
       }}>
         <Button>Swiping</Button>

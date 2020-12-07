@@ -1,4 +1,4 @@
-import { UserActionTypes, SET_USER_DIRECTION } from '../../types/userTypes';
+import { UserActionTypes, SET_USER_DIRECTION, CLEAR_USER_DIRECTION } from '../../types/userTypes';
 
 export function directionReducer(state = [], action: UserActionTypes): any {
   switch (action.type) {
@@ -6,6 +6,8 @@ export function directionReducer(state = [], action: UserActionTypes): any {
       return [
         ...state, ...action.payload,
       ]
+    case CLEAR_USER_DIRECTION:
+      return []
     default: return state;
   }
 }
