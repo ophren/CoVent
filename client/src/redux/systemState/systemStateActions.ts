@@ -14,7 +14,7 @@ export function setUserToLoggedIn(): SystemActionTypes {
     payload: true
   }
 }
-export function setUserToLoggedOut( ): SystemActionTypes {
+export function setUserToLoggedOut(): SystemActionTypes {
   return {
     type: SET_USER_AS_LOGGED_OUT,
     payload: false

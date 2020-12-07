@@ -193,29 +193,61 @@ export const ProfilePage = () => {
   }
 
   return (
-    <>
-      {console.log('PROFILE PAGE currentDirection-->', currentDirection)}
-      {/* {console.log('profiles-->', profiles)}
-      {console.log('PROFILE PAGE currentDirection.length-->', currentDirection.length)}
-      {console.log('profiles.length-->', profiles.length)} */}
+    <div id="profile_body">
 
       <div className="profile_page_container">
+
         <div className="profile_page_header_container">
-          <div>Hello {user.firstName} </div>
-          <div>{user.profile && user.profile.age} </div>
+
+          <div>
+            <div className="user_first_name">Benjamin</div>
+            <div>{user.profile && user.profile.age}</div>
+          </div>
+
           <div className="profile_page_image_container">
             <img className="profile_page_image" src={user.profile?.picture} alt="profile" />
           </div>
 
-          <div>
-            <Button variant="primary" onClick={handleShow} className="profile_updatebutton">
-              Edit Profile
-              </Button>
+          <div id="top_right_corner_btn">
+            <Button variant="primary" onClick={handleShow} className="profile_updatebutton">Edit Profile</Button>
+            <Button variant="primary" onClick={handleShowCity} className="city_add">Pick a city</Button>
+          </div>
+        </div>
 
-            <Modal show={show} onHide={handleClose}>
+        <div id="profile-page-body">
+          <div id="selected-city">Your city: {user && user.profile && user.profile.cities && user.profile.cities[0] && user.profile.cities[0].name}</div>
+
+          <div>Select activity first before going to matching</div>
+
+          <div id="sent-invitations-area">
+            Invitations sent: {user && user.profile && user.profile.likedProfile &&
+              user.profile.likedProfile[0] && user.profile.likedProfile[0].user
+              && user.profile.likedProfile.map(el => el.user && el.user.firstName)}
+          </div>
+
+          <div id="received-invitation-area">
+            <div id="received-invitation-title">Invitations received: {user && user.profile && user.profile.receivedLike &&
+              user.profile.receivedLike[0] && user.profile.receivedLike[0].user
+              && user.profile.receivedLike.map(el => el.user && el.user.firstName)}
+            </div>
+            <div></div>
+            <Button id="accept-invitation-btn">Accept</Button>
+            <Button id="reject-invitation-btn">Decline</Button>
+          </div>
+          {/*
+          <Button variant="primary" onClick={handleShowCity} className="city_add">
+              Remove me
+          </Button> */}
+
+        </div>
+
+        <Modal show={show} onHide={handleClose}>
+          <div id="modal-background">
+            <div id="edit-profile-modal-form">
               <Modal.Header>
-                <Modal.Title>Edit Your Profile</Modal.Title>
+                <Modal.Title id="edit-profile-title">Edit Your Profile</Modal.Title>
                 <Modal.Body>
+
                   <form>
                     <input name="picture" id="" placeholder="Picture" onChange={(e) => {
                       handleChange(e, setPicture)
@@ -233,6 +265,7 @@ export const ProfilePage = () => {
                       handleChange(e, setLocation)
                     }}></input>
                   </form>
+
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
@@ -246,61 +279,68 @@ export const ProfilePage = () => {
                   </Button>
                 </Modal.Footer>
               </Modal.Header>
-
-            </Modal>
-
+            </div>
           </div>
+        </Modal>
 
-          <div>
-            <Button variant="primary" onClick={handleShowCity} className="city_add">
-              Where do you wanna fucking go?
-              </Button>
 
-            <Modal show={showCityModal} onHide={handleCloseCity}>
-              <Modal.Header>
-                <Modal.Title>Add your City</Modal.Title>
-                <Modal.Body>
-                  <form>
-                    <input name="city" id="" placeholder="City" onChange={(e) => {
-                      handleChange(e, setCity)
-                    }}></input>
-                  </form>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleCloseCity}>
-                    Close
+        <div>
+          <Modal show={showCityModal} onHide={handleCloseCity}>
+            <Modal.Header>
+              <Modal.Title>Add your City</Modal.Title>
+              <Modal.Body>
+                <form>
+                  <input name="city" id="" placeholder="City" onChange={(e) => {
+                    handleChange(e, setCity)
+                  }}></input>
+                </form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseCity}>
+                  Close
                   </Button>
-                  <Button variant="primary" onClick={(e) => {
-                    handleCitySubmit(e)
-                    handleCloseCity()
-                  }}>
-                    Select
+                <Button variant="primary" onClick={(e) => {
+                  handleCitySubmit(e)
+                  handleCloseCity()
+                }}>
+                  Select
                   </Button>
-                </Modal.Footer>
-              </Modal.Header>
-            </Modal>
-
-          </div>
+              </Modal.Footer>
+            </Modal.Header>
+          </Modal>
 
         </div>
+
       </div>
 
-      <div>You selected destination {user && user.profile && user.profile.cities &&
-        user.profile.cities[0] && user.profile.cities[0].name} </div>
 
-      <div>Liked profiles {user && user.profile && user.profile.likedProfile &&
-        user.profile.likedProfile[0] && user.profile.likedProfile[0].user
-        && user.profile.likedProfile.map(el => el.user && el.user.firstName)} </div>
+      <div>
+        <Modal show={showCityModal} onHide={handleCloseCity}>
+          <Modal.Header>
+            <Modal.Title>Add your City</Modal.Title>
+            <Modal.Body>
+              <form>
+                <input name="city" id="" placeholder="City" onChange={(e) => {
+                  handleChange(e, setCity)
+                }}></input>
+              </form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseCity}>
+                Close
+                  </Button>
+              <Button variant="primary" onClick={(e) => {
+                handleCitySubmit(e)
+                handleCloseCity()
+              }}>
+                Select
+                  </Button>
+            </Modal.Footer>
+          </Modal.Header>
+        </Modal>
 
-      <div>Received likes {user && user.profile && user.profile.receivedLike &&
-        user.profile.receivedLike[0] && user.profile.receivedLike[0].user
-        && user.profile.receivedLike.map(el => el.user && el.user.firstName)} </div>
 
-      <Button>Yes or No</Button>
-
-      <div>Matched with {user && user.profile && user.profile.matched &&
-        user.profile.matched[0] && user.profile.matched[0].user
-        && user.profile.matched.map(el => el.user && el.user.firstName)} </div>
+      </div>
 
       <div>
         <p>Select activity first before going to matching</p>
@@ -334,6 +374,6 @@ export const ProfilePage = () => {
         <Button>Chat</Button>
       </Link>
 
-    </>
+    </div>
   )
 }
