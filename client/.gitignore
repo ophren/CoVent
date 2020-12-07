@@ -11,6 +11,7 @@
 # production
 /build
 
+
 # misc
 .DS_Store
 .env.local
@@ -26,4 +27,8 @@ yarn-error.log*
 
 .eslintcache
 .env
+
+src/utils/firebase.ts
+.firebase.ts
+
 

@@ -4,27 +4,33 @@ module.exports = (sequelize, DataTypes) => {
   const profile = sequelize.define('profile', {
     picture: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: ''
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: ''
     },
     age: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: ''
     },
     gender: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: ''
     },
     location: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: ''
     },
     hasNewMatch: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: false
     }
 
   });
@@ -77,6 +83,11 @@ module.exports = (sequelize, DataTypes) => {
 
     profile.belongsToMany(model.category, {
       through: 'categoryProfiles',
+      onDelete: 'cascade'
+    });
+
+    profile.belongsToMany(model.city, {
+      through: 'cityProfiles',
       onDelete: 'cascade'
     });
 

@@ -5,9 +5,13 @@ export interface SystemState {
   userFirebaseId: string | undefined,
   userEmail?:string,
   newUser?:boolean,
-  
+
 }
 
+export interface SystemStateLoggedIn {
+  loggedIn: boolean,
+  userFirebaseId: string
+}
 
 ///redux action Types
 

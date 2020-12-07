@@ -1,67 +1,91 @@
 import { Category, GiveLike, ReceivedLike } from './../types/userTypes';
 import { Profile, User } from "../types/userTypes";
+import { UserL, City, ProfileNew, CityAdd } from "../types/userLucasTypes";
+const baseUrl = "http://localhost:3002";
 
-const baseUrl = "http://localhost:3002/";
-
-export function getAllUsers(): Promise<User[]> {
+export const getAllUsers = (): Promise<UserL[]> => {
   return fetch(`${baseUrl}/users`, {
     headers: {
       Accept: "application/json",
     },
   }).then((res) => res.json());
+};
+
+export function getUserByEmailAndPassword(email: string, password: string): Promise<User> {
+  const user: User = {
+    email,
+    password
+  }
+  return fetch(`${baseUrl}/login`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user),
+  }).then((res) => res.json());
 }
 
-
-export function getUserById(id: string): Promise<User> {
+export function getUserById(id: string): Promise<User[]> {
   return fetch(`${baseUrl}/user/${id}`, {
     headers: {
-      Accept: "application/json",
+      'Content-Type': 'application/json'
     },
   }).then((res) => res.json());
 }
-
 
 export function registerUserToDataBase(user: User): Promise<User> {
+  const userAdoped: User = {
+    firstName: user.firstName, lastName: user.lastName,
+    email: user.email, password: user.password
+  }
   return fetch(`${baseUrl}/register`, {
-    method:"POST",
-    body: JSON.stringify(user),
+    method: "POST",
     headers: {
-      Accept: "application/json",
+      'Content-Type': 'application/json'
     },
+    body: JSON.stringify(userAdoped),
   }).then((res) => res.json());
 }
 
-
-export function addProfileToUserAtDataBase(profile: Profile): Promise<User> {
+export function addProfileToUserAtDataBase(profile: Profile): any {
   return fetch(`${baseUrl}/profile`, {
-    method:"POST",
-    body: JSON.stringify(profile),
+    method: "POST",
     headers: {
-      Accept: "application/json",
+      'Content-Type': 'application/json'
     },
-  }).then((res) => res.json());
+    body: JSON.stringify(profile),
+  }).then((res) => {
+    if (res.status === 204) {
+      return res;
+    } else {
+      res.json()
+    }
+  });
 }
+
 export function addCategoryToUserAtDataBase(category: Category): Promise<User> {
   return fetch(`${baseUrl}/category`, {
-    method:"POST",
+    method: "POST",
     body: JSON.stringify(category),
     headers: {
       Accept: "application/json",
     },
   }).then((res) => res.json());
 }
+
 export function giveLikeToOtherUser(giveLike: GiveLike): Promise<User> {
   return fetch(`${baseUrl}/like/give`, {
-    method:"POST",
+    method: "POST",
     body: JSON.stringify(giveLike),
     headers: {
       Accept: "application/json",
     },
   }).then((res) => res.json());
 }
+
 export function receivedLikeFromOther(receivedLike: ReceivedLike): Promise<User> {
   return fetch(`${baseUrl}/like/received`, {
-    method:"POST",
+    method: "POST",
     body: JSON.stringify(receivedLike),
     headers: {
       Accept: "application/json",
@@ -69,12 +93,59 @@ export function receivedLikeFromOther(receivedLike: ReceivedLike): Promise<User>
   }).then((res) => res.json());
 }
 
-export function updateUserProfileData (updatedUserProfile: Profile) :Promise<void>{
+export const updateUserProfileData = (updatedUserProfile: Profile): any => {
   return fetch(`${baseUrl}/profile`, {
-    method:"POST",
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(updatedUserProfile),
+  }).then((res) => res);
+};
+
+export const getAllCities = (): Promise<City[]> => {
+  return fetch(`${baseUrl}/cities`, {
     headers: {
       Accept: "application/json",
     },
+  }).then((res) => res.json())
+};
+
+export const getAllProfiles = (): Promise<ProfileNew[]> => {
+  return fetch(`${baseUrl}/profiles`, {
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json())
+};
+
+export const addCity = (city: CityAdd): any => {
+  return fetch(`${baseUrl}/city`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(city),
+  }).then((res) => res.json());
+};
+
+export const giveLike = (like: any): any => {
+  return fetch(`${baseUrl}/like/give`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(like),
+  }).then((res) => res.json());
+};
+
+export const addCategory = (category: any): any => {
+  console.log('category-->', category);
+  return fetch(`${baseUrl}/category`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(category),
   }).then((res) => res.json());
 }

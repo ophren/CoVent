@@ -5,16 +5,12 @@ import { SystemActionTypes } from '../types/systemTypes';
 import { User } from "../types/userTypes"
 import { getUserById } from './userDatabaseFetch';
 
-export function getUserByIdDispatch(firebaseId : string ) {
+export function getUserByIdDispatch(firebaseId: string) {
 
-  return (dispatch : Dispatch<UserActionTypes>) =>{
-    getUserById(firebaseId).then(user=> {
-      dispatch(setUser(user))
+  return (dispatch: Dispatch<UserActionTypes>) => {
+    getUserById(firebaseId).then(user => {
+      dispatch(setUser(user[0]))
     })
-
-
-
   }
-
 }
 

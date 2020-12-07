@@ -4,6 +4,7 @@ const models = require('./../models/');
 const helperFuncs = require('./../utils/helperFuncs');
 
 const createProfile = async (req, res) => {
+  console.log('INSIDE SERVER PROFILE CONTROLLER-->');
   const { userId } = req.body;
   const profile = await models.profile.findAll({
     where: { userId: userId }
@@ -11,9 +12,10 @@ const createProfile = async (req, res) => {
   try {
     if (profile.length > 0) {
       const updatedProfile = await models.profile.update((req.body), {
-        where: { userId: userId }
+        where: { userId: userId },
+        returning: true
       });
-      res.status(204).send(updatedProfile);
+      res.status(204).send(updatedProfile[1]);
     } else {
       const newProfile = await models.profile.create(req.body);
       res.status(201).send(newProfile);
@@ -26,7 +28,7 @@ const createProfile = async (req, res) => {
 const getProfile = async (req, res) => {
   try {
     const { id } = req.params;
-    const profile = await helperFuncs.findProfile(models, id, 'user');
+    const profile = await helperFuncs.findProfile(models, id, 'profile');
 
     res.status(200).send(profile);
   } catch (error) {

@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  margin-top: 10px;
+  flex-direction: column;
+  /* max-width: 400px;
+  min-width: 0; */
+}
+
+.image_container {
+  justify-content: space-around;
+  max-width: 400px;
+  display: flex;
+}
+
+.searchbar_image {
+  height: 60px;
+  object-fit: contain;
+  width: 120px;
+}

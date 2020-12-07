@@ -1,10 +1,15 @@
 import { SystemActionTypes } from './../types/systemTypes';
-
-
 import { Dispatch } from 'react';
 import { setUserFirebaseId, setUserToLoggedIn, setUserToLoggedOut } from '../redux/systemState/systemStateActions';
 import fire from './firebase';
-import { getUserById, registerUserToDataBase } from './userDatabaseFetch';
+import {
+    addProfileToUserAtDataBase, getUserById, registerUserToDataBase,
+    getUserByEmailAndPassword, updateUserProfileData, addCity, giveLike, addCategory
+} from './userDatabaseFetch';
+import { User, Profile } from '../types/userTypes';
+import { setUser } from '../redux/userState/userActions';
+import { UserL, City, ProfileNew, CityAdd } from "../types/userLucasTypes";
+
 
 export const userLogin = (creds: any) => {
     return (dispatch: any) => {
@@ -14,43 +19,123 @@ export const userLogin = (creds: any) => {
             .then((res) => {
                 dispatch(setUserFirebaseId(res.user?.uid));
                 dispatch(setUserToLoggedIn());
-
-
-
-                // dispatch(setUserState (getUserById(res.user?.uid)))
+                getUserByEmailAndPassword(creds.email, creds.password).then(updatedUser => {
+                    if (updatedUser.id) {
+                        getUserById(updatedUser.id.toString()).then(user => {
+                            const newUser = user[0]
+                            dispatch(setUser(newUser))
+                        })
+                    }
+                })
             })
             .catch(err => {
+                alert(err)
                 console.log(err)
             });
     };
 };
 
 export const userLogOut = () => {
-    return (dispatch: Dispatch<SystemActionTypes>) => {
-
+    return (dispatch: any) => {
         fire.auth().signOut().then(function () {
             dispatch(setUserToLoggedOut())
+            dispatch(setUser({
+                id: 0,
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                profile: {
+                    age: '',
+                    description: '',
+                    gender: '',
+                    location: '',
+                    picture: '',
+                    userId: 0,
+                }
+            }))
         }).catch(function (error) {
             console.log(error)
         });
     }
-}
+};
 
-export const userSignUp = (creds: any) => {
-    console.log('hello worls', creds)
+export const userSignUp = (user: User) => {
     return (dispatch: any) => {
-        fire
-            .auth()
-            .createUserWithEmailAndPassword(creds.email, creds.password)
-            .then((res) => {
-                console.log(res.user?.uid, ' Firebase res')
-                dispatch(setUserFirebaseId(res.user?.uid));
-                dispatch(setUserToLoggedIn());
-
-
-            })
-            .catch(err => {
-                console.log(err)
-            });
+        if (user.email && user.password) {
+            fire
+                .auth()
+                .createUserWithEmailAndPassword(user.email, user.password)
+                .then((firebaseUser) => {
+                    dispatch(setUserFirebaseId(firebaseUser.user?.uid));
+                    dispatch(setUserToLoggedIn());
+                    registerUserToDataBase(user).then(registeredUser => {
+                        if (registeredUser.id) {
+                            if (user.profile) {
+                                user.profile.userId = Number(registeredUser.id);
+                                addProfileToUserAtDataBase(user.profile)
+                                    .then(() => {
+                                        if (user.profile && user.profile.userId) {
+                                            getUserById(user.profile.userId.toString()).then(updatedUser => {
+                                                dispatch(setUser(updatedUser[0]))
+                                            })
+                                        }
+                                    })
+                            }
+                        }
+                    }).catch(e => console.log(e))
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+        }
     };
 };
+
+export const profileUpdate = (user: User) => {
+    return (dispatch: any) => {
+        if (user && user.profile) {
+            updateUserProfileData(user.profile)
+                .then(() => {
+                    dispatch(setUser(user))
+                })
+        }
+    }
+}
+
+export const addCityToProfile = (city: CityAdd, user: User) => {
+    return (dispatch: any) => {
+        addCity(city)
+            .then((el: any) => {
+                if (user.profile && user.profile.cities) {
+                    user.profile.cities[0] = el
+                    dispatch(setUser(user))
+                }
+            })
+    }
+}
+
+export const addLike = (like: any): any => {
+    console.log('SYSTEM FUNC ADD LIKE-->');
+    console.log('like-->', like);
+    return (dispatch: any) => {
+        giveLike(like)
+            .then((newUser: any) => {
+                dispatch(setUser(newUser[0]))
+            })
+    }
+}
+
+export const addCategoryToProfile = (category: any, user: User): any => {
+    return (dispatch: any) => {
+        console.log('category-->', category);
+        addCategory(category)
+            .then((activity: any) => {
+                if (user.profile && user.profile.categories) {
+                    user.profile.categories.push(activity)
+                    console.log('user after inserting category-->', user);
+                    dispatch(setUser(user))
+                }
+            })
+    }
+}
