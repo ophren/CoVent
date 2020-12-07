@@ -90,6 +90,10 @@ export const ProfilePage = () => {
       .then((list) => {
         const filteredList = list.filter((el) => el.id !== user.id)
         setProfiles(filteredList)
+        filterProfilesToShowExceptSwipedOnes(user, list)
+        if (currentDirection.length && user.profile && user.profile.id) {
+          sendLikesToBackEnd(currentDirection, user.profile.id)
+        }
       })
   }, []);
 
@@ -152,14 +156,9 @@ export const ProfilePage = () => {
 
   const filterSwipedProfiles = (profiles: ProfileNew[], currentDir: string[]): ProfileNew[] => {
     const result = [];
-    console.log('profiles profilePage.tsx, line 155 profiles: ',profiles);
-    console.log('currentDir profilePage.tsx, line 156 currentDir: ',currentDir);
     for (let i = 0; i < profiles.length; i++) {
-      console.log('profiles[i]-->', profiles[i]);
       let flag;
       for (let a = 0; a < currentDir.length; a++) {
-        console.log('currentDir[a]-->', currentDir[a]);
-
         if (Number(currentDir[a].match(/\d+/g)) === profiles[i].id) {
           flag = true;
           break;
@@ -171,14 +170,32 @@ export const ProfilePage = () => {
         flag = false;
       }
     }
-    console.log('result profilePage.tsx, line 174 result: ',result);
     return result;
+  };
+
+  const sendLikesToBackEnd = (currentDir: string[], profileId: number): void => {
+    currentDir.forEach((el) => {
+      console.log('el profilePage.tsx, line 174 el: ', el);
+      if (String(el.match(/[^\s]+/)) === 'right') {
+        dispatch(addLike({
+          profileId: profileId,
+          givenLikeId: el.match(/\d+/g)
+        }))
+      }
+    })
+  }
+
+  const filterProfilesToShowExceptSwipedOnes = (user: User, list: ProfileNew[]): void => {
+    console.log('user profilePage.tsx, line 188 user: ', user);
+    console.log('list profilePage.tsx, line 189 list: ', list);
+    // create table in back end where you keep track of swiped profiles
+    // user has many swipes ->  a swipe belongs to one user
   }
 
   return (
     <>
-      {/* {console.log('PROFILE PAGE currentDirection-->', currentDirection)}
-      {console.log('profiles-->', profiles)}
+      {console.log('PROFILE PAGE currentDirection-->', currentDirection)}
+      {/* {console.log('profiles-->', profiles)}
       {console.log('PROFILE PAGE currentDirection.length-->', currentDirection.length)}
       {console.log('profiles.length-->', profiles.length)} */}
 
@@ -275,10 +292,10 @@ export const ProfilePage = () => {
         user.profile.likedProfile[0] && user.profile.likedProfile[0].user
         && user.profile.likedProfile.map(el => el.user && el.user.firstName)} </div>
 
-
       <div>Received likes {user && user.profile && user.profile.receivedLike &&
         user.profile.receivedLike[0] && user.profile.receivedLike[0].user
         && user.profile.receivedLike.map(el => el.user && el.user.firstName)} </div>
+
       <Button>Yes or No</Button>
 
       <div>Matched with {user && user.profile && user.profile.matched &&
@@ -297,6 +314,8 @@ export const ProfilePage = () => {
 
 
       </div>
+
+      {/* {user.profile && user.profile.id && currentDirection && currentDirection.length && sendLikesToBackEnd(currentDirection, user.profile.id)} */}
 
       <Link to={{
         pathname: '/swiping',
