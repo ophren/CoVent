@@ -1,8 +1,6 @@
-
 #profile_body {
   display: grid;
   grid-template-columns: 18% 84%;
-  padding-right: 10%;
   padding-top: 3%;
   background-color: rgb(247, 247, 247);
 }
@@ -32,7 +30,8 @@
   text-align: left;
   margin-top: 5%;
   height: 30px;
-  border-bottom: 1px solid rgb(204, 204, 204);
+  border-bottom: 1px solid rgb(221, 221, 221);
+  margin-right: 10%;
   border-radius: 3px;
   cursor: pointer;
 }
@@ -40,7 +39,8 @@
 #sidebar-swipe-element:hover {
   font-size: 16px;
   font-weight: bolder;
-  color: rgb(78, 78, 78);
+  color: rgb(82, 82, 232);
+  border-bottom: 2px solid rgb(82, 82, 232);
 
 }
 
@@ -66,79 +66,116 @@
 }
 
 #user-infos {
+  width: 250px;
   margin-left: 10%;
 }
 
 .user_first_name {
   font-size: 20px;
-  line-height: 200%;
+  margin-top: 5%;
+  margin-bottom: 5%;
   font-weight: bolder;
+}
+
+#user-age {
+  margin-bottom: 2%;
 }
 
 .profile_page_image_container {
 }
 
 .profile_page_image {
-  height: 20vh;
-  border-radius: 30px;
+  height: 25vh;
+  border-radius: 50px;
 }
 
 .city_add {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   margin-left: 14px;
   border: 2px solid rgb(82,82,232);
-  border-radius: 2px;
+  border-radius: 30px;
   background-color: rgb(255, 255, 255);
   color: rgb(82,82,232);
   height: 28px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
-.profile_updatebutton {
+.city_add:hover{
+  transform: scale(0.90); 
+}
+
+.profile_update-button {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   border: none;
-  border-radius: 2px;
+  border-radius: 30px;
   border: 2px solid rgb(82,82,232);
   background-color: rgb(255, 255, 255);
   color: rgb(82,82,232);
+  padding-left: 10px;
+  padding-right: 10px;
   height: 30px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
 }
 
-#select-category-area {
-  margin-top: 5%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#select-category-catchphrase {
-  line-height: 2;
-  margin-bottom: 1%;
+.profile_update-button:hover {
+  /* height: 29px; */
+  transform: scale(0.90); 
+  /* use transform so that the other components are not affected */
 }
 
 #my-matches-area {
-  background-color: rgb(229, 226, 226);
+  background-color: rgb(255, 255, 255);
   margin-top: 2%;
   margin-right: 5%;
   padding-bottom: 2%;
+  border: 2px solid rgb(241, 241, 241);
+  border-radius: 25px;
+  font-size: 20px;
+  margin-bottom: 2%;
 }
 
 #my-matches-title {
   font-weight: bolder;
   margin-left: 3%;
   padding-top: 2%;
-  margin-bottom: 2%;
+  margin-bottom: 3%;
 }
 
 #my-matches-list {
+  display: flex;
   margin-left : 3%;
-  display: grid;
-  grid-template-columns: 50% 50%;
+  margin-bottom: 1%;
+}
+
+#match-img {
+  border-radius: 200vh;
+  min-width: 80px;
+  max-width: 80px;
+  min-height: 80px;
+  max-height: 80px;
+  margin-right: 5%;
+}
+
+#match-container {
+  margin-right: 3%;
+  display: flex;
+  max-width: 40%;
+}
+
+#match-infos {
+  margin-right: 5%;
+  margin-bottom: 3%;
+}
+
+#match-description {
+  font-style: italic;
+  font-size: 12px;
 }
 
 #invitations-grid-area {
@@ -153,7 +190,7 @@
   padding-top: 2%;
   padding-bottom: 2%;
   padding-left: 3%;
-  margin-right: 2%;
+  margin-right: 4%;
   border: 2px solid rgb(241, 241, 241);
   border-radius: 50px;
 }
@@ -166,18 +203,21 @@
 .invitations-container-title{
   text-align: center;
   color: rgb(56, 56, 56);
-  margin-bottom: 3%;
+  margin-bottom: 5%;
   margin-top: 3%;
   font-size: 20px;
   font-weight: bolder;
 }
 
+
 #invitor-area {
+
   display: flex;
   margin-top: 4%;
   /* background-color: rgb(245, 245, 245); */
   margin-right: 4%;
-  
+  margin-bottom: 4%; 
+  padding-right: 6%;
 }
 
 #invitor-details {
@@ -186,15 +226,14 @@
 
 .invitor-name {
   font-weight: bolder;
-  margin-bottom: 3%;
-  margin-top: 5%;
+  margin-bottom: 5px;
 }
 
 .invitor-city {
   font-style: italic;
   font-size: 12px;
   color: rgb(83, 83, 83);
-  margin-bottom: 10%;
+  margin-bottom: 15px;
 }
 
 #invitor-view-profile-btn {

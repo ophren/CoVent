@@ -14,14 +14,15 @@
     border: 1px solid white;
 }
 
-#logout-btn {
-    background-color: rgb(247, 80, 51);
-    height: 30px;
-    width: 80px;
-    border: none;
-    color: white;
-    border-radius: 16px;
-    margin-left: 20px;
+#logout-div {
+    font-size: 14px;
+    color: rgb(252, 70, 38);
+    margin-left: 10px;
     cursor: pointer;
+    padding-top: 10%;
+}
+
+#logout-div:hover {
+    text-decoration: underline;
 }
 

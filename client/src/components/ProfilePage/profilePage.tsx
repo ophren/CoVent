@@ -16,6 +16,7 @@ export const ProfilePage = () => {
   console.log('INSIDE PROFILE-->');
   const user = useSelector((state: RootState) => state.user)
   const currentDirection = useSelector((state: RootState) => state.direction)
+  const currentUser = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch();
 
   const initialState = {
@@ -216,13 +217,13 @@ export const ProfilePage = () => {
 
             <div id="user-infos">
               <div className="user_first_name">Benjamin</div>
-              <div id="user-age">{user.profile && user.profile.age}</div>
-              <div id="selected-city">Your city: {user && user.profile && user.profile.cities && user.profile.cities[0] && user.profile.cities[0].name}</div>
+              <div id="user-age">{user.profile && user.profile.age} years old</div>
+              <div id="selected-city">{user && user.profile && user.profile.cities && user.profile.cities[0] && user.profile.cities[0].name}</div>
             </div>
           </div>
 
           <div id="top_right_corner_btn">
-            <Button variant="primary" onClick={handleShow} className="profile_updatebutton">Edit Profile</Button>
+            <Button variant="primary" onClick={handleShow} className="profile_update-button">Edit Profile</Button>
             <Button variant="primary" onClick={handleShowCity} className="city_add">Pick a city</Button>
           </div>
         </div>
@@ -231,7 +232,20 @@ export const ProfilePage = () => {
 
           <div id="my-matches-area">
             <div id="my-matches-title">My matches</div>
-            <div></div> 
+            <div id="my-matches-list">
+              {currentUser.profile && currentUser.profile.matched && currentUser.profile.matched.map((el, i) => {
+                return (
+                <div id="match-container" key={i}>
+                  <img src={el.picture} id="match-img" alt="profile pic" />
+                  <div id="match-infos">
+                    <div className="invitor-name" >{el.user?.firstName}</div> 
+                    <div className="invitor-city" >{el.location}</div>
+                    <div id="match-description">{el.description}</div>
+                  </div>
+                </div>
+                )
+              })}
+            </div> 
           </div>
 
           <div id="invitations-grid-area">
@@ -258,7 +272,7 @@ export const ProfilePage = () => {
 
 
             <div className="invitations-container" id="invitations-received">
-              <div className= "invitations-container-title">They have invited you:</div>
+              <div className= "invitations-container-title">They have invited you</div>
               <div className="invitations-list">
                 { 
                   user && user.profile && user.profile.receivedLike &&
@@ -394,6 +408,8 @@ export const ProfilePage = () => {
           }
         }}>
         </Link>
+
+     
       </div>
     </div>
   )

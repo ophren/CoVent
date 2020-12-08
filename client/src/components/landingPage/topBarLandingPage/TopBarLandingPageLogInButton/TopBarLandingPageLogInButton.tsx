@@ -28,7 +28,7 @@ export const TopBarLandingPageLogInButton = ({ setShowModal }: TopBarSignInButto
   return (
     <div className="log_in_button_container">
       {userLoggedIn
-        ? <button id="logout-btn" onClick={handleLogOut}>{USER_LOGGED_OUT_TEXT}</button>
+        ? <div id="logout-div" onClick={handleLogOut}>{USER_LOGGED_OUT_TEXT}</div>
         : <button id="login-btn" onClick={displayModal}>{USER_LOGGED_IN_TEXT}</button>
       }
     </div>
