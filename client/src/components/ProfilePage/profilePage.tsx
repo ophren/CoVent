@@ -195,17 +195,29 @@ export const ProfilePage = () => {
   return (
     <div id="profile_body">
 
-      <div className="profile_page_container">
+      <div id="sidebar-swipes">
+        <div id="sidebar-swipes-title">Swipe by categories</div>
+        <div>test</div>
+        <div>test</div>
+        <div>test</div>
+        <div>test</div>
+        <div>test</div>
+        <div>test</div>
+      </div>
+      <div className="profile_page_content">
 
         <div className="profile_page_header_container">
 
-          <div>
-            <div className="user_first_name">Benjamin</div>
-            <div>{user.profile && user.profile.age}</div>
-          </div>
+          <div id="profile-infos-picture">
+            <div className="profile_page_image_container">
+              <img className="profile_page_image" src={user.profile?.picture} alt="profile" />
+            </div>
 
-          <div className="profile_page_image_container">
-            <img className="profile_page_image" src={user.profile?.picture} alt="profile" />
+            <div id="user-infos">
+              <div className="user_first_name">Benjamin</div>
+              <div id="user-age">{user.profile && user.profile.age}</div>
+              <div id="selected-city">Your city: {user && user.profile && user.profile.cities && user.profile.cities[0] && user.profile.cities[0].name}</div>
+            </div>
           </div>
 
           <div id="top_right_corner_btn">
@@ -215,30 +227,35 @@ export const ProfilePage = () => {
         </div>
 
         <div id="profile-page-body">
-          <div id="selected-city">Your city: {user && user.profile && user.profile.cities && user.profile.cities[0] && user.profile.cities[0].name}</div>
 
-          <div>Select activity first before going to matching</div>
-
-          <div id="sent-invitations-area">
-            Invitations sent: {user && user.profile && user.profile.likedProfile &&
-              user.profile.likedProfile[0] && user.profile.likedProfile[0].user
-              && user.profile.likedProfile.map(el => el.user && el.user.firstName)}
-          </div>
-
-          <div id="received-invitation-area">
-            <div id="received-invitation-title">Invitations received: {user && user.profile && user.profile.receivedLike &&
-              user.profile.receivedLike[0] && user.profile.receivedLike[0].user
-              && user.profile.receivedLike.map(el => el.user && el.user.firstName)}
+          <div id="my-matches-area">
+            <div id="my-matches-title">My matches</div>
+            <div id="my-matches-list">
+              <div id="test">test</div>
+              <div id="test">test</div>
+              <div id="test">test</div>
+              <div id="test">test</div>
+              <div id="test">test</div>
+              <div id="test">test</div>
             </div>
-            <div></div>
-            <Button id="accept-invitation-btn">Accept</Button>
-            <Button id="reject-invitation-btn">Decline</Button>
           </div>
-          {/*
-          <Button variant="primary" onClick={handleShowCity} className="city_add">
-              Remove me
-          </Button> */}
 
+          <div id="invitations-grid-area">
+            <div id="sent-invitations-area">
+              Invitations sent: {user && user.profile && user.profile.likedProfile &&
+                user.profile.likedProfile[0] && user.profile.likedProfile[0].user
+                && user.profile.likedProfile.map(el => el.user && el.user.firstName)}
+            </div>
+
+            <div id="received-invitation-area">
+              <div id="received-invitation-title">Invitations received: {user && user.profile && user.profile.receivedLike &&
+                user.profile.receivedLike[0] && user.profile.receivedLike[0].user
+                && user.profile.receivedLike.map(el => el.user && el.user.firstName)}
+              </div>
+              <Button id="accept-invitation-btn">Accept</Button>
+              <Button id="reject-invitation-btn">Decline</Button>
+            </div>
+          </div>        
         </div>
 
         <Modal show={show} onHide={handleClose}>
@@ -338,13 +355,9 @@ export const ProfilePage = () => {
             </Modal.Footer>
           </Modal.Header>
         </Modal>
-
-
       </div>
 
-      <div>
-        <p>Select activity first before going to matching</p>
-
+      <div id="select-category-area">
         <select id="mySelect" onChange={(e) => { handleCategorySubmit(e) }}>
           {categories.map((el, i) => {
             return <option key={i} value={el}>{el}</option>
@@ -352,28 +365,14 @@ export const ProfilePage = () => {
           }
         </select>
 
-
+        <Link to={{
+          pathname: '/swiping',
+          state: {
+            profiles: currentDirection.length === 0 ? profiles : filterSwipedProfiles(profiles, currentDirection)
+          }
+        }}>
+        </Link>
       </div>
-
-      {/* {user.profile && user.profile.id && currentDirection && currentDirection.length && sendLikesToBackEnd(currentDirection, user.profile.id)} */}
-
-      <Link to={{
-        pathname: '/swiping',
-        state: {
-          profiles: currentDirection.length === 0 ? profiles : filterSwipedProfiles(profiles, currentDirection)
-        }
-      }}>
-        <Button>Swiping</Button>
-      </Link>
-
-      <Link to="/matches">
-        <Button>Matches</Button>
-      </Link>
-
-      <Link to="/chat">
-        <Button>Chat</Button>
-      </Link>
-
     </div>
   )
 }
