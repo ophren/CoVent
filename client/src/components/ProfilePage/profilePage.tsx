@@ -88,7 +88,11 @@ export const ProfilePage = () => {
   useEffect(() => {
     getAllProfiles()
       .then((list) => {
+        console.log('USE EFFECT-->');
+        console.log('list-->', list);
+
         const filteredList = list.filter((el) => el.id !== user.id)
+        console.log('filteredList-->', filteredList);
         setProfiles(filteredList)
         // filterProfilesToShowExceptSwipedOnes(user, list)
         if (currentDirection.length && user.profile && user.profile.id) {
@@ -155,9 +159,9 @@ export const ProfilePage = () => {
     dispatch(addCategoryToProfile(categoryToSend, user))
   };
 
-  const filterSwipedProfiles = (profiles: ProfileNew[], currentDir: string[]): ProfileNew[] => {
+  const filterSwipedProfiles = (profiles: ProfileNew[], currentDir: string[]): any => {
 
-    console.log('PROFILE PAGE ---> SWIPED PROFILES FUNCTION-->');
+    console.log('filterSwipedProfiles PROFILES FUNCTION-->');
     console.log('profiles-->', profiles);
 
     // filter profiles according to selected city from user
@@ -165,62 +169,114 @@ export const ProfilePage = () => {
     // filter the above list based on selected activity from user
     const filteredByCityAndActivity = filterByActivity(filteredByCity)
 
-    const result = [];
-    for (let i = 0; i < filteredByCityAndActivity.length; i++) {
-      let flag;
-      for (let a = 0; a < currentDir.length; a++) {
-        if (Number(currentDir[a].match(/\d+/g)) === filteredByCityAndActivity[i].id) {
-          flag = true;
-          break;
+    // remove yourself from the list
+    if (filteredByCityAndActivity) {
+      const filteredByCityActivitySelf = filteredByCityAndActivity.filter((el: any) => el.id !== user.id)
+
+      console.log('INSIDE FILTERBYCITY AND ACTIVITY-->');
+      console.log('filteredByCityActivitySelf-->', filteredByCityActivitySelf);
+
+
+      let filteredByPreviousSwipes = [];
+
+      if (user.profile && user.profile.swipes && user.profile.swipes.length > 0) {
+        console.log('user.profile.swipes-->', user.profile.swipes);
+        console.log('user.profile.swipes.length-->', user.profile.swipes.length);
+        for (let a = 0; a < filteredByCityActivitySelf.length; a++) {
+          let flag;
+          for (let c = 0; c < user.profile.swipes.length; c++) {
+            if (Number(user.profile.swipes[c].swipeId) === filteredByCityActivitySelf[a].id) {
+              flag = true;
+              break;
+            }
+          }
+          if (!flag) {
+            filteredByPreviousSwipes.push(filteredByCityActivitySelf[a])
+          }
+          else {
+            flag = false;
+          }
         }
-      }
-      if (!flag) {
-        result.push(filteredByCityAndActivity[i]);
       } else {
-        flag = false;
+        filteredByPreviousSwipes = filteredByCityActivitySelf
+      }
+
+      console.log('filteredByPreviousSwipes-->', filteredByPreviousSwipes);
+
+      if (filteredByPreviousSwipes.length > 0) {
+        const result = [];
+        for (let i = 0; i < filteredByPreviousSwipes.length; i++) {
+          let flag;
+          for (let a = 0; a < currentDir.length; a++) {
+            if (Number(currentDir[a].match(/\d+/g)) === filteredByPreviousSwipes[i].id) {
+              flag = true;
+              break;
+            }
+          }
+          if (!flag) {
+            result.push(filteredByPreviousSwipes[i]);
+          } else {
+            flag = false;
+          }
+        }
+        console.log('filterSwipedProfiles result -->', result);
+
+        return result;
+
+      }
+      else {
+        return filteredByPreviousSwipes
       }
     }
-    return result;
   };
 
-  const filterByCity = (profiles: ProfileNew[]): ProfileNew[] => {
-    // console.log('INSIDE FILTER BY CITY-->');
-    // console.log('profiles-->', profiles);
+  const filterByCity = (profiles: ProfileNew[]): any => {
+    console.log('filterByCity-->');
+    console.log('profiles-->', profiles);
+    console.log('user-->', user);
+
     // console.log('user.profile.cities-->', user.profile);
+    if (user && user.profile && user.profile.cities && user.profile.cities[0] && user.profile.cities[0].name) {
+      console.log('profiles-->', profiles);
+      // console.log('profiles.cities-->', profiles.cities);
+      const res = profiles.filter((el) => {
+        console.log('el-->', el);
+        if (user && user.profile && user.profile.cities && user.profile.cities[0].name && el && el.cities && el.cities.length > 0) {
+          console.log('INSIDE IF STATEMENT FILTER BY CITY-->');
+          if (el.cities && el.cities[0] && el.cities[0].name && user && user.profile && user.profile.cities && user.profile.cities[0]) {
+            return el.cities[0].name === user.profile.cities[0].name;
+          }
+          // console.log('el.cities[0].name-->', el.cities[0].name);
+          // console.log('el.cities[0].name === user.profile.ciities[0].name-->', el.cities[0].name === user.profile.cities[0].name);
 
-    const res = profiles.filter((el) => {
-      if (user && user.profile && user.profile.cities && user.profile.cities[0].name) {
-        // console.log('el.cities[0].name-->', el.cities[0].name);
-        // console.log('el.cities[0].name === user.profile.ciities[0].name-->', el.cities[0].name === user.profile.cities[0].name);
-
-        // console.log('user.profile.cities[0].name-->', user.profile.cities[0].name);
-        return el.cities[0].name === user.profile.cities[0].name;
-      }
-    })
-    console.log('res-->', res);
-    return res;
+          // console.log('user.profile.cities[0].name-->', user.profile.cities[0].name);
+        }
+      })
+      console.log('filterByCity res -->', res);
+      return res;
+    }
   }
 
-  const filterByActivity = (profiles: ProfileNew[]): ProfileNew[] => {
-    console.log('PROFILE PAGE FILTER BY ACTIVITY-->', );
-    console.log('profiles-->', profiles);
-
-    const res = profiles.filter((el) => {
-      if (user && user.profile && user.profile.categories && user.profile.categories.length > 0 && el.categories && el.categories.length > 0) {
-        console.log('el.categories-->', el.categories);
-        console.log('el.categories[el.categories.length - 1].name-->', el.categories[el.categories.length - 1].name);
-        console.log('user.profile.categories[categories.length - 1].name-->', user.profile.categories[user.profile.categories.length - 1].name);
-        return el.categories[0].name === user.profile.categories[user.profile.categories.length - 1].name
-      }
-    })
-    console.log('res from filter by activity-->', res);
-
-    return res;
+  const filterByActivity = (profiles: ProfileNew[]): any => {
+    console.log('filterByActivity-->',);
+    // console.log('profiles-->', profiles);
+    if (profiles) {
+      const res = profiles.filter((el) => {
+        if (user && user.profile && user.profile.categories && user.profile.categories.length > 0 && el.categories && el.categories.length > 0) {
+          // console.log('el.categories-->', el.categories);
+          // console.log('el.categories[el.categories.length - 1].name-->', el.categories[el.categories.length - 1].name);
+          // console.log('user.profile.categories[categories.length - 1].name-->', user.profile.categories[user.profile.categories.length - 1].name);
+          return el.categories[0].name === user.profile.categories[user.profile.categories.length - 1].name
+        }
+      })
+      console.log('res from filter by activity-->', res);
+      return res;
+    }
   }
 
   const sendLikesToBackEnd = (currentDir: string[], profileId: number): void => {
     currentDir.forEach((el) => {
-      console.log('el profilePage.tsx, line 174 el: ', el);
+      // console.log('el profilePage.tsx, line 174 el: ', el);
       if (String(el.match(/[^\s]+/)) === 'right') {
         dispatch(addLike({
           profileId: profileId,
@@ -401,7 +457,8 @@ export const ProfilePage = () => {
 
       </div>
 
-      {console.log('user', user)}
+      {/* {console.log('user', user)} */}
+      {user.profile && user.profile.swipes && console.log('user.profile.swipes-->', user.profile.swipes)}
       {console.log('currentDirection', currentDirection)}
 
       {/* {user.profile && user.profile.id && currentDirection && currentDirection.length && sendLikesToBackEnd(currentDirection, user.profile.id)} */}
@@ -409,7 +466,7 @@ export const ProfilePage = () => {
       <Link to={{
         pathname: '/swiping',
         state: {
-          profiles: currentDirection.length === 0 ? filterByActivity(filterByCity(profiles)) : filterSwipedProfiles(profiles, currentDirection)
+          profiles: filterSwipedProfiles(profiles, currentDirection)
         }
       }}>
         <Button>Swiping</Button>

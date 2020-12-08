@@ -14,17 +14,17 @@ export interface City {
 }
 
 export interface ProfileNew {
-  id: number,
-  picture: string,
-  description: string,
-  age: string,
-  location: string,
-  cities: City[],
-  hasNewMatch: boolean,
-  createdAt: string,
-  updatedAt: string,
-  userId: number,
-  cityProfiles: {
+  cities?: City[],
+  id?: number,
+  picture?: string,
+  description?: string,
+  age?: string,
+  location?: string,
+  hasNewMatch?: boolean,
+  createdAt?: string,
+  updatedAt?: string,
+  userId?: number,
+  cityProfiles?: {
     createdAt: string,
     updatedAt: string,
     cityId: number,

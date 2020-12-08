@@ -132,14 +132,11 @@ export const addLike = (like: any): any => {
 
 export const addCategoryToProfile = (category: any, user: User): any => {
     return (dispatch: any) => {
-        console.log('SYSTEM FUNC ADD CATEGORY TO PROFILE-->');
         addCategory(category)
             .then((activity: any) => {
                 if (user.profile && user.profile.categories) {
-                    console.log('activity-->', activity);
                     if (!activity.error) {
                         user.profile.categories[0] = activity
-                        console.log('user after inserting category-->', user);
                         dispatch(setUser(user))
                     }
                 }
@@ -150,7 +147,5 @@ export const addCategoryToProfile = (category: any, user: User): any => {
 export const addSwipeToProfile = (swipe: any): any => {
     console.log('SYSTEM FUNC ADD SWIPE-->');
     console.log('swipe-->', swipe);
-    return (dispatch: any) => {
-        addSwipe(swipe)
-    }
+    addSwipe(swipe)
 }

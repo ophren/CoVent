@@ -11,7 +11,14 @@ export interface User {
   password?: string
 }
 
+export interface Swipe {
+  profileId: number,
+  swipeId: string
+}
+
 export interface Profile {
+  // swipes: Profile | undefined
+  swipes?: Swipe[],
   id?: number,
   picture?: string,
   description?: string

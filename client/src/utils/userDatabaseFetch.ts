@@ -150,6 +150,9 @@ export const addCategory = (category: any): any => {
 }
 
 export const addSwipe = (swipe: any): any => {
+  console.log('INSIDE DB FETCH ADD SWIPE-->');
+  console.log('swipe-->', swipe);
+
   return fetch(`${baseUrl}/swipe`, {
     method: "POST",
     headers: {

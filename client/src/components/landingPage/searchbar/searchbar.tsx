@@ -45,15 +45,17 @@ export const Searchbar = (): ReactElement => {
   }
 
   let renderUserWithCities;
-  if (users[0] && users[0].cities) {
+  if (users && users[0] && users[0].cities) {
     renderUserWithCities = (
-      users.filter(user => user.cities.length
+      users.filter(user => user.cities && user.cities.length
         && user.cities[0].name.toLowerCase().includes(city)).map((el, i) => {
           return <div key={i} className="image_container">
             <img src={el.picture} className="searchbar_image" alt="profile pic" />
             <h1>{el.description}</h1>
             <Button onClick={(e) => {
-              handleLike(e, el.id)
+              if (el && el.id) {
+                handleLike(e, el.id)
+              }
             }}>💌</Button>
           </div>
         }
@@ -69,7 +71,9 @@ export const Searchbar = (): ReactElement => {
           <img src={el.picture} className="searchbar_image" alt="profile pic" onClick={handleShow} />
           <div>{el.description}</div>
           <Button onClick={(e) => {
-            handleLike(e, el.id)
+            if (el && el.id) {
+              handleLike(e, el.id)
+            }
           }}>💌</Button>
         </div>
       })

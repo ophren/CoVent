@@ -20,13 +20,16 @@ export const TopBarLandingPageLogInButton = ({ setShowModal }: TopBarSignInButto
   function handleLogOut() {
     currentDirection.forEach((el) => {
       if (currentUser.profile) {
-        const swipeToSend = {
-          profileId: currentUser.profile.id,
-          swipeId: el.match(/\d+/g)
+        const swipeValue = el.match(/\d+/g)
+        if (swipeValue) {
+          const swipeToSend = {
+            profileId: currentUser.profile.id,
+            swipeId: swipeValue[0]
+          }
+          console.log('TOP BAR INSIDE HANDLE LOGOUT-->');
+          console.log('swipeToSend-->', swipeToSend);
+          addSwipeToProfile(swipeToSend)
         }
-        console.log('TOP BAR INSIDE HANDLE LOGOUT-->');
-        console.log('swipeToSend-->', swipeToSend);
-        addSwipeToProfile(swipeToSend)
       }
     })
     dispatch(userLogOut())
