@@ -1,14 +1,15 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import { RootState } from '../../types/combinedStoreTypes';
+import { Link } from 'react-router-dom';
 
-export const Matches = () => {
+export const Chats = () => {
 
   const currentUser = useSelector((state: RootState) => state.user)
-  console.log('currentUser-->', currentUser);
 
   return (
     <>
+      <h1>Hello From Chats</h1>
       {console.log('currentUser-->', currentUser)}
       <h1>Hello From Matches</h1>
 
@@ -16,11 +17,17 @@ export const Matches = () => {
         currentUser.profile &&
         currentUser.profile.matched &&
         currentUser.profile.matched.map((el, i) =>
-          <div key={i} className="image_container">
-            <img src={el.picture} className="searchbar_image" alt="profile pic" />
+          <div key={i} className="match">
+            <Link to= {{
+              pathname:  '/chat',
+              state: {
+                profile: el.picture
+              }
+            }}>
+            <img src={el.picture} className="match__chat" alt="match chat" />
+            </Link>
           </div>
         )}
-
     </>
   )
 }

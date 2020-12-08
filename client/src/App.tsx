@@ -7,6 +7,7 @@ import { ProfilePage } from './components/ProfilePage/profilePage';
 import { RenderProfilesList } from './components/RenderProfilesList';
 
 import { Chat } from './components/Chat/chat';
+import { Chats } from './components/Chats/chats';
 import { Matches } from './components/Matches/matches';
 import { Swiping } from './components/Swiping/swiping'
 
@@ -22,6 +23,8 @@ function App() {
           <Route path="/swiping" component={Swiping} />
 
           <Route path="/matches" component={Matches} />
+
+          <Route path="/chats" component={Chats} />
 
           <Route path="/chat" component={Chat} />
 

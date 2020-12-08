@@ -476,8 +476,14 @@ export const ProfilePage = () => {
         <Button>Matches</Button>
       </Link>
 
-      <Link to="/chat">
-        <Button>Chat</Button>
+      {console.log('user.profile-->', user.profile)}
+      <Link to= {{
+        pathname: '/chats',
+        state: {
+          matches: user.profile && user.profile.matched
+        }
+      }}>
+        <Button>Chats</Button>
       </Link>
 
     </div>
