@@ -197,13 +197,14 @@ export const ProfilePage = () => {
 
       <div id="sidebar-swipes">
         <div id="sidebar-swipes-title">Swipe by categories</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
+        <div id="sidebar-swipes-category-list" onChange={(e) => { handleCategorySubmit(e) }}>
+          {categories.map((el, i) => {
+            return <option id="sidebar-swipe-element" key={i} value={el}>{el}</option>
+          })
+          }
+        </div> 
       </div>
+
       <div className="profile_page_content">
 
         <div className="profile_page_header_container">
@@ -230,30 +231,56 @@ export const ProfilePage = () => {
 
           <div id="my-matches-area">
             <div id="my-matches-title">My matches</div>
-            <div id="my-matches-list">
-              <div id="test">test</div>
-              <div id="test">test</div>
-              <div id="test">test</div>
-              <div id="test">test</div>
-              <div id="test">test</div>
-              <div id="test">test</div>
-            </div>
+            <div></div> 
           </div>
 
           <div id="invitations-grid-area">
-            <div id="sent-invitations-area">
-              Invitations sent: {user && user.profile && user.profile.likedProfile &&
+            <div className="invitations-container" id="invitations-sent">
+              <div className="invitations-container-title">You have invited them</div> 
+              <div className="invitations-list">
+                {user && user.profile && user.profile.likedProfile &&
                 user.profile.likedProfile[0] && user.profile.likedProfile[0].user
-                && user.profile.likedProfile.map(el => el.user && el.user.firstName)}
+                && user.profile.likedProfile.map((el, i) => {
+                  return (
+                  <div id="invitor-area" key={i}>
+                    <img className="invitor-img" src={el.picture}/>
+                    <div id="invitor-details">
+                      <div className="invitor-name" >{el.user?.firstName}</div>  
+                      <div className="invitor-city" >{el.location}</div>
+
+                      <button id="invitor-view-profile-btn">View profile</button>
+                    </div>
+                  </div>
+                  
+                )})}
+              </div>
             </div>
 
-            <div id="received-invitation-area">
-              <div id="received-invitation-title">Invitations received: {user && user.profile && user.profile.receivedLike &&
-                user.profile.receivedLike[0] && user.profile.receivedLike[0].user
-                && user.profile.receivedLike.map(el => el.user && el.user.firstName)}
+
+            <div className="invitations-container" id="invitations-received">
+              <div className= "invitations-container-title">They have invited you:</div>
+              <div className="invitations-list">
+                { 
+                  user && user.profile && user.profile.receivedLike &&
+                  user.profile.receivedLike[0] && user.profile.receivedLike[0].user
+                  && user.profile.receivedLike.map((el, i) => {
+                    return (
+                      <div id="invitor-area" key={i}>
+                        <img className="invitor-img" src={el.picture}/>
+                        <div id="invitor-details">
+                          <div className="invitor-name" >{el.user?.firstName}</div>  
+                          <div className="invitor-city" >{el.location}</div>
+                          <button id="invitor-view-profile-btn">View profile</button>
+                        </div>
+                          <div id="evaluate-invitation-btn">
+                            <Button id="accept-invitation-btn">√</Button>
+                            <Button id="reject-invitation-btn">X</Button>
+                          </div>
+                      </div>
+                    )
+                  })
+                }
               </div>
-              <Button id="accept-invitation-btn">Accept</Button>
-              <Button id="reject-invitation-btn">Decline</Button>
             </div>
           </div>        
         </div>
@@ -358,12 +385,7 @@ export const ProfilePage = () => {
       </div>
 
       <div id="select-category-area">
-        <select id="mySelect" onChange={(e) => { handleCategorySubmit(e) }}>
-          {categories.map((el, i) => {
-            return <option key={i} value={el}>{el}</option>
-          })
-          }
-        </select>
+       
 
         <Link to={{
           pathname: '/swiping',

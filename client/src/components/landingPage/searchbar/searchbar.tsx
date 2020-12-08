@@ -57,14 +57,13 @@ export const Searchbar = (): ReactElement => {
 
             <div id="lp-profile-description">
               <div id="user-description-text">{el.description}</div>
-              <Button id="invitation-btn" onClick={(e) => { handleLike(e, el.id) }}>Message</Button>
+              <Button id="invitation-btn" onClick={(e) => { handleLike(e, el.id) }}>Interested</Button>
           </div>
           </div>
         }
       )
     )
   }
-
 
   if (users[0]) {
     renderAllUsers = (
@@ -80,7 +79,7 @@ export const Searchbar = (): ReactElement => {
 
           <div id="lp-profile-description">
             <div id="user-description-text">{el.description}</div>
-            <Button id="invitation-btn" onClick={(e) => { handleLike(e, el.id) }}>Message</Button>
+            <Button id="invitation-btn" onClick={(e) => { handleLike(e, el.id) }}>Interested</Button>
           </div>
 
         </div>
