@@ -1,5 +1,41 @@
 .top_bar_landing_page_container {
+  margin-top: 1%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 2%;
+  margin-right: 10%;
+}
 
+#v {
+  color: rgb(255, 102, 0);
+  font-size: 30px;
+}
+
+#app-logo {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 20px;
+  font-weight: bolder;
+  color: rgb(82, 82, 232);
+}
+
+#logo-area {
+  margin-left: 2%;
+}
+
+#top-right-buttons-area {
+  display: flex;
+}
+
+#profile-btn {
+  border : 2px solid rgb(82, 82, 232);
+  color: rgb(82, 82, 232);
+  background-color: white;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+#profile-btn:hover {
+  border : 2px solid rgb(219, 135, 26);
+  color: rgb(219, 135, 26);
 }

@@ -1,16 +1,17 @@
 import React, { ReactElement, useState, useEffect, FormEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './../../../types/combinedStoreTypes';
-import { UserL, City, ProfileNew } from './../../../types/userLucasTypes';
-import { getAllUsers, getAllCities, getAllProfiles } from './../../../utils/userDatabaseFetch';
+import { ProfileNew } from './../../../types/userLucasTypes';
+import { getAllProfiles } from './../../../utils/userDatabaseFetch';
 import { Button, Modal } from 'react-bootstrap';
 import './searchbar.css'
 import { addLike } from './../../../utils/systemFunction'
 
 export const Searchbar = (): ReactElement => {
-  console.log('INSIDE SEARCHBAR-->');
 
   const currentUser = useSelector((state: RootState) => state.user)
+  const currentDirection = useSelector((state: RootState) => state.direction)
+
   const dispatch = useDispatch();
 
   const [users, setUsers] = useState<ProfileNew[]>([]);
@@ -32,10 +33,6 @@ export const Searchbar = (): ReactElement => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleSubmit = (e: FormEvent) => {
-    console.log('fuck')
-  }
-
   const handleLike = (e: FormEvent, id: number) => {
     e.preventDefault()
     if (currentUser.profile) {
@@ -48,44 +45,64 @@ export const Searchbar = (): ReactElement => {
   }
 
   let renderUserWithCities;
+  let renderAllUsers;
+
+
   if (users[0] && users[0].cities) {
     renderUserWithCities = (
       users.filter(user => user.cities.length
         && user.cities[0].name.toLowerCase().includes(city)).map((el, i) => {
           return <div key={i} className="image_container">
             <img src={el.picture} className="searchbar_image" alt="profile pic" />
-            <h1>{el.description}</h1>
-            <Button onClick={(e) => {
-              handleLike(e, el.id)
-            }}>💌</Button>
+
+            <div id="lp-profile-description">
+              <div id="user-description-text">{el.description}</div>
+              <Button id="invitation-btn" onClick={(e) => { handleLike(e, el.id) }}>Message</Button>
+          </div>
           </div>
         }
-        )
+      )
     )
   }
 
-  let renderAllUsers;
+
   if (users[0]) {
     renderAllUsers = (
       users.map((el, i) => {
-        return <div key={i} className="image_container">
-          <img src={el.picture} className="searchbar_image" alt="profile pic" onClick={handleShow} />
-          <div>{el.description}</div>
-          <Button onClick={(e) => {
-            handleLike(e, el.id)
-          }}>💌</Button>
+        const temp = el.user.firstName.charAt(0).toUpperCase() + el.user.firstName.slice(1);
+
+        return <div key={i} id="user-box">
+
+          <div  className="image_container">
+            <img src={el.picture} className="searchbar_image" alt="profile pic" onClick={handleShow} />
+            <div id="user-name">{temp}</div>
+          </div>
+
+          <div id="lp-profile-description">
+            <div id="user-description-text">{el.description}</div>
+            <Button id="invitation-btn" onClick={(e) => { handleLike(e, el.id) }}>Message</Button>
+          </div>
+
         </div>
+        
       })
     )
   }
 
   return (
     <div>
+      {console.log('searchbar Current dir-->', currentDirection)}
+
+    <div id="searchbar_area">
       <form>
-        <input type="text" placeholder="city" value={city} onChange={handleChange} />
+        <input id="main-searchbar" type="text" placeholder="Browse all cities..." value={city} onChange={handleChange} />
       </form>
+      <button id="search-btn">Go</button>
+    </div>
+
       <div className="container">
         {!city ? renderAllUsers : renderUserWithCities}
+
         <Modal size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
@@ -104,6 +121,7 @@ export const Searchbar = (): ReactElement => {
           </Modal.Header>
 
         </Modal>
+
       </div>
     </div>
   )

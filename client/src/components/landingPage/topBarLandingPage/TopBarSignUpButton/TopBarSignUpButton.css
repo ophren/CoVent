@@ -1,10 +1,22 @@
 .top_bar_sign_up_button {
-    border-radius : 5px;
-    color: white;
-    background-color: rebeccapurple;
-    border: none;
+    border-radius : 2px;
+    color: rgb(82, 82, 232);
+    border: 2px solid rgb(82, 82, 232);
+    background-color: rgb(255, 255, 255);
     height: 30px;
     width: 80px;
-    margin-top: 20px;
-    margin-right: 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.top_bar_sign_up_button:hover {
+    border : 2px solid rgb(82, 82, 232);
+    height: 29px;
+    width: 79px;
+}
+
+#app-catchphrase {
+    color: rgb(150, 150, 150);
+    font-size: 11px;
+    font-style: italic;
 }

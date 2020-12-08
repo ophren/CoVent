@@ -1,4 +1,5 @@
 import { userInfo } from 'os'
+import './TopBarLandingPageLogInButton.css'
 import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../../types/combinedStoreTypes'
@@ -7,6 +8,7 @@ import { userLogin, userLogOut } from '../../../../utils/systemFunction'
 const USER_LOGGED_IN_TEXT = 'Log In'
 const USER_LOGGED_OUT_TEXT = 'Log Out'
 const buttonClassName = 'log_in_button'
+
 interface TopBarSignInButtonProp {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -26,10 +28,8 @@ export const TopBarLandingPageLogInButton = ({ setShowModal }: TopBarSignInButto
   return (
     <div className="log_in_button_container">
       {userLoggedIn
-        ? <button className={buttonClassName} onClick={handleLogOut}>{USER_LOGGED_OUT_TEXT}</button>
-        : <button className={buttonClassName} onClick={displayModal}>
-          {USER_LOGGED_IN_TEXT}
-        </button>
+        ? <button id="logout-btn" onClick={handleLogOut}>{USER_LOGGED_OUT_TEXT}</button>
+        : <button id="login-btn" onClick={displayModal}>{USER_LOGGED_IN_TEXT}</button>
       }
     </div>
   )

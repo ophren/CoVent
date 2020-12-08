@@ -2,55 +2,55 @@ import { City } from './userLucasTypes'
 
 
 export interface User {
-  firebaseId?:string
-  id?:number,
+  firebaseId?: string
+  id?: number,
   firstName?: string,
   lastName?: string,
-  email?:string,
-  profile?:Profile,
-  password?:string
+  email?: string,
+  profile?: Profile,
+  password?: string
 }
 
 export interface Profile {
-  id?:number,
+  id?: number,
   picture?: string,
-  description?:string
+  description?: string
   age?: string,
-  gender?:string,
-  location?:string, 
-  userId?:number,
-  hasNewMatch?:boolean
+  gender?: string,
+  location?: string,
+  userId?: number,
+  hasNewMatch?: boolean
   likedProfile?: Profile[]
 
-  user?:User, //this is for the likedProfile structure
-  receivedLike?:Profile[],
-  matched?:Profile[],
+  user?: User, //this is for the likedProfile structure
+  receivedLike?: Profile[],
+  matched?: Profile[],
   categories?: Category[],
-  likedProfiles?:LikedProfiles,
-  receivedLikes? : ReceivedLikes,
+  likedProfiles?: LikedProfiles,
+  receivedLikes?: ReceivedLikes,
   matches?: Matches
   cities?: City[]
 
 }
 
 export interface Matches {
-  createdAt : string,
-  updatedAt : string,
+  createdAt: string,
+  updatedAt: string,
   matched: number,
-  partner:number
+  partner: number
 
 }
 export interface ReceivedLikes {
-  createdAt : string,
-  updatedAt : string,
+  createdAt: string,
+  updatedAt: string,
   receivedLike: number,
-  liked:number
+  liked: number
 }
 export interface LikedProfiles {
-  createdAt : string,
-  updatedAt : string,
+  createdAt: string,
+  updatedAt: string,
   likedProfile: number,
-  givenLike:number
+  givenLike: number
 
 }
 
@@ -73,11 +73,15 @@ export interface ReceivedLike {
 }
 
 export interface CategoryProfiles {
-  createdAt?:string,
-  updatedAt?:string,
-  categoryId:number,
-  profileId:number
+  createdAt?: string,
+  updatedAt?: string,
+  categoryId: number,
+  profileId: number
 }
+
+// export interface Direction {
+//   directions?: string[]
+// }
 
 //redux action types
 
@@ -85,9 +89,10 @@ export const SET_USER_FIREBASE_ID = 'SET_USER_FIREBASE_ID'
 export const SET_USER_NAME = 'SET_USER_NAME'
 export const SET_USER_AGE = 'SET_USER_AGE'
 export const SET_USER_PROFILE_PIC = 'SET_USER_PROFILE_PIC'
-export const SET_USER_HAS_MATCHES_TO_FALSE= 'SET_USER_HAS_MATCHES_TO_FALSE'
+export const SET_USER_HAS_MATCHES_TO_FALSE = 'SET_USER_HAS_MATCHES_TO_FALSE'
 export const SET_USER = "SET_USER"
 // export const SET_USER_AGE = 'SET_USER_AGE'
+export const SET_USER_DIRECTION = "SET_USER_DIRECTION"
 
 interface SetUserNameAction {
   type: typeof SET_USER_NAME,
@@ -100,9 +105,14 @@ interface SetUserAgeAction {
 }
 
 interface SetUserAction {
-  type:typeof SET_USER,
-  payload:User
+  type: typeof SET_USER,
+  payload: User
+}
+
+interface SetUserDirection {
+  type: typeof SET_USER_DIRECTION,
+  payload: string[]
 }
 
 
-export type UserActionTypes = SetUserAgeAction | SetUserNameAction | SetUserAction
+export type UserActionTypes = SetUserAgeAction | SetUserNameAction | SetUserAction | SetUserDirection

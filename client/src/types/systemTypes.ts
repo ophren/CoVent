@@ -5,7 +5,7 @@ export interface SystemState {
   userFirebaseId: string | undefined,
   userEmail?:string,
   newUser?:boolean,
-  
+
 }
 
 export interface SystemStateLoggedIn {

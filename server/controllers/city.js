@@ -4,11 +4,8 @@ const models = require('./../models/');
 const helperFuncs = require('./../utils/helperFuncs');
 
 const addCity = async (req, res) => {
-  console.log('SERVER CITY-->');
 
   const { name, profileId } = req.body;
-  console.log('req.body-->', req.body);
-
   const city = await models.city.findAll({
     where: { name: name },
   });
@@ -27,17 +24,12 @@ const addCity = async (req, res) => {
       } else {
         try {
           if (city.length > 0) {
-            console.log('INSIDE IF-->');
-            console.log('profile[0].cities[0]-->', profile[0].cities[0]);
             if (profile[0].cities[0]) {
               await profile[0].removeCity(profile[0].cities[0].dataValues.id, profileId);
             }
             await profile[0].addCity(city);
             res.status(201).send(city[0]);
           } else {
-            console.log('INSIDE ELSE-->');
-
-            console.log('profile[0]-->', profile[0]);
             const newCity = await models.city.create(req.body);
             if (profile[0].cities[0]) {
               await profile[0].removeCity(profile[0].cities[0].dataValues.id, profileId);

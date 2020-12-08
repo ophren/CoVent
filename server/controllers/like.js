@@ -5,7 +5,7 @@ const helperFuncs = require('./../utils/helperFuncs');
 
 const like = async (req, res) => {
   console.log('BACKEND LIKE-->');
-  // console.log('req.body-->', req.body);
+  console.log('req.body-->', req.body);
   // console.log('req.params-->', req.params);
 
   const { direction } = req.params;

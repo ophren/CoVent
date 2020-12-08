@@ -21,16 +21,19 @@ export const TopBarSignUpButton = ({ setShowModal }: TopBarSignUpButtonProp) => 
   }
 
   return (
-    <div className="top_bar_sign_up_button_container">
-      {showSignUp ??
-        <>
-          <button className="top_bar_sign_up_button"
-            onClick={displayModal}
-          >
-            {USER_SIGN_UP_TEXT}
-          </button>
-        </>
-      }
+    <div>
+      <div className="top_bar_sign_up_button_container">
+      
+        {showSignUp ??
+          <>
+            <button className="top_bar_sign_up_button"
+              onClick={displayModal}
+            >
+              {USER_SIGN_UP_TEXT}
+            </button>
+          </>
+        }
+      </div>
     </div>
 
   )

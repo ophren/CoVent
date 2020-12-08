@@ -1,5 +1,7 @@
-import { SET_USER } from './../../types/userTypes';
-import { SET_USER_NAME, SET_USER_AGE, UserActionTypes, User } from '../../types/userTypes';
+import {
+  SET_USER, SET_USER_NAME, SET_USER_AGE,
+  UserActionTypes, User, SET_USER_DIRECTION
+} from '../../types/userTypes';
 
 export function setUser(user: User): UserActionTypes {
   return {
@@ -7,6 +9,7 @@ export function setUser(user: User): UserActionTypes {
     payload: user
   }
 }
+
 export function setUserName(newName: string): UserActionTypes {
   return {
     type: SET_USER_NAME,
@@ -27,6 +30,8 @@ export function setUserProfilePic(newAge: number): UserActionTypes {
     payload: newAge
   }
 }
+
+
 
 
 
