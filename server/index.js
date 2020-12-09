@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(router);
 
 (async function bootstrap () {
-  await db.sequelize.sync();
+  await db.sequelize.sync({ force: true });
   app.listen(PORT, () => {
     console.log(`COEVENT listening at http://localhost:${PORT}`);
   });

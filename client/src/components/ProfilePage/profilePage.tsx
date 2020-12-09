@@ -304,6 +304,8 @@ export const ProfilePage = () => {
           <div>
             <div className="user_first_name">{user.firstName}</div>
             <div>{user.profile && user.profile.age}</div>
+            <div id="selected-city">Description: {user && user.profile && user.profile.description}</div>
+            <div id="selected-city">Location: {user && user.profile && user.profile.location}</div>
           </div>
 
           <div className="profile_page_image_container">
@@ -318,6 +320,7 @@ export const ProfilePage = () => {
 
         <div id="profile-page-body">
           <div id="selected-city">Your city: {user && user.profile && user.profile.cities && user.profile.cities[0] && user.profile.cities[0].name}</div>
+          <div id="selected-city">Selected activity: {user && user.profile && user.profile.categories && user.profile.categories[0] && user.profile.categories[0].name}</div>
 
           <div>Select activity first before going to matching</div>
 
@@ -477,7 +480,7 @@ export const ProfilePage = () => {
       </Link>
 
       {console.log('user.profile-->', user.profile)}
-      <Link to= {{
+      <Link to={{
         pathname: '/chats',
         state: {
           matches: user.profile && user.profile.matched
