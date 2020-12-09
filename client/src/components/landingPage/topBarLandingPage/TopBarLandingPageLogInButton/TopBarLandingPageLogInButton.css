@@ -1,0 +1,28 @@
+#login-btn {
+    border-radius : 40px;
+    color: white;
+    background-color: rgb(82, 82, 232);
+    border: none;
+    height: 30px;
+    margin-left: 15%;
+    width: 80px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#login-btn:hover {
+    border: 1px solid white;
+}
+
+#logout-div {
+    font-size: 14px;
+    color: rgb(252, 70, 38);
+    margin-left: 10px;
+    cursor: pointer;
+    padding-top: 10%;
+}
+
+#logout-div:hover {
+    text-decoration: underline;
+}
+

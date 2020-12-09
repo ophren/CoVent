@@ -1,5 +1,26 @@
 .hasNewMatches{
-  background-color: red;
+  background-color: rgb(233, 64, 64);
+  height: 30px;
+  width: 80px;
+  border: none;
+  color: white;
+  border-radius: 30px;
+  margin-right: 2%;
 }
 
+.noNewMatches {
+  background-color: rgb(255, 255, 255);
+  height: 30px;
+  width: 80px;
+  border: 2px solid rgb(82, 82, 232);
+  border-radius: 30px;
+  color: rgb(82, 82, 232);
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.noNewMatches:hover{
+  height:29px;
+  width: 79px;
+}
  

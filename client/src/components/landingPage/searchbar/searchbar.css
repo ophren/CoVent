@@ -1,19 +1,109 @@
 .container {
   display: flex;
+  justify-content: center;
   margin-top: 10px;
-  flex-direction: column;
-  /* max-width: 400px;
-  min-width: 0; */
+  flex-wrap: wrap;
 }
 
 .image_container {
   justify-content: space-around;
-  max-width: 400px;
+  max-width: 500px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 3%;
 }
 
 .searchbar_image {
-  height: 60px;
-  object-fit: contain;
-  width: 120px;
+  height: 15vh;
+  min-height: 105px;
+  max-height: 105px;
+  max-width: 105px;
+  min-width: 105px;
+  border-radius: 5px;
+  margin-bottom: 10%;
+}
+
+#searchbar_area {
+  margin-top: 4%;
+  margin-bottom: 3%;
+  display: flex;
+  justify-content: center;
+}
+
+#main-searchbar {
+  padding-left: 10px;
+  width: 400px;
+  border: 1px solid rgb(177, 177, 177);
+  height: 25px;
+  font-style: italic;
+  border-radius: 3px;
+}
+
+#search-btn {
+  width: 50px;
+  border: none;
+  margin-left: 1%;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(59, 59, 59);
+}
+
+#user-box {
+  margin-top: 2%;
+  margin-right: 2%; 
+  margin-bottom: 3%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+#user-name {
+  color: rgb(44, 44, 44);
+  font-size: 15px;
+}
+
+#lp-profile-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 1%;
+  padding-top: 2%;
+  background-color: rgb(255, 255, 255);
+  color: rgb(58, 58, 58);
+  margin-right: 2%;
+  max-width: 333px;
+  border: 3px solid rgb(235, 235, 235);
+  border-top: 1px solid rgb(209, 209, 209);
+  border-left: 1px solid rgb(237, 237, 237);
+  border-radius: 5px;
+}
+
+#lp-profile-description:hover {
+  border: 3px solid rgb(216, 216, 216);
+  border-top: 1px solid rgb(216, 216, 216);
+  border-left: 1px solid rgb(237, 237, 237);
+}
+
+#user-description-text {
+  padding: 1%;
+  padding-left: 3%;
+  padding-right: 6%;
+  margin-bottom: 10%;
+}
+
+#invitation-btn {
+  margin-left: auto;
+  height: 33px;
+  width: 100px;
+  border-radius: 3px;
+  border: none;
+  color: white;
+  background-color: rgb(56, 56, 56);
+  cursor: pointer;
+}
+
+#invitation-btn:hover {
+  background-color: rgb(56, 56, 56);
+  color: white;
 }

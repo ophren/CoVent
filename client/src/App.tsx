@@ -5,7 +5,6 @@ import { LandingPage } from './components/landingPage/landingPage'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { ProfilePage } from './components/ProfilePage/profilePage';
 import { RenderProfilesList } from './components/RenderProfilesList';
-
 import { Chat } from './components/Chat/chat';
 import { Chats } from './components/Chats/chats';
 import { Matches } from './components/Matches/matches';

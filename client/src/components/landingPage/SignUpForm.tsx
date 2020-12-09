@@ -44,33 +44,40 @@ export const SignUpForm = ({ setShowModal, setShowDescriptionModal }: any): JSX.
 
             <form id="modal" onSubmit={handleSubmit}>
 
-                <input
-                    name="email"
-                    placeholder="Email"
-                    onChange={handleChange}
-                >
-                </input>
+            <div id= "welcome-title">Welcome to CoVent</div>
+            <div id= "welcome-subtitle">Please register to join our international community of perverts</div>
 
-                <input
-                    name="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                >
-                </input>
+            <input
+                className="registration-input"
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+            >
+            </input>
 
-                <input
-                    name="firstName"
-                    placeholder="First name"
-                    onChange={handleChange}
-                >
-                </input>
+            <input
+                className="registration-input"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+            >
+            </input>
 
-                <input
-                    name="lastName"
-                    placeholder="Last name"
-                    onChange={handleChange}
-                >
-                </input>
+            <input
+                className="registration-input"
+                name="firstName"
+                placeholder="First name"
+                onChange={handleChange}
+            >
+            </input>
+
+            <input
+                className="registration-input" id="registration-last-item"
+                name="lastName"
+                placeholder="Last name"
+                onChange={handleChange}
+            >
+            </input>
 
                 <button id="submitSignUp">Submit</button>
                 <div id="toggleToSignIn">Already have an account? <span>Sign in</span></div>

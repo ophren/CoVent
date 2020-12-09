@@ -45,38 +45,48 @@ export const Searchbar = (): ReactElement => {
   }
 
   let renderUserWithCities;
-  if (users && users[0] && users[0].cities) {
+  let renderAllUsers;
+
+
+  if (users[0] && users[0].cities) {
     renderUserWithCities = (
       users.filter(user => user.cities && user.cities.length
         && user.cities[0].name.toLowerCase().includes(city)).map((el, i) => {
+          if (el && el.id) {
           return <div key={i} className="image_container">
             <img src={el.picture} className="searchbar_image" alt="profile pic" />
-            <h1>{el.description}</h1>
-            <Button onClick={(e) => {
-              if (el && el.id) {
-                handleLike(e, el.id)
-              }
-            }}>💌</Button>
+            <div id="lp-profile-description">
+              <div id="user-description-text">{el.description}</div>
+              <Button id="invitation-btn" onClick={(e) => { handleLike(e, Number(el.id)) }}>Interested</Button>
+            </div>
           </div>
+          }
         }
-        )
+      )
     )
   }
 
-  let renderAllUsers;
   if (users[0]) {
     renderAllUsers = (
       users.map((el, i) => {
-        return <div key={i} className="image_container">
-          <img src={el.picture} className="searchbar_image" alt="profile pic" onClick={handleShow} />
-          <div>{el.description}</div>
-          <Button onClick={(e) => {
-            if (el && el.id) {
-              handleLike(e, el.id)
-            }
-          }}>💌</Button>
+        if(el.user) {
+        const temp = el.user.firstName?.charAt(0).toUpperCase() + el.user.firstName?.slice(1);
+
+        return <div key={i} id="user-box">
+
+          <div  className="image_container">
+            <img src={el.picture} className="searchbar_image" alt="profile pic" onClick={handleShow} />
+            <div id="user-name">{temp}</div>
+          </div>
+
+          <div id="lp-profile-description">
+            <div id="user-description-text">{el.description}</div>
+            <Button id="invitation-btn" onClick={(e) => { handleLike(e, Number(el.id)) }}>Interested</Button>
+          </div>
+
         </div>
-      })
+
+      }})
     )
   }
 
@@ -84,9 +94,13 @@ export const Searchbar = (): ReactElement => {
     <div>
       {/* {console.log('searchbar Current dir-->', currentDirection)} */}
 
+    <div id="searchbar_area">
       <form>
-        <input type="text" placeholder="city" value={city} onChange={handleChange} />
+        <input id="main-searchbar" type="text" placeholder="Browse all cities..." value={city} onChange={handleChange} />
       </form>
+      <button id="search-btn">Go</button>
+    </div>
+
       <div className="container">
         {!city ? renderAllUsers : renderUserWithCities}
 

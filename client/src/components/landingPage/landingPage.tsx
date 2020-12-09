@@ -85,7 +85,7 @@ export const LandingPage = (): ReactElement => {
               profiles: currentDirection.length === 0 ? profiles : filterSwipedProfiles(profiles, currentDirection)
             }
           }}>
-            <Button>Swiping</Button>
+            <Button id="swiping-btn">Swipe all</Button>
           </Link>
         </>
         :

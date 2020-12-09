@@ -1,7 +1,9 @@
-import './SignUpForm.css'
+import './SignInForm.css';
 import React, { FormEvent, useState } from 'react';
 import {userLogin} from "../../utils/systemFunction";
 import { useDispatch } from "react-redux";
+import { lookupService } from 'dns';
+
 
 export const SignInForm = ({setShowModal}: any) : JSX.Element => {
 
@@ -34,20 +36,23 @@ export const SignInForm = ({setShowModal}: any) : JSX.Element => {
         <div id="modal-main">
             <form id="modal" onSubmit={handleSubmit}>
 
-                <input 
-                    id="inputUserEmail" 
-                    placeholder="Enter email" 
-                    onChange={(ev: React.ChangeEvent<HTMLInputElement>,): void =>
-                    handleUserName(ev)} >
-                </input>
+                <div id= "welcome-title">Welcome to CoVent</div>
+                <div id= "welcome-subtitle">Ready to start a new adventure and to meet incredible new people?</div>
 
-                <input 
-                    id="inputUserPassword" 
-                    placeholder="Enter password" 
-                    onChange={(ev: React.ChangeEvent<HTMLInputElement>,): void =>
-                        handlePassword(ev)} > 
-                </input>
+                    <input 
+                        id="inputUserEmail" 
+                        placeholder="Enter email" 
+                        onChange={(ev: React.ChangeEvent<HTMLInputElement>,): void =>
+                        handleUserName(ev)} >
+                    </input>
 
+                    <input 
+                        id="inputUserPassword"     
+                        placeholder="Enter password" 
+                        onChange={(ev: React.ChangeEvent<HTMLInputElement>,): void =>
+                            handlePassword(ev)} > 
+                    </input>
+    
                 <button id="submitSignUp">Submit</button>
                 <div id="toggleToSignUp">No account yet? <span>Sign Up</span></div>
                 <div id="close-modal" onClick={closeModal}>close</div>
