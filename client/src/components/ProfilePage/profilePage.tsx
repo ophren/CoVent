@@ -10,6 +10,7 @@ import './profilePage.css';
 import { Link } from 'react-router-dom';
 import { getAllProfiles } from './../../utils/userDatabaseFetch';
 import { addLike } from './../../utils/systemFunction';
+import { setUser } from '../../redux/userState/userActions';
 
 export const ProfilePage = () => {
 
@@ -287,6 +288,20 @@ export const ProfilePage = () => {
     })
   }
 
+  const hideAcceptedLike = (user: any): User => {
+    const newUser = { ...currentUser }
+    if (newUser.profile && newUser.profile.matched &&  newUser.profile.receivedLike) {
+
+     newUser.profile.matched.push(user)
+
+     const arr = newUser.profile.receivedLike.filter(profile => profile.id !== user.id)
+     newUser.profile.receivedLike= arr
+    }
+    console.log(newUser , 'newUSer------------')
+    return newUser
+
+  }
+
   // const filterProfilesToShowExceptSwipedOnes = (user: User, list: ProfileNew[]): void => {
   //   console.log('user profilePage.tsx, line 188 user: ', user);
   //   console.log('list profilePage.tsx, line 189 list: ', list);
@@ -302,7 +317,7 @@ export const ProfilePage = () => {
         <div id="sidebar-swipes-title">Swipe by categories</div>
         <div id="sidebar-swipes-category-list">
           {categories.map((el, i) => {
-            return <option onClick={(e) => {handleCategorySubmit(e) }} id="sidebar-swipe-element" key={i} value={el}>{el}</option>
+            return <option onClick={(e) => { handleCategorySubmit(e) }} id="sidebar-swipe-element" key={i} value={el}>{el}</option>
           })
           }
         </div>
@@ -337,14 +352,14 @@ export const ProfilePage = () => {
             <div id="my-matches-list">
               {currentUser.profile && currentUser.profile.matched && currentUser.profile.matched.map((el, i) => {
                 return (
-                <div id="match-container" key={i}>
-                  <img src={el.picture} id="match-img" alt="profile pic" />
-                  <div id="match-infos">
-                    <div className="invitor-name" >{el.user?.firstName}</div>
-                    <div className="invitor-city" >{el.location}</div>
-                    <div id="match-description">{el.description}</div>
+                  <div id="match-container" key={i}>
+                    <img src={el.picture} id="match-img" alt="profile pic" />
+                    <div id="match-infos">
+                      <div className="invitor-name" >{el.user?.firstName}</div>
+                      <div className="invitor-city" >{el.location}</div>
+                      <div id="match-description">{el.description}</div>
+                    </div>
                   </div>
-                </div>
                 )
               })}
             </div>
@@ -355,45 +370,51 @@ export const ProfilePage = () => {
               <div className="invitations-container-title">You have invited them</div>
               <div className="invitations-list">
                 {user && user.profile && user.profile.likedProfile &&
-                user.profile.likedProfile[0] && user.profile.likedProfile[0].user
-                && user.profile.likedProfile.map((el, i) => {
-                  return (
-                  <div id="invitor-area" key={i}>
-                    <img className="invitor-img" src={el.picture}/>
-                    <div id="invitor-details">
-                      <div className="invitor-name" >{el.user?.firstName}</div>
-                      <div className="invitor-city" >{el.location}</div>
+                  user.profile.likedProfile[0] && user.profile.likedProfile[0].user
+                  && user.profile.likedProfile.map((el, i) => {
+                    return (
+                      <div id="invitor-area" key={i}>
+                        <img className="invitor-img" src={el.picture} />
+                        <div id="invitor-details">
+                          <div className="invitor-name" >{el.user?.firstName}</div>
+                          <div className="invitor-city" >{el.location}</div>
 
-                      <button id="invitor-view-profile-btn">View profile</button>
-                    </div>
-                  </div>
+                          <button id="invitor-view-profile-btn">View profile</button>
+                        </div>
+                      </div>
 
-                )})}
+                    )
+                  })}
               </div>
             </div>
 
 
             <div className="invitations-container" id="invitations-received">
-              <div className= "invitations-container-title">They have invited you</div>
+              <div className="invitations-container-title">They have invited you</div>
               <div className="invitations-list">
                 {
                   user && user.profile && user.profile.receivedLike &&
                   user.profile.receivedLike[0] && user.profile.receivedLike[0].user
                   && user.profile.receivedLike.map((el, i) => {
-                    return (
-                      <div id="invitor-area" key={i}>
-                        <img className="invitor-img" src={el.picture}/>
-                        <div id="invitor-details">
-                          <div className="invitor-name" >{el.user?.firstName}</div>
-                          <div className="invitor-city" >{el.location}</div>
-                          <button id="invitor-view-profile-btn">View profile</button>
-                        </div>
+                    if (el.user && el.user.id) {
+
+                      return (
+                        <div id="invitor-area" key={i}>
+                          <img className="invitor-img" src={el.picture} />
+                          <div id="invitor-details">
+                            <div className="invitor-name" >{el.user?.firstName}</div>
+                            <div className="invitor-city" >{el.location}</div>
+                            <button id="invitor-view-profile-btn">View profile</button>
+                          </div>
                           <div id="evaluate-invitation-btn">
-                            <Button id="accept-invitation-btn">√</Button>
+                            <Button id="accept-invitation-btn" onClick={() => {
+                              console.log('click')
+                              dispatch(setUser(hideAcceptedLike(el.user)))}}>√</Button>
                             <Button id="reject-invitation-btn">X</Button>
                           </div>
-                      </div>
-                    )
+                        </div>
+                      )
+                    }
                   })
                 }
               </div>
@@ -415,13 +436,13 @@ export const ProfilePage = () => {
                     <input className="edit-profile-input-field" name="description" id="" placeholder="Description" onChange={(e) => {
                       handleChange(e, setDescription)
                     }}></input>
-                    <input  className="edit-profile-input-field" name="age" id="" placeholder="Age" onChange={(e) => {
+                    <input className="edit-profile-input-field" name="age" id="" placeholder="Age" onChange={(e) => {
                       handleChange(e, setAge)
                     }}></input>
-                    <input  className="edit-profile-input-field" name="gender" id="" placeholder="Gender" onChange={(e) => {
+                    <input className="edit-profile-input-field" name="gender" id="" placeholder="Gender" onChange={(e) => {
                       handleChange(e, setGender)
                     }}></input>
-                    <input  className="edit-profile-input-field" name="location" id="" placeholder="Location" onChange={(e) => {
+                    <input className="edit-profile-input-field" name="location" id="" placeholder="Location" onChange={(e) => {
                       handleChange(e, setLocation)
                     }}></input>
                   </form>
@@ -469,7 +490,7 @@ export const ProfilePage = () => {
                     </Button>
                     <div id="close-edit-profile-modal" onClick={handleCloseCity}>Close</div>
                   </Modal.Footer>
-              </Modal.Header>
+                </Modal.Header>
               </div>
             </div>
           </Modal>

@@ -21,7 +21,10 @@ export const Searchbar = (): ReactElement => {
   useEffect(() => {
     getAllProfiles()
       .then((list) => {
-        const filteredList = list.filter((el) => el.id !== currentUser.id)
+        const filteredList = list.filter((el) => {
+          console.log(el.id, currentUser.id);
+          return el.id !== currentUser.id})
+          console.log('filteredList', filteredList)
         setUsers(filteredList)
       })
   }, []);
