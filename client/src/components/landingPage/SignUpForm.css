@@ -32,6 +32,7 @@
  #welcome-title {
    font-size: 28px;
    line-height: 3;
+   color: rgb(83, 83, 83);
  }
 
  #welcome-subtitle {
@@ -61,12 +62,13 @@
   width: 31%;
   border: 1px solid grey;
   height: 34px;
-  background-color: rgb(56, 56, 56);
+  background-color: rgb(82, 82, 232);
   color: rgb(235, 235, 235);
   border-radius: 40px;
   cursor: pointer;
 }
 
 #submitSignUp:hover {
-  background-color: rgb(72, 72, 72);
+  background-color: rgb(82, 82, 232);
+  transform: scale(0.95);
 }

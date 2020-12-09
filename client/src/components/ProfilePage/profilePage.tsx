@@ -216,7 +216,7 @@ export const ProfilePage = () => {
             </div>
 
             <div id="user-infos">
-              <div className="user_first_name">Benjamin</div>
+              <div className="user_first_name">{user.firstName}</div>
               <div id="user-age">{user.profile && user.profile.age} years old</div>
               <div id="selected-city">{user && user.profile && user.profile.cities && user.profile.cities[0] && user.profile.cities[0].name}</div>
             </div>
@@ -306,35 +306,34 @@ export const ProfilePage = () => {
                 <Modal.Title id="edit-profile-title">Edit Your Profile</Modal.Title>
                 <Modal.Body>
 
-                  <form>
-                    <input name="picture" id="" placeholder="Picture" onChange={(e) => {
+                  <form id="edit-profile-input-list">
+                    <input className="edit-profile-input-field" name="picture" id="" placeholder="Picture" onChange={(e) => {
                       handleChange(e, setPicture)
                     }}></input>
-                    <input name="description" id="" placeholder="Description" onChange={(e) => {
+                    <input className="edit-profile-input-field" name="description" id="" placeholder="Description" onChange={(e) => {
                       handleChange(e, setDescription)
                     }}></input>
-                    <input name="age" id="" placeholder="Age" onChange={(e) => {
+                    <input  className="edit-profile-input-field" name="age" id="" placeholder="Age" onChange={(e) => {
                       handleChange(e, setAge)
                     }}></input>
-                    <input name="gender" id="" placeholder="Gender" onChange={(e) => {
+                    <input  className="edit-profile-input-field" name="gender" id="" placeholder="Gender" onChange={(e) => {
                       handleChange(e, setGender)
                     }}></input>
-                    <input name="location" id="" placeholder="Location" onChange={(e) => {
+                    <input  className="edit-profile-input-field" name="location" id="" placeholder="Location" onChange={(e) => {
                       handleChange(e, setLocation)
                     }}></input>
                   </form>
 
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
-                    Close
-                  </Button>
-                  <Button variant="primary" onClick={(e) => {
+                  
+                  <Button id="edit-profile-submit-btn" variant="primary" onClick={(e) => {
                     handleSubmit(e)
                     handleClose()
                   }}>
                     Save Changes
                   </Button>
+                  <div id="close-edit-profile-modal" onClick={handleClose}>Close</div>
                 </Modal.Footer>
               </Modal.Header>
             </div>
@@ -342,65 +341,42 @@ export const ProfilePage = () => {
         </Modal>
 
 
+        {/* REUSED IDs FROM THE OTHER MODAL BELOW */}
+        {/* NEED CHANGE */}
+
+
         <div>
           <Modal show={showCityModal} onHide={handleCloseCity}>
-            <Modal.Header>
-              <Modal.Title>Add your City</Modal.Title>
-              <Modal.Body>
-                <form>
-                  <input name="city" id="" placeholder="City" onChange={(e) => {
-                    handleChange(e, setCity)
-                  }}></input>
-                </form>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseCity}>
-                  Close
-                  </Button>
-                <Button variant="primary" onClick={(e) => {
-                  handleCitySubmit(e)
-                  handleCloseCity()
-                }}>
-                  Select
-                  </Button>
-              </Modal.Footer>
-            </Modal.Header>
+            <div id="modal-background">
+              <div id="edit-profile-modal-form">
+                <Modal.Header>
+                  <Modal.Title id="edit-profile-title">Add your city</Modal.Title>
+                  <Modal.Body>
+                    <form id="edit-profile-input-list">
+                      <input className="edit-profile-input-field" name="city" id="" onChange={(e) => {
+                        handleChange(e, setCity)
+                      }}></input>
+                    </form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button id="edit-profile-submit-btn" variant="primary" onClick={(e) => {
+                      handleCitySubmit(e)
+                      handleCloseCity()
+                    }}>
+                      Submit
+                    </Button>
+                    <div id="close-edit-profile-modal" onClick={handleCloseCity}>Close</div>
+                  </Modal.Footer>
+              </Modal.Header>
+              </div>
+            </div>
           </Modal>
-
         </div>
 
       </div>
 
-
-      <div>
-        <Modal show={showCityModal} onHide={handleCloseCity}>
-          <Modal.Header>
-            <Modal.Title>Add your City</Modal.Title>
-            <Modal.Body>
-              <form>
-                <input name="city" id="" placeholder="City" onChange={(e) => {
-                  handleChange(e, setCity)
-                }}></input>
-              </form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseCity}>
-                Close
-                  </Button>
-              <Button variant="primary" onClick={(e) => {
-                handleCitySubmit(e)
-                handleCloseCity()
-              }}>
-                Select
-                  </Button>
-            </Modal.Footer>
-          </Modal.Header>
-        </Modal>
-      </div>
-
       <div id="select-category-area">
        
-
         <Link to={{
           pathname: '/swiping',
           state: {

@@ -58,7 +58,7 @@ export const Searchbar = (): ReactElement => {
             <div id="lp-profile-description">
               <div id="user-description-text">{el.description}</div>
               <Button id="invitation-btn" onClick={(e) => { handleLike(e, el.id) }}>Interested</Button>
-          </div>
+            </div>
           </div>
         }
       )
@@ -68,7 +68,8 @@ export const Searchbar = (): ReactElement => {
   if (users[0]) {
     renderAllUsers = (
       users.map((el, i) => {
-        const temp = el.user.firstName.charAt(0).toUpperCase() + el.user.firstName.slice(1);
+        if(el.user) {
+        const temp = el.user.firstName?.charAt(0).toUpperCase() + el.user.firstName?.slice(1);
 
         return <div key={i} id="user-box">
 
@@ -84,7 +85,7 @@ export const Searchbar = (): ReactElement => {
 
         </div>
         
-      })
+      }})
     )
   }
 
