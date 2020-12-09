@@ -37,7 +37,7 @@ const findAllUsers = async (models) => {
         },
         { model: models.category },
         { model: models.city },
-        { model: models.swipe }
+        { model: models.swipe },
       ]
     }
   });
@@ -77,7 +77,8 @@ const findUser = async (models, id) => {
         },
         { model: models.category },
         { model: models.city },
-        { model: models.swipe }
+        { model: models.swipe },
+
       ]
     }
   });

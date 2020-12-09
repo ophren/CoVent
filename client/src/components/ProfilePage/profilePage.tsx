@@ -302,7 +302,7 @@ export const ProfilePage = () => {
         <div className="profile_page_header_container">
 
           <div>
-            <div className="user_first_name">Benjamin</div>
+            <div className="user_first_name">{user.firstName}</div>
             <div>{user.profile && user.profile.age}</div>
           </div>
 

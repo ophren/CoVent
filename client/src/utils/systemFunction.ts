@@ -6,7 +6,8 @@ import {
     addProfileToUserAtDataBase, getUserById,
     registerUserToDataBase, getUserByEmailAndPassword,
     updateUserProfileData, addCity, giveLike, addCategory,
-    addSwipe
+    addSwipe, addMsg, getAllMsgs, getMsgByProfileId,
+    getMsgByReceivedId, getMsgBySentId
 } from './userDatabaseFetch';
 import { User, Profile } from '../types/userTypes';
 import { setUser } from '../redux/userState/userActions';
@@ -145,7 +146,6 @@ export const addCategoryToProfile = (category: any, user: User): any => {
 };
 
 export const addSwipeToProfile = (swipe: any): any => {
-    console.log('SYSTEM FUNC ADD SWIPE-->');
-    console.log('swipe-->', swipe);
-    addSwipe(swipe)
-}
+    addSwipe(swipe);
+};
+

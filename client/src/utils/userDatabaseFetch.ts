@@ -150,14 +150,67 @@ export const addCategory = (category: any): any => {
 }
 
 export const addSwipe = (swipe: any): any => {
-  console.log('INSIDE DB FETCH ADD SWIPE-->');
-  console.log('swipe-->', swipe);
-
   return fetch(`${baseUrl}/swipe`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(swipe)
+  }).then((res) => res.json())
+};
+
+export const addMsg = (msg: any): any => {
+  return fetch(`${baseUrl}/message`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(msg)
+  }).then((res) => {
+    if (res.status === 204) {
+      return res;
+    } else {
+      res.json()
+    }
+  })
+};
+
+export const getAllMsgs = (): any => {
+  return fetch(`${baseUrl}/messages`, {
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json())
+}
+
+export const getMsgByProfileId = (profileId: number): any => {
+  return fetch(`${baseUrl}/messages/${profileId}`, {
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json())
+}
+
+export const getMsgByReceivedId = (receivedId: number): any => {
+  return fetch(`${baseUrl}/messages/received/${receivedId}`, {
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json())
+}
+
+export const getMsgBySentId = (sentId: number): any => {
+  return fetch(`${baseUrl}/messages/sent/${sentId}`, {
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json())
+}
+
+export const getMsgsByProfileIdAndReceiverId = (profileId: number, receiverId: number): any => {
+  return fetch(`${baseUrl}/messages/${profileId}/${receiverId}`, {
+    headers: {
+      Accept: "application/json",
+    },
   }).then((res) => res.json())
 }

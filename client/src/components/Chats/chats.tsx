@@ -11,7 +11,6 @@ export const Chats = () => {
     <>
       <h1>Hello From Chats</h1>
       {console.log('currentUser-->', currentUser)}
-      <h1>Hello From Matches</h1>
 
       {
         currentUser.profile &&
@@ -21,7 +20,9 @@ export const Chats = () => {
             <Link to= {{
               pathname:  '/chat',
               state: {
-                profile: el.picture
+                profile: el.picture,
+                id: el.id,
+                firstName: el.user?.firstName
               }
             }}>
             <img src={el.picture} className="match__chat" alt="match chat" />
