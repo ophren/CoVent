@@ -149,12 +149,18 @@ export const ProfilePage = () => {
     }
   };
 
+  const firstLetterUpper = (str: string): string => {
+    const arr = str.split('')
+    arr[0] = arr[0].toUpperCase()
+    return arr.join('')
+  }
+
   const handleCitySubmit = (e: FormEvent) => {
     e.preventDefault()
     if (user.profile && user.profile.id) {
       const cityObj: CityAdd = {
         profileId: user.profile.id,
-        name: city
+        name: firstLetterUpper(city)
       }
       dispatch(addCityToProfile(cityObj, user))
     }
@@ -173,12 +179,16 @@ export const ProfilePage = () => {
 
   const filterSwipedProfiles = (profiles: ProfileNew[], currentDir: string[]): any => {
 
-    // console.log('filterSwipedProfiles PROFILES FUNCTION-->');
-    // console.log('profiles-->', profiles);
+    console.log('filterSwipedProfiles PROFILES FUNCTION-->');
+    console.log('profiles-->', profiles);
+    console.log('currentDir-->', currentDir);
     // filter profiles according to selected city from user
     const filteredByCity = filterByCity(profiles);
+    console.log('filteredByCity-->', filteredByCity);
+
     // filter the above list based on selected activity from user
     const filteredByCityAndActivity = filterByActivity(filteredByCity)
+    console.log('filteredByCityAndActivity-->', filteredByCityAndActivity);
 
     // remove yourself from the list
     if (filteredByCityAndActivity) {
@@ -191,8 +201,8 @@ export const ProfilePage = () => {
       let filteredByPreviousSwipes = [];
 
       if (user.profile && user.profile.swipes && user.profile.swipes.length > 0) {
-        // console.log('user.profile.swipes-->', user.profile.swipes);
-        // console.log('user.profile.swipes.length-->', user.profile.swipes.length);
+        console.log('user.profile.swipes-->', user.profile.swipes);
+        console.log('user.profile.swipes.length-->', user.profile.swipes.length);
         for (let a = 0; a < filteredByCityActivitySelf.length; a++) {
           let flag;
           for (let c = 0; c < user.profile.swipes.length; c++) {
@@ -212,9 +222,9 @@ export const ProfilePage = () => {
         filteredByPreviousSwipes = filteredByCityActivitySelf
       }
 
-      // console.log('filteredByPreviousSwipes-->', filteredByPreviousSwipes);
+      console.log('filteredByPreviousSwipes-->', filteredByPreviousSwipes);
 
-      if (filteredByPreviousSwipes.length > 0) {
+      if (filteredByPreviousSwipes.length > 0 && (user.profile && user.profile.swipes && user.profile.swipes.length > 0 || currentDir.length > 0)) {
         const result = [];
         for (let i = 0; i < filteredByPreviousSwipes.length; i++) {
           let flag;
@@ -231,12 +241,36 @@ export const ProfilePage = () => {
           }
         }
         // console.log('filterSwipedProfiles result -->', result);
-
         return result;
 
       }
       else {
-        return filteredByPreviousSwipes
+        // here i would have to add a check and compare it to send profiles that are not part of the matches already
+        //
+        const filteredByNotMatchedYet = [];
+        if (user && user.profile && user.profile.matched && filteredByCityAndActivity.length !== 0 && filteredByPreviousSwipes.length > 0) {
+          console.log('----------------> INSIDE IF USER HAS MATCHES');
+
+          for (let i = 0; i < filteredByCityAndActivity.length; i++) {
+            let flag;
+            for (let a = 0; a < user.profile.matched.length; a++) {
+              if (Number(user.profile.matched[a].id) === Number(filteredByCityAndActivity[i].id)) {
+                flag = true;
+                break;
+              }
+            }
+            if (!flag) {
+              filteredByNotMatchedYet.push(filteredByCityAndActivity[i])
+            } else {
+              flag = false;
+            }
+          }
+          console.log('filteredByNotMatchedYet-->', filteredByNotMatchedYet);
+          return filteredByNotMatchedYet;
+        } else {
+          console.log('filteredByPreviousSwipes-->', filteredByPreviousSwipes);
+          return filteredByPreviousSwipes
+        }
       }
     }
   };
@@ -285,10 +319,9 @@ export const ProfilePage = () => {
   }
 
   const sendLikesToBackEnd = (currentDir: string[], profileId: number): void => {
-    console.log('profile page inside sendlikestoback end-->');
-    console.log('currentDir-->', currentDir);
-    console.log('profileId-->', profileId);
-
+    // console.log('profile page inside sendlikestoback end-->');
+    // console.log('currentDir-->', currentDir);
+    // console.log('profileId-->', profileId);
 
     currentDir.forEach((el) => {
       // console.log('el profilePage.tsx, line 174 el: ', el);
@@ -540,6 +573,7 @@ export const ProfilePage = () => {
       {/* {console.log('currentDirection', currentDirection)} */}
 
       {/* {user.profile && user.profile.id && currentDirection && currentDirection.length && sendLikesToBackEnd(currentDirection, user.profile.id)} */}
+
 
       <Link to={{
         pathname: '/swiping',
