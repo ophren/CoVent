@@ -112,7 +112,7 @@ export const addCityToProfile = (city: CityAdd, user: User) => {
     return (dispatch: any) => {
         addCity(city)
             .then((el: any) => {
-                if (user.profile && user.profile.cities) {
+                if (user.profile && user.profile.cities && !el.error) {
                     user.profile.cities[0] = el
                     dispatch(setUser(user))
                 }

@@ -9,8 +9,8 @@ import './swiping.css'
 import { setDirection } from '../../redux/directionState/directionActions';
 
 export const Swiping = (prop: any): any => {
-  // console.log('INSIDE SWIPING-->');
-  // console.log('prop-->', prop);
+  console.log('INSIDE SWIPING-->');
+  console.log('prop-->', prop);
 
   const currentUser = useSelector((state: RootState) => state.user)
   const currentDirection = useSelector((state: RootState) => state.direction)
