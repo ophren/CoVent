@@ -28,7 +28,6 @@ const getConversation = async (req, res) => {
       [Op.or]: [{ profileId: profileId, receivedMessageId: receivedId }, { profileId: receivedId, receivedMessageId: profileId }]
     }
   });
-  console.log('msgs-->', msgs);
   res.status(200).send(msgs);
 };
 

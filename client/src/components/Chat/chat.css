@@ -1,0 +1,100 @@
+#chat-area {
+    text-align: center;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 2%;
+    padding: 5%;
+    border-radius: 0px;
+    /* border-top: 1px solid rgb(197, 197, 197);
+    border-bottom: 1px solid rgb(197, 197, 197); */
+    /* border-left: 3px solid rgb(248, 248, 248);  */
+    padding-bottom: 8%;
+}
+
+#chat-input-field {
+    margin-top: 1%;
+    margin-bottom: 10%;
+    margin-left: 2%;
+    margin-right: 2%;
+    min-width: 400px;
+    max-width: 400px;
+    border-radius: 40px;
+    min-height: 27px;
+    max-height: auto;
+    padding-left: 3%;
+    border: 1px solid rgb(161, 161, 161);
+}
+
+#sendMessageBtn {
+    height: 32px;
+    width: 90px;
+    color: white;
+    border: none;
+    background-color: rgb(65, 65, 65);
+    border-radius: 10px;
+}
+
+#test {
+    border-bottom: 2px solid rgb(241, 241, 241);
+    margin-bottom: 3%;
+}
+
+
+#chat-messages-area {
+    margin-top: 4%;
+}
+
+#chat-container {
+    margin-bottom: 16%;
+}
+
+#chatter-current-user {
+    color: rgb(82, 82, 232);
+    margin-bottom: 1%;
+    text-align: right;
+    font-size: 12px;
+    font-style: italic;
+    padding-right: 3%;
+}
+
+#chatter-other-user {
+    color: rgb(99, 99, 99);
+    margin-bottom: 1%;
+    text-align: left;
+    font-size: 12px;
+    font-style: italic;
+    padding-left: 3%;
+}
+
+#chat-message-box-current {
+    background-color: rgb(82, 82, 232);
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    min-height: 30px;
+    float:right;
+    text-align: left;
+    padding-top: 4%;
+    padding-bottom: 2%;
+    border-radius: 200px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#chat-message-box-other {
+    max-width: auto;
+    padding-left: 5%;
+    padding-right: 5%;
+    float:left;
+    background-color: rgb(175, 175, 175);
+    border-radius: 200px;
+    width: auto;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    min-height: 30px;
+    padding-left: 4%;
+    text-align: left;
+    padding-top: 4%;
+    padding-bottom: 2%;
+}

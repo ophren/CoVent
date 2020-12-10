@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from "react-redux";
 import { RootState } from '../../types/combinedStoreTypes';
 import { Link } from 'react-router-dom';
+import './chats.css';
 
 export const Chats = () => {
 
@@ -9,14 +10,17 @@ export const Chats = () => {
 
   return (
     <>
-      <h1>Hello From Chats</h1>
-      {console.log('currentUser-->', currentUser)}
+      <div id="chat-title">The CoVent Chat</div>
+      <div id="chat-subtitle">Join the conversation with one of your matches</div>
+      <div id="matches-list">
 
       {
         currentUser.profile &&
         currentUser.profile.matched &&
         currentUser.profile.matched.map((el, i) =>
-          <div key={i} className="match">
+        <div id="match-person-area" key={i}>
+          
+          <div  >
             <Link to= {{
               pathname:  '/chat',
               state: {
@@ -25,10 +29,14 @@ export const Chats = () => {
                 firstName: el.user?.firstName
               }
             }}>
-            <img src={el.picture} className="match__chat" alt="match chat" />
+            <img src={el.picture} id="match-chat-picture" alt="match chat" />
+            
             </Link>
           </div>
+          <div id="match-name">{el.user?.firstName}</div>
+        </div>
         )}
+      </div>
     </>
   )
 }

@@ -2,6 +2,7 @@ import React, { useState, FormEvent, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { RootState } from '../../types/combinedStoreTypes';
 import { getMsgsByProfileIdAndReceiverId, addMsg } from './../../utils/userDatabaseFetch';
+import './chat.css';
 
 export const Chat = (props: any): JSX.Element => {
 
@@ -57,27 +58,45 @@ export const Chat = (props: any): JSX.Element => {
   }
 
   return (
-    <>
+    <div id="chat-area">
       {console.log('conversation-->', conversation)}
-      <h1>Hello From Chat</h1>
+    <div id="test">
       <form onSubmit={handleSubmit}>
         <input
+          id= "chat-input-field"
           name="message"
-          placeholder="Message"
+          placeholder="New message"
           value={message}
           onChange={handleChange}
         ></input>
-        <button
-          id="sendMessage"
-        >Send</button>
+        <button id="sendMessageBtn">Send</button>
       </form>
-
-      {conversation.map((el, i) => {
-        console.log('el-->', el);
-        return <p key={i}>{currentUser.profile && currentUser.profile.id
-          && el.sentMessageId === currentUser.profile.id ?
-          currentUser.firstName : props.location.state.firstName}: {el.text}</p>
-      })}
-    </>
+    </div>
+    
+      <div id="chat-messages-area" >
+        {conversation.map((el, i) => {
+          console.log('el-->', el);
+          return (
+            <div id="chat-container" key={i}>
+              <div id="userName">{
+                currentUser.profile && currentUser.profile.id
+                && el.sentMessageId === currentUser.profile.id ?
+                  <div id="chatter-current-user">{currentUser.firstName}</div>
+                  : <div id="chatter-other-user">{props.location.state.firstName}</div>}
+              </div>
+              
+              <div id="chat">
+                {
+               currentUser.profile && currentUser.profile.id
+                && el.sentMessageId === currentUser.profile.id ?
+                  <div id="chat-message-box-current">{el.text}</div>
+              : <div id="chat-message-box-other">{el.text}</div> 
+                }
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
   )
 }

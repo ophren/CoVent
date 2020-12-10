@@ -8,12 +8,14 @@ const createProfile = async (req, res) => {
   const profile = await models.profile.findAll({
     where: { userId: userId }
   });
+
   try {
     if (profile.length > 0) {
       const updatedProfile = await models.profile.update((req.body), {
         where: { userId: userId },
         returning: true
       });
+
       res.status(204).send(updatedProfile[1]);
     } else {
       const newProfile = await models.profile.create(req.body);

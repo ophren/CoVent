@@ -65,6 +65,10 @@
   align-items: flex-start;
 }
 
+#top_right_corner_btn {
+  display: flex;
+}
+
 #user-infos {
   width: 250px;
   margin-left: 10%;
@@ -125,6 +129,7 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  margin-left: 14px;
 }
 
 .profile_update-button:hover {
@@ -357,6 +362,7 @@
 #edit-profile-submit-btn {
   margin-bottom: 2%;
   padding-left: 1%;
+  margin-left: 14px;
   width: 31%;
   border: 1px solid grey;
   height: 34px;
@@ -378,4 +384,21 @@
   color: grey;
   font-size: 12px;
   text-decoration: underline;
+}
+
+#chats-link-btn {
+  height: 30px;
+  width: 100px;
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(82,82,232);
+  background-color: rgb(82,82,232);
+  border-radius: 18px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 10%;
+}
+
+#chats-link-btn:hover {
+  transform: scale(0.90); 
 }
