@@ -30,5 +30,7 @@ yarn-error.log*
 
 src/utils/firebase.ts
 .firebase.ts
+**/node_modules
+**/firebase.ts
 
 
