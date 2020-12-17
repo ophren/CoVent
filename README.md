@@ -1,6 +1,9 @@
 
 <p align="center"><img  width="412" alt="Screenshot 2020-12-15 at 13 05 32" src="https://user-images.githubusercontent.com/31804969/102212990-57afe200-3ed6-11eb-8b00-1b9ecde6036a.png"></p>
 
+<img width="1440" alt="Screenshot 2020-12-17 at 01 24 58" src="https://user-images.githubusercontent.com/31804969/102508568-d0a16c00-4085-11eb-8cfb-da6062411e6a.png">
+
+
 At the crossroads between MeetUp and Tinder, CoVent is a web application that connects people through events. Depending on your location, you can match with people based on their daily activities or on their interest in joining a specific event. CoVent offers a matching system and a chat room where you can discuss with your matches.
 
 ## Screenshots
